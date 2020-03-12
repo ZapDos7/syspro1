@@ -1,5 +1,14 @@
 #include "date.h"
 
+using namespace std;
+
+date::date(){}
+date::date(string str)
+{
+    //c_str()
+    
+    //tokenize string --> AA-BB-CCCC
+}
 date::date(int d, int m, int y) {
     if ((m<0)||(m>12)) {
         fprintf(stderr, "Invalid month\n");

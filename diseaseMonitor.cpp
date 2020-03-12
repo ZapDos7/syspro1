@@ -4,10 +4,15 @@
 
 int main(int argc, char const *argv[])
 {
+    //test chamber
     date d1(3,4,2002);
     //if (d1.is_set()) std::cout << "is set\n";
     //d1.print_date();
     std::cout << d1.get_date_as_string();
+
+
+
+    
     /*STEPS:
     1.  Read patient records file
         Check for unique recordIDs & correctly typed info (exitDate > entryDate else problem)

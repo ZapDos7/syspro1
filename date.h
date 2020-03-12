@@ -7,13 +7,15 @@
 class date
 {
 private:
-    int day;
-    int month;
-    int year;
+    short unsigned int day;
+    short unsigned int month;
+    short unsigned int year;
     bool set; //if true, date exists, if not, no matter the int fields, this is a "-" date aka doesn't exist.
     //std::string myDate;
 
 public:
+    date();
+    date(std::string str);
     date(int d, int m, int y);
     ~date();
     int get_day();

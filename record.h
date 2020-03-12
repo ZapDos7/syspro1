@@ -16,9 +16,17 @@ private:
     date exitD; /*exitDate:   DD-MM-YYYY or "-" (den exei eksitirio akoma o asthenis)*/
 
 public:
-    record(/* args */);
+    record();
+    record(std::string line);
+    record(std::string id0, std::string fn, std::string ln, std::string dis, std::string countr, date enD, date exD);
     ~record();
-    date get_exitD();
+    std::string get_id();
+    std::string get_fname();
+    std::string get_lname();
+    std::string get_disease();
+    std::string get_country();
+    date get_entryDate();
+    date get_exitDate();
     bool hasLeft();
 };
 
