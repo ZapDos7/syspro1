@@ -33,21 +33,36 @@ date::date(int d, int m, int y) {
 }
 date::~date() {}
 int date::get_day() {
-    return this->day;
+    if (this->is_set()==true)
+        return this->day;
+    else
+        return -1;    
 }
 int date::get_month() {
-    return this->month;
+    if (this->is_set()==true)
+        return this->month;
+    else
+        return -1;    
 }
 int date::get_year() {
-    return this->year;
+    if (this->is_set()==true)
+        return this->year;
+    else
+        return -1;    
 }
 std::string date::get_date_as_string()
 {
-    std::string day = std::to_string(this->get_day());
-    std::string month = std::to_string(this->get_month());
-    std::string year = std::to_string(this->get_year());
-    std::string date = day+"-"+month+"-"+year;
-    return date;
+    if (this->is_set()==true)
+    {
+        std::string day = std::to_string(this->get_day());
+        std::string month = std::to_string(this->get_month());
+        std::string year = std::to_string(this->get_year());
+        std::string date = day+"-"+month+"-"+year;
+        return date;
+    }
+    else
+        return "-1";    
+    
 }
 bool date::is_set() {
     return this->set;
@@ -59,7 +74,8 @@ void date::set_day(int d) {
     }
     else {
         this->day = d;
-    }    
+        this->set = true;
+    }
     return;
 }
 void date::set_month(int m) {
@@ -69,22 +85,37 @@ void date::set_month(int m) {
     }
     else {
         this->month = m;
+        this->set = true;
     } 
     return;
 }
 void date::set_year(int y) {
     this->year = y;
+    this->set = true;
     return;
 }
 void date::print_date() {
-    fprintf(stdout, "Date is: %d-%d-%d\n",this->get_day(), this->get_month(), this->get_year());
+    if (this->is_set()==true)
+    {
+        fprintf(stdout, " %d-%d-%d ",this->get_day(), this->get_month(), this->get_year());
+    }
+    else
+    {
+        fprintf(stdout," - ");
+    }
+    
     return;
 }
 
 //check if d1 is between d2 & d3 => d2...d1...d3
 bool isBetween(date d, date d1, date d2)
 {
-    //is 10-11-2004 between 9-1-2003 and 4-6-2008?
+    if ((d.is_set()==false)||(d1.is_set()==false)||(d2.is_set()==false))
+    {
+        fprintf(stderr, "No dates set to compare!\n");
+        exit(-1);
+    }
+    //else
     if ((d.get_year()>=d1.get_year())&&(d.get_year()<d2.get_year())||((d.get_year()>d1.get_year())&&(d.get_year()<=d2.get_year())))
     {
         return true;
