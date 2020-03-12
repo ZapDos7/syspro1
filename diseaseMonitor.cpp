@@ -1,7 +1,13 @@
 #include <iostream>
 
+#include "date.h"
+
 int main(int argc, char const *argv[])
 {
+    date d1(3,4,2002);
+    //if (d1.is_set()) std::cout << "is set\n";
+    //d1.print_date();
+    std::cout << d1.get_date_as_string();
     /*STEPS:
     1.  Read patient records file
         Check for unique recordIDs & correctly typed info (exitDate > entryDate else problem)
@@ -37,14 +43,6 @@ recordID    FName   LName   diseaseID   Country     entryDate   exitDate
 889         Mary    Smith   COVID-2019  China       25-1-2019   27-1-2019
 776         Larry   Jones   SARS-1      Italy       10-02-2003  –
 125         Jon     Dupont  H1N1        USA         12-02-2016  15-02-2016
-opou:
-recordID: unique string
-patientFirstName: string xwris kena mono letters
-patientLastName: string xwris kena mono letters
-diseaseID: string w/ letters, numbers & "-"
-country: string xwris kena mono letters
-entryDate:  DD-MM-YYYY
-exitDate:   DD-MM-YYYY or "-" (den exei eksitirio akoma o asthenis)
 */
 
 /*
