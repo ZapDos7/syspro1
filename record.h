@@ -2,6 +2,8 @@
 #define _RECORD_H_
 
 #include <string>
+#include <cstring>
+#include <iostream>
 #include "date.h"
 
 class record

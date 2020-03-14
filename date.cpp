@@ -5,9 +5,55 @@ using namespace std;
 date::date(){}
 date::date(string str)
 {
-    //c_str()
-    
-    //tokenize string --> AA-BB-CCCC
+    char * cstr = new char[str.length() + 1]; //auto 8a kanw tokenize
+    strcpy (cstr, str.c_str()); //copy as string to str sto cstr
+    char * pch;
+    const char delim[2] = "-";
+    pch = strtok(cstr, delim);
+    short unsigned int counter = 0;
+    char* parts[3];
+    while (pch != NULL)
+    {
+        //printf ("%s ",pch);
+        parts[counter] = pch;
+        counter++;
+        pch = strtok (NULL, delim);
+    }
+
+    if (atoi(parts[2])<0)
+    {
+        cout << "Before Christ.\n";
+    }
+    else
+    {
+        this->year = atoi(parts[2]);
+        this->set=true;
+    }
+
+    if ((atoi(parts[1])<0) || (atoi(parts[1])>12))
+    {
+        cout << "Wrong month.\n";
+        exit(-1);
+    }
+    else
+    {
+        this->month = atoi(parts[1]);
+        this->set=true;
+    }
+
+
+    if ((atoi(parts[0])<0) || (atoi(parts[0])>31))
+    {
+        cout << "Wrong day.\n";
+        exit(-1);
+    }
+    else
+    {
+        this->day = atoi(parts[0]);
+        this->set=true;
+    }
+   
+    //cout << "GJ! it's " << day << "-" << month << "-" << year << endl;
 }
 date::date(int d, int m, int y) {
     if ((m<0)||(m>12)) {
@@ -66,6 +112,16 @@ std::string date::get_date_as_string()
 }
 bool date::is_set() {
     return this->set;
+}
+void date::make_set()
+{
+    if (this->is_set()==false) this->set==true;
+    else {cout << "Error in make_set"; exit(-1);} //it's already set
+}
+void date::unset()
+{
+    if (this->is_set()==true) this->set==false;
+    else {cout << "Error in unset"; exit(-1);}
 }
 void date::set_day(int d) {
     if ((d<0)||(d>31)) {

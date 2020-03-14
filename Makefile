@@ -16,7 +16,6 @@ $(EXECUTABLE): $(OBJECTS)
 
 run:
 	./$(EXECUTABLE) -h1 2 -h2 3 -b 1024
-	#./$(EXECUTABLE) -p patientRecordsFile.csv -h1 diseaseHashtableNumOfEntries -h2 countryHashtableNumOfEntries -b bucketSize
 
 clean:
 	rm -f $(OBJECTS) $(EXECUTABLE)

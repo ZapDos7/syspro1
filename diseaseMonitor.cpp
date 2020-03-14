@@ -1,18 +1,16 @@
 #include <iostream>
 
 #include "date.h"
-
+#include "record.h"
+//./$(EXECUTABLE) -p patientRecordsFile.csv -h1 diseaseHashtableNumOfEntries -h2 countryHashtableNumOfEntries -b bucketSize
 int main(int argc, char const *argv[])
 {
     //test chamber
-    date d1(3,4,2002);
-    //if (d1.is_set()) std::cout << "is set\n";
-    //d1.print_date();
-    std::cout << d1.get_date_as_string();
-
-
-
-    
+    std::string line = "47 David Williams SARS-1 Denmark 30-05-2009 20-02-2020";
+    record r1(line);
+    std::cout << r1.get_id() << std::endl << r1.get_fname()<< std::endl << r1.get_lname()<< std::endl << r1.get_country()<< std::endl << r1.get_disease() << std::endl << r1.get_entryDate().get_date_as_string()<< std::endl << r1.get_exitDate().get_date_as_string();
+    //date d1("30-05-2009");
+    //std::cout <<d1.get_day()<<" "<<d1.get_month()<<" "<<d1.get_year()<<"\n";
     /*STEPS:
     1.  Read patient records file
         Check for unique recordIDs & correctly typed info (exitDate > entryDate else problem)
