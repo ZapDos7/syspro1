@@ -107,3 +107,40 @@ bool record::hasLeft()
 {
     return this->exitD.is_set(); //if exit date is set (true) aka it exists and isn't "-", then he has left (true)
 }
+
+void record::set_id(std::string id_to_be)
+{
+    this->id = id_to_be;
+    return;
+}
+
+void record::set_fname(std::string fn)
+{
+    this->fname = fn;
+    return;
+}
+void record::set_lname(std::string ln)
+{
+    this->lname = ln;
+    return;
+}
+void record::set_disease(std::string dis)
+{
+    this->disease = dis;
+    return;
+}
+void record::set_country(std::string cntr)
+{
+    this->country = cntr;
+    return;
+}
+void record::set_entryD(std::string enD)
+{
+    this->entryD = enD; //this wont work
+    return;
+}
+void record::set_exitD(std::string exD)
+{
+    this->exitD = exD;
+    return;
+}

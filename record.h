@@ -30,6 +30,13 @@ public:
     date get_entryDate();
     date get_exitDate();
     bool hasLeft();
+    void set_id(std::string id_to_be);
+    void set_fname(std::string fn);
+    void set_lname(std::string ln);
+    void set_disease(std::string dis);
+    void set_country(std::string cntr);
+    void set_entryD(std::string enD);
+    void set_exitD(std::string exD);
 };
 
 #endif

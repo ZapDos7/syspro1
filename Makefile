@@ -1,7 +1,7 @@
 CC=g++  -std=c++11
 CFLAGS=-c -Wpedantic -Ofast
 LDFLAGS=
-SOURCES=diseaseMonitor.cpp date.cpp record.cpp
+SOURCES=diseaseMonitor.cpp date.cpp record.cpp ht.cpp bht.cpp tree.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=diseaseMonitor
 
