@@ -15,7 +15,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 run:
-	./$(EXECUTABLE) -h1 2 -h2 3 -b 1024
+	./$(EXECUTABLE) -p small.csv -h1 2 -h2 3 -b 1024
 
 clean:
 	rm -f $(OBJECTS) $(EXECUTABLE)
