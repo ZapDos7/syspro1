@@ -52,8 +52,6 @@ date::date(string str)
         this->day = atoi(parts[0]);
         this->set=true;
     }
-   
-    //cout << "GJ! it's " << day << "-" << month << "-" << year << endl;
 }
 date::date(date &d) { //copy constructor, kaleitai ws: date d1 = d2;
     if ((d.get_month()<0)||(d.get_month()>12)) {
@@ -164,7 +162,35 @@ void date::print_date() {
 }
 
 //check if d1 is between d2 & d3 => d2...d1...d3
-bool isBetween(date d, date d1, date d2)
+bool isLater(date d1, date d2) //is d1 later than d2?
+{
+    if ((d1.is_set()==false)||d2.is_set()==false)
+    {
+        fprintf(stderr, "No dates set to compare!\n");
+        exit(-1);
+    }
+    if (d1.get_year()>d2.get_year())
+    {
+        return true;
+    }
+    else if (d1.get_year()==d2.get_year())
+    {
+        if (d1.get_month()>d2.get_month())
+        {
+            return true;
+        }
+        else if (d1.get_month()==d2.get_month())
+        {
+            if (d1.get_day()>d2.get_day())
+            {
+                return true;
+            }
+        }
+    }
+    //else d2 >= d1
+    return false;
+}
+bool isBetween(date d, date d1, date d2) //is d between d1 kai d2
 {
     if ((d.is_set()==false)||(d1.is_set()==false)||(d2.is_set()==false))
     {
@@ -173,7 +199,7 @@ bool isBetween(date d, date d1, date d2)
         exit(-1);
     }
     //else
-    if ((d.get_year()>=d1.get_year())&&(d.get_year()<d2.get_year())||((d.get_year()>d1.get_year())&&(d.get_year()<=d2.get_year())))
+    /*if ((d.get_year()>=d1.get_year())&&(d.get_year()<d2.get_year())||((d.get_year()>d1.get_year())&&(d.get_year()<=d2.get_year())))
     {
         return true;
     }
@@ -191,5 +217,14 @@ bool isBetween(date d, date d1, date d2)
             }            
         }
     }
-    return false; //else
+    return false; //else*/
+    if ((isLater(d,d1)==true)&&(isLater(d2,d)==true))
+    {
+        return true; //pane d1 < d < d2
+    }
+    else
+    {
+        return false; //estw kai 1 na pige lathos
+    }
+    
 }

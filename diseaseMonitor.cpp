@@ -11,11 +11,12 @@
 //./$(EXECUTABLE) -p patientRecordsFile.csv -h1 diseaseHashtableNumOfEntries -h2 countryHashtableNumOfEntries -b bucketSize
 int main(int argc, char const *argv[])
 {
-    //test chamber
+    //test chamber/////////////////////////////////////////////
     std::string ln = "47 David Williams SARS-1 Denmark 30-05-2009 20-02-2020";
     record r1(ln);
     ht_item mitsos2(&r1);
-    
+
+    //////////////////////////////////////////////////////////
     char records_file[256];
     int h1=-1; //diseaseHashtableNumOfEntries
     int h2=-1; //countryHashtableNumOfEntries
@@ -62,11 +63,11 @@ int main(int argc, char const *argv[])
     while (std::getline(dataset, line))
     {
         record r(line); //temp r
-        my_ht.insert(&r);
+        my_ht.insert(&r); //edw ginetai kai elegxos gia unique IDs
     }
-    /*
+    
     //check all are saved in HT
-    for (unsigned int j = 0; j < my_ht.get_size(); j++)
+    /*for (unsigned int j = 0; j < my_ht.get_size(); j++)
     {
         my_ht.get_table()[j].print_ht_item();//1o stoixeio 
         ht_item * temp = my_ht.get_table()[j].next;
@@ -75,7 +76,7 @@ int main(int argc, char const *argv[])
             temp->print_ht_item();
             temp = temp->next;
         }
-        //std::cout << j <<std::endl;
+        std::cout << j <<std::endl;
     }*/
 
 
@@ -89,15 +90,11 @@ int main(int argc, char const *argv[])
 
 
 
-
-    //check unique IDs etc???
-    //make date function is latter and use it in record to check if it makes sense
+    
 
     /*STEPS:
-    1.  Read patient records file
-        Check for unique recordIDs & correctly typed info (exitDate > entryDate else problem)
-        if problem: exit msg & exit
-    2.  Save these in struct
+    ~make countryht && diseaseht
+    ~make trees
     3.  Await for user input:
 
     A. /globalDiseaseStats [date1 date2]

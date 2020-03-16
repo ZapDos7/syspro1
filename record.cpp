@@ -45,11 +45,16 @@ record::record(string line)
                 exitD.set_day(tmpD.get_day());
                 exitD.set_month(tmpD.get_month());
                 exitD.set_year(tmpD.get_year());
+                /*if (isLater(entryD,exitD)==true) //mpike meta poy bgike
+                {
+                    std::cerr << "Error in record dates.\n";
+                    exit(-1);
+                }*/
             }
             else //not set date
             {
                 exitD.unset(); //date's set == false so it's just a dash!
-            }          
+            }
         }
     }
     

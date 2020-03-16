@@ -32,5 +32,6 @@ public:
     void set_year(int y);
     void print_date();
 };
+bool isLater(date d1, date d2);
 bool isBetween(date d, date d1, date d2);
 #endif

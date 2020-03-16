@@ -3,6 +3,8 @@ sdi1400044
 
 1st SysPro Assignment
 
+Used: C++11
+
 Contents:
 - this readme
 - Makefile
@@ -19,11 +21,9 @@ Use:
 - run "$make run" to execute (to see the parameters values and alter them, see the Makefile file)
 - run "$make clean" to clean the working folder.
 
-Supporting Functions:
-- isBetween: returns if a date is between two others (date.h, date.cpp)
-
-Future Expansions:
-- 
+Notes:
+- In the class "record" we check if the exit date is greater than the entry date, if it is set (if it's just a dash, we do not check this, obviously)
+- The insert function of the hash table checks whether the ID's inserted are unique or not.
 
 Sources:
 - Makefile - Software Dev. for Algorithmic Problems, 2019-20

@@ -78,21 +78,42 @@ void ht::insert(record* r) //mporei na epistrefei rec* gia na to parw ws orisma 
     }
     else if (table[where].next == NULL) //exw record alla den exw next
     {
-        //grafw ston next moy
-        table[where].next = new ht_item;
-        table[where].next->rec =  new record(*r);
-        //std::cerr << table[where].rec->get_id();
+        if (table[where].rec->get_id()==r->get_id())
+        {
+            std::cerr << "Dublicate record ID. Fix your dataset and try again.\n";
+            exit(-1);
+        }
+        else //grafw ston next moy
+        {
+            table[where].next = new ht_item;
+            table[where].next->rec =  new record(*r);
+            //std::cerr << table[where].rec->get_id();
+        }
     }
     else //uparxei kai next
     {
         ht_item * temp = table[where].next;
-        while(temp->next != NULL)//psaxnw na vrw to next null gia na paw sto telos tis listas autou tou stoixeiou tou ht
+        if (temp->rec->get_id()==r->get_id())
         {
-            temp = temp->next;
+            std::cerr << "Dublicate record ID. Fix your dataset and try again(1).\n";
+            exit(-1);
         }
-        temp->next = new ht_item;
-        temp->next->rec = new record(*r);
-        //std::cerr << table[where].rec->get_id();
+        else
+        {
+            while(temp->next != NULL)//psaxnw na vrw to next null gia na paw sto telos tis listas autou tou stoixeiou tou ht
+            {
+                temp = temp->next; //paw ston epomeno mou kai elegxw an uparxei idi to ID ekei
+                if (temp->rec->get_id()==r->get_id()) //an edw mesa vrw to ID tou r, exit
+                {
+                    std::cerr << "Dublicate record ID. Fix your dataset and try again(2).\n";
+                    exit(-1);
+                }
+            }
+            //else, exw brei to telos twn buckets kai paw kai grafw
+            temp->next = new ht_item;
+            temp->next->rec = new record(*r);
+            //std::cerr << table[where].rec->get_id();
+        }
     }
 }
 
