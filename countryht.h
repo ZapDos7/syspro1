@@ -1,13 +1,14 @@
-#ifndef _BHT_H_
-#define _BHT_H_
+#ifndef _CHT_H_
+#define _CHT_H_
 
-class bht
+class countryht
 {
 private:
     /* data */
+    //size_t bucketSize; //to b apo to command line
 public:
-    bht(/* args */);
-    ~bht();
+    countryht(/* args */);
+    ~countryht();
 };
 
 

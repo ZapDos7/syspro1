@@ -55,26 +55,26 @@ date::date(string str)
    
     //cout << "GJ! it's " << day << "-" << month << "-" << year << endl;
 }
-date::date(int d, int m, int y) {
-    if ((m<0)||(m>12)) {
+date::date(date &d) { //copy constructor, kaleitai ws: date d1 = d2;
+    if ((d.get_month())<0)||(d.get_month()>12)) {
         fprintf(stderr, "Invalid month\n");
         exit(1);
     }
-    if ((d<0)||(d>31)) {
+    if ((d.get_day()<0)||(d.get_day()>31)) {
         fprintf(stderr, "Invalid day\n");
         exit(1);
     }
-    if ((m==2)&&(y%4==0)&&(d>29)) { //leap yeared feb
+    if ((d.get_month()==2)&&(d.get_year()%4==0)&&(d.get_day()>29)) { //leap yeared feb
         fprintf(stderr, "Invalid date format\n");
         exit(1);
     }
-    if (((m==4)||(m==6)||(m==9)||(m==11))&&(d>30)) { //30 day-d months
+    if (((d.get_month()==4)||(d.get_month()==6)||(d.get_month()==9)||(d.get_month()==11))&&(d.get_day()>30)) { //30 day-d months
         fprintf(stderr, "Invalid date format\n");
         exit(1);
     }
-    this->day = d;
-    this->month = m;
-    this->year = y;
+    this->day = d.get_day();
+    this->month = d.get_month();
+    this->year = d.get_year();
     this->set = true;
 }
 date::~date() {}
@@ -169,6 +169,7 @@ bool isBetween(date d, date d1, date d2)
     if ((d.is_set()==false)||(d1.is_set()==false)||(d2.is_set()==false))
     {
         fprintf(stderr, "No dates set to compare!\n");
+        //epektasi: mono to ena na einai "-" => it's max date => act accordingly
         exit(-1);
     }
     //else

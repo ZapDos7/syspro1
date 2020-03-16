@@ -1,10 +1,10 @@
-#include "bht.h"
+#include "diseaseht.h"
 
 
-bht::bht(/* args */)
+diseaseht::diseaseht(/* args */)
 {
 }
 
-bht::~bht()
+diseaseht::~diseaseht()
 {
 }

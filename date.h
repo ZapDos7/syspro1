@@ -18,7 +18,7 @@ private:
 public:
     date();
     date(std::string str);
-    date(int d, int m, int y);
+    date(date &d);
     ~date();
     int get_day();
     int get_month();

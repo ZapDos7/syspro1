@@ -20,7 +20,7 @@ private:
 public:
     record();
     record(std::string line);
-    record(std::string id0, std::string fn, std::string ln, std::string dis, std::string countr, date enD, date exD);
+    record(record &r);
     ~record();
     std::string get_id();
     std::string get_fname();

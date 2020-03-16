@@ -54,14 +54,15 @@ record::record(string line)
     }
     
 }
-record::record(std::string id0, std::string fn, std::string ln, std::string dis, std::string countr, date enD, date exD)
+record::record(record &r) //copy constructor //kaleitai ws record r1 = r2;
 {
-    this->id = id0;
-    this->fname = fn;
-    this->lname = ln;
-    this->disease = dis;
-    this->country = countr;
-    //this->entryD
+    this->id = r.get_id();
+    this->fname = r.get_fname();
+    this->lname = r.get_lname();
+    this->disease = r.get_disease();
+    this->country = r.get_country();
+    this->entryD = r.get_entryDate();
+    this->exitD = r.get_exitDate();
 }
 
 record::~record()

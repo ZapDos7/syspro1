@@ -1,13 +1,13 @@
-#ifndef _BHT_H_
-#define _BHT_H_
+#ifndef _DHT_H_
+#define _DHT_H_
 
-class bht
+class diseaseht
 {
 private:
     /* data */
 public:
-    bht(/* args */);
-    ~bht();
+    diseaseht(/* args */);
+    ~diseaseht();
 };
 
 

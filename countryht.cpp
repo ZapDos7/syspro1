@@ -1,10 +1,10 @@
-#include "bht.h"
+#include "countryht.h"
 
 
-bht::bht(/* args */)
+countryht::countryht(/* args */)
 {
 }
 
-bht::~bht()
+countryht::~countryht()
 {
 }

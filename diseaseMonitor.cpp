@@ -2,7 +2,8 @@
 
 #include "date.h"
 #include "ht.h"
-#include "bht.h"
+#include "diseaseht.h"
+#include "countryht.h"
 #include "tree.h"
 #include "record.h"
 #include <fstream>
@@ -13,7 +14,7 @@ int main(int argc, char const *argv[])
     
     std::string ln = "47 David Williams SARS-1 Denmark 30-05-2009 20-02-2020";
     record r1(ln);
-    ht_item mitsos(&r1, 4);
+    ht_item mitsos(&r1);
     mitsos.print_ht_item();
     //ok
     ht ht0(4);
@@ -54,10 +55,14 @@ int main(int argc, char const *argv[])
     std::ifstream confile(records_file); //dataset: recordID FName LName diseaseID Country entryDate exitDate
     std::string line;
     unsigned int records_num=0;
+    //dhlwnw to diko m ht
     while (std::getline(confile, line))
     {
         records_num++;
-        //record r(line);
+        record r(line);
+        //eisagwgi record sto HT mou
+        //hash iD, find bucket, rec* = new record (line) //oute * oute &
+        //i alliws rec * = new record (record) //ousiastika copy record
     }
 
 
