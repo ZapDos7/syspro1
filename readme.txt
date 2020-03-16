@@ -10,7 +10,8 @@ Contents:
 - date.h, date.cpp (class date, with date-month-year fields and all the methods required)
 - record.h, record.cpp (records class with the required fields & methods)
 - ht.h, ht.cpp (classic hash table class and methods, it's used to store the actual records and acts as the data structure of my choice, as the assignment dictates)
-- bht.h bht.cpp (a hash table specifically used for this assignment, an alteration of the classic hash table - this one has blocks and all else needed)
+- countryht.h, countryht.cpp (country hash table)
+- disease.h, disease.cpp (disease hash table)
 - tree.h, tree.cpp (BST class and methods)
 
 Use:

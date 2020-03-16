@@ -1,22 +1,28 @@
 #include <iostream>
 
 #include "date.h"
+#include "ht.h"
+#include "bht.h"
+#include "tree.h"
 #include "record.h"
 #include <fstream>
 //./$(EXECUTABLE) -p patientRecordsFile.csv -h1 diseaseHashtableNumOfEntries -h2 countryHashtableNumOfEntries -b bucketSize
 int main(int argc, char const *argv[])
 {
     //test chamber
-    //std::string line = "47 David Williams SARS-1 Denmark 30-05-2009 20-02-2020";
-    //record r1(line);
-    //std::cout << r1.get_id() << std::endl << r1.get_fname()<< std::endl << r1.get_lname()<< std::endl << r1.get_country()<< std::endl << r1.get_disease() << std::endl << r1.get_entryDate().get_date_as_string()<< std::endl << r1.get_exitDate().get_date_as_string();
-    //date d1("30-05-2009");
-    //std::cout <<d1.get_day()<<" "<<d1.get_month()<<" "<<d1.get_year()<<"\n";
-      
+    
+    std::string ln = "47 David Williams SARS-1 Denmark 30-05-2009 20-02-2020";
+    record r1(ln);
+    ht_item mitsos(&r1, 4);
+    mitsos.print_ht_item();
+    //ok
+    ht ht0(4);
+    //std::cout << ht0.get_size();
+    
     char records_file[256];
-    unsigned int h1; //diseaseHashtableNumOfEntries
-    unsigned int h2; //countryHashtableNumOfEntries
-    unsigned int b; //bucketSize
+    int h1=-1; //diseaseHashtableNumOfEntries
+    int h2=-1; //countryHashtableNumOfEntries
+    int b=-1; //bucketSize
     for (int i = 0; i < argc; i++)
     {
         if (strcmp("-p", argv[i]) == 0)
@@ -39,7 +45,11 @@ int main(int argc, char const *argv[])
             b = atoi(argv[i + 1]);
         }
     }
-
+    if((h1<0)||(h2<0)||(b<0))
+    {
+        std::cerr << "No values for the parameters, please execute again properly." << std::endl;
+        exit(-1);
+    }
     
     std::ifstream confile(records_file); //dataset: recordID FName LName diseaseID Country entryDate exitDate
     std::string line;
@@ -49,6 +59,8 @@ int main(int argc, char const *argv[])
         records_num++;
         //record r(line);
     }
+
+
 
     /*STEPS:
     1.  Read patient records file

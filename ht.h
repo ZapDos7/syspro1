@@ -1,29 +1,41 @@
-#include <iostream>
-#include "record.h"
-/*This class will hold all the actual records, which shall be accessed by the respectable BST's of each "bht" hash table (h1, h2)*/
+#ifndef _HT_H
+#define _HT_H_
 
-class ht_node
+#include <iostream>
+#include <string>
+#include "record.h"
+
+class ht_item //functions like bucket
 {
 private:
-    record rec;
-    ht_node* next; //edw pane lista me ta 
+    record* rec; //it's ID is the key!!
+    int key; //?
+    ht_item* next;//node to next
 public:
-    ht_node(record * record);
-    ~ht_node();
-    //ht_node* get_next();
+    ht_item();
+    ht_item(record* r, int k);
+    ~ht_item();
+    void print_ht_item();
 };
 
 class ht
 {
 private:
-    unsigned int size;
-    ht_node** table;
+    unsigned int size; //size of ht
+    ht_item** table; //the items
+    //size_t bucketSize; //to b apo to command line
 public:
     ht(unsigned int sz);
     ~ht();
+    //Bucket* initBucket(size_t bktsz);
+    //void insert(Bucket* bucket, record* item); //insert //insert to hash table
+    void insert(ht_item* h, record* r);
+
     unsigned int get_size();
-    int hash(ht_node* nd); //the hash function, based on a record r(its ID, basically) returns an int.
+    unsigned int hash(std::string recordId, int maxVal); //the hash function, based on a record r(its ID, basically) returns an int.
     //search //epistrefei to se poio index uparxei to record, else error msg
-    //insert //insert ht_node to hash table
-    //delete //delete ht_node from hash table
+    
+    //delete //delete from hash table //delete(a, k): delete the k:v pair associated with k, or do nothing if k does not exist
 };
+
+#endif

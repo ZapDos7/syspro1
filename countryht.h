@@ -1,3 +1,6 @@
+#ifndef _BHT_H_
+#define _BHT_H_
+
 class bht
 {
 private:
@@ -6,3 +9,6 @@ public:
     bht(/* args */);
     ~bht();
 };
+
+
+#endif

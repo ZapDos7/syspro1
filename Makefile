@@ -1,7 +1,7 @@
 CC=g++  -std=c++11
 CFLAGS=-c -Wpedantic -Ofast
 LDFLAGS=
-SOURCES=diseaseMonitor.cpp date.cpp record.cpp ht.cpp bht.cpp tree.cpp
+SOURCES=diseaseMonitor.cpp date.cpp record.cpp ht.cpp countryht.cpp diseaseht.cpp tree.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=diseaseMonitor
 
@@ -15,7 +15,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 run:
-	./$(EXECUTABLE) -p small.csv -h1 2 -h2 3 -b 1024
+	./$(EXECUTABLE) -p small.csv -h1 40 -h2 40 -b 1024
 
 clean:
 	rm -f $(OBJECTS) $(EXECUTABLE)
