@@ -20,11 +20,12 @@ Use:
 - run "$make clean" to clean the working folder.
 
 Supporting Functions:
-- isBetween: returns if a date is between two others
+- isBetween: returns if a date is between two others (date.h, date.cpp)
 
 Future Expansions:
-- More accurate date struct (check month-day combo)
+- 
 
 Sources:
 - Makefile - Software Dev. for Algorithmic Problems, 2019-20
 - date.h, date.cpp - my code from last years 1st assignment, without the time stamp class.
+- hash function based on this: http://www.cse.yorku.ca/~oz/hash.html

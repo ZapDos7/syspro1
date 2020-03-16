@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 #include "date.h"
 #include "ht.h"
@@ -6,19 +7,14 @@
 #include "countryht.h"
 #include "tree.h"
 #include "record.h"
-#include <fstream>
+
 //./$(EXECUTABLE) -p patientRecordsFile.csv -h1 diseaseHashtableNumOfEntries -h2 countryHashtableNumOfEntries -b bucketSize
 int main(int argc, char const *argv[])
 {
     //test chamber
-    
     std::string ln = "47 David Williams SARS-1 Denmark 30-05-2009 20-02-2020";
     record r1(ln);
-    ht_item mitsos(&r1);
-    mitsos.print_ht_item();
-    //ok
-    ht ht0(4);
-    //std::cout << ht0.get_size();
+    ht_item mitsos2(&r1);
     
     char records_file[256];
     int h1=-1; //diseaseHashtableNumOfEntries
@@ -51,21 +47,51 @@ int main(int argc, char const *argv[])
         std::cerr << "No values for the parameters, please execute again properly." << std::endl;
         exit(-1);
     }
-    
-    std::ifstream confile(records_file); //dataset: recordID FName LName diseaseID Country entryDate exitDate
+    std::ifstream dataset(records_file); //dataset: recordID FName LName diseaseID Country entryDate exitDate
     std::string line;
     unsigned int records_num=0;
-    //dhlwnw to diko m ht
-    while (std::getline(confile, line))
+    
+    while (std::getline(dataset, line))
     {
         records_num++;
-        record r(line);
-        //eisagwgi record sto HT mou
-        //hash iD, find bucket, rec* = new record (line) //oute * oute &
-        //i alliws rec * = new record (record) //ousiastika copy record
     }
+    ht my_ht(records_num*3/4); //ht size = 0.75 * (plithos records from file) => not the worst seek time?
+    //reread file and actually keep info
+    dataset.clear();
+    dataset.seekg(0);
+    while (std::getline(dataset, line))
+    {
+        record r(line); //temp r
+        my_ht.insert(&r);
+    }
+    /*
+    //check all are saved in HT
+    for (unsigned int j = 0; j < my_ht.get_size(); j++)
+    {
+        my_ht.get_table()[j].print_ht_item();//1o stoixeio 
+        ht_item * temp = my_ht.get_table()[j].next;
+        while (temp != NULL)
+        {
+            temp->print_ht_item();
+            temp = temp->next;
+        }
+        //std::cout << j <<std::endl;
+    }*/
 
 
+
+
+
+
+
+
+
+
+
+
+
+    //check unique IDs etc???
+    //make date function is latter and use it in record to check if it makes sense
 
     /*STEPS:
     1.  Read patient records file

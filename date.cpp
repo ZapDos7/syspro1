@@ -56,7 +56,7 @@ date::date(string str)
     //cout << "GJ! it's " << day << "-" << month << "-" << year << endl;
 }
 date::date(date &d) { //copy constructor, kaleitai ws: date d1 = d2;
-    if ((d.get_month())<0)||(d.get_month()>12)) {
+    if ((d.get_month()<0)||(d.get_month()>12)) {
         fprintf(stderr, "Invalid month\n");
         exit(1);
     }
