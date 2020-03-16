@@ -79,9 +79,18 @@ int main(int argc, char const *argv[])
         std::cout << j <<std::endl;
     }*/
 
-
-
-
+    tree t;
+    date dd("20-02-2020");
+    t.insert(t.get_root(), dd);
+    t.get_root()->d->print_date();
+    date dd2("20-02-2021");
+    date dd3("20-02-2019");
+    
+    /*t.insert(t.get_root(), dd2);
+    t.insert(t.get_root(), dd3);
+    t.get_root()->right->d->print_date();
+    t.get_root()->left->d->print_date();
+*/
 
 
 
