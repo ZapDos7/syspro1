@@ -30,7 +30,7 @@ date::date(string str)
         this->set=true;
     }
 
-    if ((atoi(parts[1])<0) || (atoi(parts[1])>12))
+    if ((atoi(parts[1])<=0) || (atoi(parts[1])>12))
     {
         cout << "Wrong month.\n";
         exit(-1);
@@ -105,8 +105,7 @@ std::string date::get_date_as_string()
         return date;
     }
     else
-        return "-1";    
-    
+        return "-";
 }
 bool date::is_set() {
     return this->set;
@@ -171,24 +170,24 @@ bool isLater(date d1, date d2) //is d1 later than d2?
     }
     if (d1.get_year()>d2.get_year())
     {
-        return true;
+        return false;
     }
     else if (d1.get_year()==d2.get_year())
     {
         if (d1.get_month()>d2.get_month())
         {
-            return true;
+            return false;
         }
         else if (d1.get_month()==d2.get_month())
         {
             if (d1.get_day()>d2.get_day())
             {
-                return true;
+                return false;
             }
         }
     }
     //else d2 >= d1
-    return false;
+    return true;
 }
 bool isBetween(date d, date d1, date d2) //is d between d1 kai d2
 {

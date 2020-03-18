@@ -12,21 +12,22 @@ public:
     tree_node* right;
     //tree_node* parent;
     //methods
-    tree_node(date d1);
+    tree_node();
+    tree_node(date *d1);
     ~tree_node();
 };
 
 class tree
 {
 private:
-    tree_node* root;
 public:
+    tree_node* root;
+    //std::string name; //of country or disease
     tree(/* args */);
     ~tree();
-    tree_node* get_root();
-    //void in_order(tree_node* rt);
-    tree_node* insert(tree_node* tr, date d1);
-    //tree_node* search(tree_node* tr, date d1);
+    void in_order(tree_node* rt);
+    /*void*/tree_node*  insert(tree_node* tr, date *d1);
+    tree_node* search(tree_node* tr, date d1);
     //remove
 };
 

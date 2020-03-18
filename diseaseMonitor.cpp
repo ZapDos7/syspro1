@@ -12,9 +12,23 @@
 int main(int argc, char const *argv[])
 {
     //test chamber/////////////////////////////////////////////
-    std::string ln = "47 David Williams SARS-1 Denmark 30-05-2009 20-02-2020";
-    record r1(ln);
-    ht_item mitsos2(&r1);
+    tree t;
+    date dd("20-01-2020");
+    date dd2("21-01-2021");
+    date dd3("19-01-2019");
+    
+    t.root = t.insert(t.root, &dd);
+    std::cerr << "\nena mpika\n";
+    t.insert(t.root, &dd2);
+    std::cerr << "\n2 mpika\n";
+    t.insert(t.root, &dd3);
+
+    std::cerr << t.root->left->d->get_year() << std::endl;
+    std::cerr << t.root->d->get_year() << std::endl;
+    std::cerr << t.root->right->d->get_year() << std::endl;
+
+
+
 
     //////////////////////////////////////////////////////////
     char records_file[256];
@@ -60,6 +74,7 @@ int main(int argc, char const *argv[])
     //reread file and actually keep info
     dataset.clear();
     dataset.seekg(0);
+    
     while (std::getline(dataset, line))
     {
         record r(line); //temp r
@@ -76,25 +91,8 @@ int main(int argc, char const *argv[])
             temp->print_ht_item();
             temp = temp->next;
         }
-        std::cout << j <<std::endl;
+        std::cerr << j <<std::endl;
     }*/
-
-    tree t;
-    date dd("20-02-2020");
-    t.insert(t.get_root(), dd);
-    t.get_root()->d->print_date();
-    date dd2("20-02-2021");
-    date dd3("20-02-2019");
-    
-    /*t.insert(t.get_root(), dd2);
-    t.insert(t.get_root(), dd3);
-    t.get_root()->right->d->print_date();
-    t.get_root()->left->d->print_date();
-*/
-
-
-
-
 
 
 

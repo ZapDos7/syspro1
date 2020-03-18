@@ -1,10 +1,19 @@
 #include "tree.h"
 
-tree_node::tree_node(date d1)
+tree_node::tree_node(date *d1)
 {
-    this->d = new date(d1);
+    this->d = new date(*d1);
     this->left = NULL;
     this->right = NULL;
+    //this->kati = NULL;
+    //this->parent = NULL;
+}
+tree_node::tree_node()
+{
+    this->d = NULL;
+    this->left = NULL;
+    this->right = NULL;
+    //this->kati = NULL;
     //this->parent = NULL;
 }
 tree_node::~tree_node()
@@ -12,9 +21,9 @@ tree_node::~tree_node()
     this->d = NULL;
     delete(this->d);
     this->left = NULL;
-    //delete(this->left);
+    delete(this->left);
     this->right = NULL;
-    //delete(this->right);
+    delete(this->right);
 }
 
 
@@ -30,31 +39,31 @@ tree::~tree()
     this->root = NULL;
     delete(this->root);
 }
-tree_node* tree::get_root()
+/*void*/tree_node*  tree::insert(tree_node* tr, date *d1) //tin 1i fora prepei na kli8ei me 1o orisma to root tou tree
 {
-    return this->root;
+    if (tr==NULL)
+    {
+        tree_node * tn = new tree_node(d1);
+        tn->left = NULL;
+        tn->right = NULL;
+        return tn;
+    }
+    else if (isLater(*(tr->d), *d1)==true) //node's date is later compared to d1 so it should be to d1's right (greater)
+    {
+        tr->right = insert(tr->right, d1);
+    }
+    else if (isLater(*(tr->d), *d1)==false)
+    {
+        tr->left = insert(tr->left, d1);
+    }
+    else
+    {
+        std::cerr << "Wtf?\n";
+        return NULL;
+    }
+    return NULL;
 }
-tree_node* tree::insert(tree_node* tr, date d1) //tin 1i fora prepei na kli8ei me 1o orisma to root tou tree
-{
-    if (this->root==NULL) //i arxi tou dentrou - den eixame tpt before - first node to be added
-    {
-        this->root = new tree_node(d1);
-        this->root->left = NULL;
-        this->root->right = NULL;
-        //this->root->parent = NULL;
-        return this->root;
-    }
-    //else, exoume root opote blepoume an einai to value mas ligotero apo to d1:
-    else if (isLater(*(this->root->d), d1)==false) //node's date is later compared to d1 so it should be to d1's right (greater)
-    {
-        this->root->right = insert(this->root->right, d1);
-    }
-    else //it's to my left
-    {
-        this->root->left = insert(this->root->left, d1);
-    }
-}
-/*
+
 void tree::in_order(tree_node* rt) //https://www.programiz.com/dsa/tree-traversal
 {
     if (rt == NULL)
@@ -62,26 +71,31 @@ void tree::in_order(tree_node* rt) //https://www.programiz.com/dsa/tree-traversa
         return;
     }
     in_order(rt->left);
-    this->root->d->get_date_as_string();
+    rt->d->get_date_as_string();
     std::cerr << std::endl;
     in_order(rt->right);
 }
-*/
-/*
+
 tree_node* tree::search(tree_node* tr, date d1) //tin 1i fora prepei na kli8ei me 1o orisma to root tou tree
 {
-    if (tr==NULL) //i arxi tou dentrou - den eixame tpt before - first node to be added
+    if (tr->d->get_date_as_string() == d1.get_date_as_string())
     {
-        return NULL;
+        std::cerr << tr->d->get_date_as_string() << "found\n";
+        return tr;
     }
-    //else, exoume root opote blepoume an einai to value mas ligotero apo to d1:
-    else if (isLater(*(this->root->d), d1)==true) //node's date is later compared to d1 so it should be to d1's right (greater)
+    else if (isLater(*(tr->d), d1)==true) //node's date is later compared to d1 so it should be to d1's right (greater)
     {
-        return search(this->root->right, d1);
+        std::cerr << "searching right\n";
+        return search(tr->right, d1);
     }
-    else //it's to my left
+    else if (isLater(*(tr->d), d1)==false) //d1 > d
     {
-        return search(this->root->left, d1);
+        std::cerr << "searching left\n";
+        return search(tr->left, d1);
+    }
+    else
+    {
+        std::cerr << "No such date exists here: " << d1.get_date_as_string() << std::endl;
+        return NULL; //it's not there
     }
 }
-*/
