@@ -1,7 +1,7 @@
 CC=g++  -std=c++11
 CFLAGS=-c -Wpedantic -Ofast
 LDFLAGS=
-SOURCES=diseaseMonitor.cpp date.cpp record.cpp ht.cpp countryht.cpp diseaseht.cpp tree.cpp
+SOURCES=diseaseMonitor.cpp date.cpp record.cpp ht.cpp aht.cpp bb.cpp tree.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=diseaseMonitor
 
@@ -19,3 +19,6 @@ run:
 
 clean:
 	rm -f $(OBJECTS) $(EXECUTABLE)
+
+val:
+	valgrind --leak-check=full ./$(EXECUTABLE) -p small.csv -h1 40 -h2 40 -b 1024

@@ -52,20 +52,6 @@ unsigned int ht::hash(record r) //the hash function, based on a record r(its ID,
     }
     return result % this->size;
 }
-/*
-Enallaktika:
-// unsigned int ht_hash(const char* s, const int a, const int m) {
-    long hash = 0;
-    const int len_s = strlen(s);
-    for (int i = 0; i < len_s; i++) {
-        hash += (long)pow(a, len_s - (i+1)) * s[i];
-        hash = hash % m;
-    }
-    return (unsigned int)hash;
-}
-apo:
-https://github.com/jamesroutley/write-a-hash-table/tree/master/03-hashing
-*/
 
 void ht::insert(record* r) //mporei na epistrefei rec* gia na to parw ws orisma sta alla hash tables of satan
 {   //antigrafw ta stoixeia tou r sto dynamic record pou tha mpei sto ht mas

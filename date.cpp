@@ -161,63 +161,46 @@ void date::print_date() {
 }
 
 //check if d1 is between d2 & d3 => d2...d1...d3
-bool isLater(date d1, date d2) //is d1 later than d2?
+/*bool*/short int isLater(date d1, date d2) //is d1 later than d2?
 {
     if ((d1.is_set()==false)||d2.is_set()==false)
     {
         fprintf(stderr, "No dates set to compare!\n");
-        exit(-1);
+        return -32,768; //error
     }
     if (d1.get_year()>d2.get_year())
     {
-        return false;
+        return -1;
     }
     else if (d1.get_year()==d2.get_year())
     {
         if (d1.get_month()>d2.get_month())
         {
-            return false;
+            return -1;
         }
         else if (d1.get_month()==d2.get_month())
         {
             if (d1.get_day()>d2.get_day())
             {
-                return false;
+                return -1;
+            }
+            else
+            {
+                return 0; //same dates
             }
         }
     }
-    //else d2 >= d1
-    return true;
+    //else
+    return 1;
 }
 bool isBetween(date d, date d1, date d2) //is d between d1 kai d2
 {
     if ((d.is_set()==false)||(d1.is_set()==false)||(d2.is_set()==false))
     {
         fprintf(stderr, "No dates set to compare!\n");
-        //epektasi: mono to ena na einai "-" => it's max date => act accordingly
         exit(-1);
     }
-    //else
-    /*if ((d.get_year()>=d1.get_year())&&(d.get_year()<d2.get_year())||((d.get_year()>d1.get_year())&&(d.get_year()<=d2.get_year())))
-    {
-        return true;
-    }
-    else if ( (d.get_year()==d1.get_year()) && (d.get_year()==d2.get_year()) ) //idia xronia
-    {
-        if ((d.get_month()>=d1.get_month())&&(d.get_month()<d2.get_month())||((d.get_month()>d1.get_month())&&(d.get_month()<=d2.get_month())))
-        {
-            return true;
-        }
-        else if ((d.get_month()==d1.get_month()) && (d.get_month()==d2.get_month())) //idios mhnas
-        {
-            if ((d.get_day()>=d1.get_day())&&(d.get_day()<d2.get_day())||((d.get_day()>d1.get_day())&&(d.get_day()<=d2.get_day())))
-            {
-                return true;
-            }            
-        }
-    }
-    return false; //else*/
-    if ((isLater(d,d1)==true)&&(isLater(d2,d)==true))
+    if ((isLater(d,d1)==1)&&(isLater(d2,d)==1))
     {
         return true; //pane d1 < d < d2
     }

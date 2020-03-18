@@ -48,11 +48,11 @@ tree::~tree()
         tn->right = NULL;
         return tn;
     }
-    else if (isLater(*(tr->d), *d1)==true) //node's date is later compared to d1 so it should be to d1's right (greater)
+    else if (isLater(*(tr->d), *d1)==1) //node's date is later compared to d1 so it should be to d1's right (greater)
     {
         tr->right = insert(tr->right, d1);
     }
-    else if (isLater(*(tr->d), *d1)==false)
+    else if (isLater(*(tr->d), *d1)!=1) //-1 or 0
     {
         tr->left = insert(tr->left, d1);
     }
@@ -83,12 +83,12 @@ tree_node* tree::search(tree_node* tr, date d1) //tin 1i fora prepei na kli8ei m
         std::cerr << tr->d->get_date_as_string() << "found\n";
         return tr;
     }
-    else if (isLater(*(tr->d), d1)==true) //node's date is later compared to d1 so it should be to d1's right (greater)
+    else if (isLater(*(tr->d), d1)==1) //node's date is later compared to d1 so it should be to d1's right (greater)
     {
         std::cerr << "searching right\n";
         return search(tr->right, d1);
     }
-    else if (isLater(*(tr->d), d1)==false) //d1 > d
+    else if (isLater(*(tr->d), d1)==1) //d1 > d
     {
         std::cerr << "searching left\n";
         return search(tr->left, d1);

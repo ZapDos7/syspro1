@@ -3,10 +3,10 @@
 
 #include "date.h"
 #include "ht.h"
-#include "diseaseht.h"
-#include "countryht.h"
+#include "aht.h" //advanced hash table
 #include "tree.h"
 #include "record.h"
+#include "bb.h"
 
 //./$(EXECUTABLE) -p patientRecordsFile.csv -h1 diseaseHashtableNumOfEntries -h2 countryHashtableNumOfEntries -b bucketSize
 int main(int argc, char const *argv[])
