@@ -1,22 +1,27 @@
+/*
+Ioanna Zapalidi, sdi1400044
+System Programming Project #1, Spring 2020
+*/
+
 #include <iostream>
 #include <fstream>
 
-#include "date.h"
-#include "ht.h"
-#include "aht.h" //advanced hash table
-#include "tree.h"
-#include "record.h"
-#include "bb.h"
+#include "date.h" //my date class
+#include "ht.h" //hash table - diki mas domi
+#include "aht.h" //"advanced" hash table
+#include "tree.h" //bst
+#include "record.h" //record class
+#include "bb.h" //blocks and buckets
 
 //./$(EXECUTABLE) -p patientRecordsFile.csv -h1 diseaseHashtableNumOfEntries -h2 countryHashtableNumOfEntries -b bucketSize
 int main(int argc, char const *argv[])
 {
     //test chamber/////////////////////////////////////////////
+    /*
     tree t;
     date dd("20-01-2020");
     date dd2("21-01-2021");
     date dd3("19-01-2019");
-    
     t.root = t.insert(t.root, &dd);
     std::cerr << "\nena mpika\n";
     t.insert(t.root, &dd2);
@@ -25,10 +30,19 @@ int main(int argc, char const *argv[])
 
     std::cerr << t.root->left->d->get_year() << std::endl;
     std::cerr << t.root->d->get_year() << std::endl;
-    std::cerr << t.root->right->d->get_year() << std::endl;
-
-
-
+    std::cerr << t.root->right->d->get_year() << std::endl;*/
+    record rec("47 David Williams SARS-1 Denmark 30-05-2009 20-02-2020");
+    
+    std::string dis1 = rec.get_disease(); //SARS1
+    //std::cerr << dis1 << std::endl;
+    std::string *dis = &dis1;
+    std::cerr << *dis << std::endl; //SARS1
+    //block blk(dis);
+    //block blk();
+    //blk.set_id(dis1);
+    //std::cerr << blk.get_id() << std::endl;
+    //std::cerr << blk.id << std::endl;
+    
 
     //////////////////////////////////////////////////////////
     char records_file[256];
@@ -95,51 +109,98 @@ int main(int argc, char const *argv[])
     }*/
 
 
-
-
     
+    //while(1)
+    //{
+        std::string com; //command
+		std::cout << "Enter desired function:\n";
+		std::getline(std::cin, com); //std::cin >> com; doesn't work due to spaces
+        char * cstr = new char[com.length() + 1]; //auto 8a kanw tokenize
+        strcpy (cstr, com.c_str()); //copy as string to line sto cstr
+        char * pch;
+        const char delim[2] = " ";
+        pch = strtok(cstr, delim);
+        std::string comms[7];//i entoli me ta perissotera orismata einai h insertPatientRecord me d2
+        int counter = 1;
+        comms[0] = pch;
+        //check first word to match with command, check entire command if correct
+        if (comms[0]=="insertPatientRecord") //1. /insertPatientRecord recordID patientFirstName patientLastName diseaseID entryDate [exitDate]
+        //Eisagoume nea eggrafi (exit date may be missiing)
+        {
+            while (pch != NULL)
+            {
+                comms[counter] = pch;
+                counter++;
+                pch = strtok(NULL, delim);
+            }
+            record r1;
+            r1.set_id(comms[1]);
+            r1.set_fname(comms[2]);
+            r1.set_lname(comms[3]);
+            r1.set_disease(comms[4]);
+            r1.set_country(comms[5]);
+            r1.set_entryD(comms[6]);
+            if (counter==6) //den uparxei date 2
+            {
+                r1.set_exitD("-");
+            }
+            else
+            {
+                r1.set_exitD(comms[7]);
+            }
+            /*if (my_ht.insert(&r1)==-1) //an exoume diplotupo record ID to xeirizetai h insert epistrefontas -1
+            {
+                std::cerr << "moving on!"; //skip this record
+            }
+            else
+            {
+                insert sta disease & country hash table    
+            }*/
+        }
+        else if (comms[0]=="recordPatientExit") //3. /recordPatientExit recordID exitDate
+        //Add exit Date to this record
+        {
+            //my_ht.search();
+            //if exitDate > autou tou record.entryD
+            //my_ht[ekei] -> set_exitD(exitDate)
+            //else
+        }
+        else if (comms[0]=="exit")
+        {
+            //make sure stuff is free
+            return 0;
+        }
+        else if (comms[0]=="numCurrentPatients") //4. /numCurrentPatients [disease]
+        //an dw8ei to [disease] print posoi patients exoun auto to disease AKOMA (exitDate based)
+        //if not, print posoi patient exoun kathe disease AKOMA
+        {
 
-    /*STEPS:
-    ~make countryht && diseaseht
-    ~make trees
-    3.  Await for user input:
+        }
+        else if (comms[0]=="globalDiseaseStats") //6. /globalDiseaseStats [date1 date2]
+        //Print for each disease posa krousmata [metaksu twn 2 dates] //an uparxei date1 prepei na uparxei date2, alla mporei na leipoun kai ta 2
+        {
+            
+        }
+        else if (comms[0]=="diseaseFrequency") //8. /diseaseFrequency virusName date1 date2 [country]
+        //An oxi country orisma, gia kathe country, print posa Virus metaksu twn 2 dates
+        //An nai, mono gi auto to country print posa Virus metaksu twn 2 dates
+        {
 
-    A. /globalDiseaseStats [date1 date2]
-        Print for each disease posa krousmata [metaksu twn 2 dates] //an uparxei date1 prepei na uparxei date2, alla mporei na leipoun kai ta 2
-    B. /diseaseFrequency virusName [country] date1 date2
-        An oxi country orisma, gia kathe country, print posa Virus metaksu twn 2 dates
-        An nai, mono gi auto to country print posa Virus metaksu twn 2 dates
-    C. /topk-Diseases k country [date1 date2]
-        Gia to country, which k viruses are top (most krousmata) [between dates if given] //an uparxei date1 prepei na uparxei date2, alla mporei na leipoun kai ta 2
-    D. /topk-Countries k disease [date1 date2]
-        Gia to virus, which k countries are top (most krousmata) [between dates if given] //an uparxei date1 prepei na uparxei date2, alla mporei na leipoun kai ta 2
-    E. /insertPatientRecord recordID patientFirstName patientLastName diseaseID entryDate [exitDate]
-        Eisagoume nea eggrafi (exit date may be missiing)
-    F. /recordPatientExit recordID exitDate
-        Add exit Date to this record
-    G. /numCurrentPatients [disease]
-        an dw8ei to [disease] print posoi patients exoun auto to disease AKOMA (exitDate based)
-        if not, print posoi patient exoun kathe disease AKOMA
-    H. /exit
-        Just yeet [SOS FREE MEMORY]
-    */
+        }
+        else if (comms[0]=="topk-Diseases") //10. /topk-Diseases k country [date1 date2]
+        //Gia to country, which k viruses are top (most krousmata) [between dates if given] //an uparxei date1 prepei na uparxei date2, alla mporei na leipoun kai ta 2
+        {
+
+        }
+        else if (comms[0]=="topk-Countries") //11. /topk-Countries k disease [date1 date2]
+        //Gia to virus, which k countries are top (most krousmata) [between dates if given] //an uparxei date1 prepei na uparxei date2, alla mporei na leipoun kai ta 2
+        {
+
+        }
+        else
+        {
+            std::cerr << "Unknown Command!\n"; //doesn't exit the program, gives the user another chance to type properly this time.
+        }
+    //} //end while(1)
     return 0;
 }
-
-/*
-Patient Records:
-recordID    FName   LName   diseaseID   Country     entryDate   exitDate
-889         Mary    Smith   COVID-2019  China       25-1-2019   27-1-2019
-776         Larry   Jones   SARS-1      Italy       10-02-2003  –
-125         Jon     Dupont  H1N1        USA         12-02-2016  15-02-2016
-*/
-
-/*
-Domes we will need:
-1. 2 hash tables (gia diseased & countries) (dynamically create buckets gia collision)
-2. BBST gia apothikeusi olwn twn eggrafwn twn patient kapoiou disease. Taksinomimeno dentro basei entryDate
-3. BBST gia apothikeusi olwn twn eggrafwn twn patient kapoias xwras. Taksinomimeno dentro basei entryDate
-XRISI POINTERS <=> OXI DIPLOTPA STI MNIMI
-4. gia topK: on the fly creation of binary heap me kathe kombo na krataei to sunolo twn krousmatwn ana country/disease
-5. whatever we may need
-*/
