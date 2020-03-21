@@ -17,7 +17,8 @@ private:
 public:
     block();
     ~block();
-    std::string* get_id();
+    std::string* get_idPtr();
+    std::string get_id();
     unsigned int get_count_all();
     unsigned int get_count_in();
     tree * get_tree();

@@ -5,29 +5,43 @@ block::block()
 {
     this->count_in = 0;
     this->count_all = 0;
-    this->id = NULL;
-    this->my_tree = NULL;
+    //this->id = new std::string;
+    //this->id = NULL;
+    //this->my_tree = new tree;
+    //this->my_tree = NULL;
 }
 block::~block()
 {
     this->id = NULL;
     delete(this->id);
+    this->my_tree = NULL;
+    delete(this->my_tree);
 }
 void block::set_id(record * r, bool isCountry)
 {
     if (isCountry==true)
     {
-        this->id = r->get_countryPtr();
+        std::string c = r->get_country(); //katastrefetai me to peras ths klisis tis function
+        //std::cerr << c << "\n";
+        //this->id = r->get_countryPtr();
+        //this->id = &c;
+        id = new std::string(c);
+        //*(this->id) = c;
     }
     else
     {
+        this->id = new std::string;
         this->id = r->get_diseasePtr();
     }
     return;
 }
-std::string* block::get_id()
+std::string* block::get_idPtr()
 {
     return this->id;
+}
+std::string block::get_id()
+{
+    return *(this->id);
 }
 unsigned int block::get_count_all()
 {
@@ -113,7 +127,7 @@ block * bucket::search(std::string srch) //orisma: ti psaxnoume?
 {
     for (unsigned int i = 0; i < this->num_of_blocks; i++)
     {
-        if (this->blocks[i].get_id()==&srch) //an sto block[i] moy exw auto to srch string (disease or country ID)
+        if (this->blocks[i].get_id()==srch) //an sto block[i] moy exw auto to srch string (disease or country ID)
         {
             return &(this->blocks[i]); //epistrepse mou auto to block
         }
@@ -126,26 +140,30 @@ void bucket::insert(record* r, bool isCountry) //herein lies all the zoumi
 {
     if (isCountry == true)
     {
-        if (this->blocks == NULL) //den uparxei tpt sta blocks tou bcket
+        if (this->blocks[0].get_idPtr() == NULL) //den uparxei tpt sta blocks tou bcket
         {
             this->blocks = new block;
             this->blocks[0].set_id(r, isCountry);
+            //this->blocks->set_id(r, isCountry);
             this->blocks[0].update_c_all();
+            //this->blocks->update_c_all();
             if (r->get_exitDate().is_set()==false) //den exei exit Date ara einai allos enas pou menei mesa, ara to c_in ++;
             {
                 this->blocks[0].update_c_in(true);
+                //this->blocks->update_c_in(true);
             }
             //this->blocks[0].insert_to_tree(r);
+            ////this->blocks->insert_to_tree(r);
         }
         else //not null dld uparxoun blocks ara thelw na dw an uparxei block me to country ID mou
         {   
             unsigned int i = 0;
             std::string c = r->get_country();
-            std::string * cPtr = this->blocks[i].get_id();
+            std::string * cPtr = this->blocks[i].get_idPtr();
             while (*cPtr != c)
             {
                 i++;
-                cPtr = this->blocks[i].get_id();
+                cPtr = this->blocks[i].get_idPtr();
             }
             if (i+1==this->num_of_blocks) //xwraei 10 blocks kai esu exeis psaksei 10 xwris na brethei to Country ID ara pame sto next bucket
             {
@@ -179,11 +197,11 @@ void bucket::insert(record* r, bool isCountry) //herein lies all the zoumi
         {   
             unsigned int i = 0;
             std::string c = r->get_disease();
-            std::string * cPtr = this->blocks[i].get_id();
+            std::string * cPtr = this->blocks[i].get_idPtr();
             while (*cPtr != c)
             {
                 i++;
-                cPtr = this->blocks[i].get_id();
+                cPtr = this->blocks[i].get_idPtr();
             }
             if (i+1==this->num_of_blocks) //xwraei 10 blocks kai esu exeis psaksei 10 xwris na brethei to Country ID ara pame sto next bucket
             {

@@ -17,14 +17,13 @@ System Programming Project #1, Spring 2020
 int main(int argc, char const *argv[])
 {
     //test chamber/////////////////////////////////////////////
+    /*
     record rec("47 David Williams SARS-1 Denmark 30-05-2009 20-02-2020");
     
-    block* lala = new block;
-    lala->set_id(&rec, true);
-    std::cerr << lala->get_id();
-    //bucket bkt(1024);
-    //bkt.insert(&rec, true);
-    /*block * blk = bkt.search(rec.get_country());
+    bucket bkt(1024);
+    
+    bkt.insert(&rec, true);
+    block * blk = bkt.search(rec.get_country());
     if (blk==NULL)
     {
         std::cerr << "ekmek\n";
@@ -32,7 +31,9 @@ int main(int argc, char const *argv[])
     else
     {
         std::cerr << "ok\n";
-    }*/
+    }
+    std::cerr << blk->get_id() << "\n";
+    */
     //why is sizeof(block)==sizeof(bucket)? block should be +4 bytes due to one more unsigned int
 
 
