@@ -2,33 +2,21 @@
 #define _DHT_H_
 
 #include "bb.h"
-
-class diseaseht
+#include "record.h"
+#include <cmath>
+class aht
 {
 private:
-    unsigned int size; //size of ht, h1
+    unsigned int size; //size of ht, h1 or h2
     bucket* table; //the items
 public:
-    diseaseht();
-    diseaseht(unsigned int sz);
-    ~diseaseht();
+    aht();
+    aht(int hsize, int bsize);
+    ~aht();
     unsigned int get_size();
     bucket* get_table();
+    unsigned int ahash(std::string tbhashed); //a slightly better hash function compared to the simple HT
+    void ainsert(record *r, bool isCountry); //if isCountry == true, we hash a country, if false, we hash a disease
 };
-
-/*
-Enallaktika:
-// unsigned int ht_hash(const char* s, const int a, const int m) {
-    long hash = 0;
-    const int len_s = strlen(s);
-    for (int i = 0; i < len_s; i++) {
-        hash += (long)pow(a, len_s - (i+1)) * s[i];
-        hash = hash % m;
-    }
-    return (unsigned int)hash;
-}
-apo:
-https://github.com/jamesroutley/write-a-hash-table/tree/master/03-hashing
-*/
 
 #endif

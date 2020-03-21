@@ -17,33 +17,35 @@ System Programming Project #1, Spring 2020
 int main(int argc, char const *argv[])
 {
     //test chamber/////////////////////////////////////////////
-    /*
-    tree t;
-    date dd("20-01-2020");
-    date dd2("21-01-2021");
-    date dd3("19-01-2019");
-    t.root = t.insert(t.root, &dd);
-    std::cerr << "\nena mpika\n";
-    t.insert(t.root, &dd2);
-    std::cerr << "\n2 mpika\n";
-    t.insert(t.root, &dd3);
-
-    std::cerr << t.root->left->d->get_year() << std::endl;
-    std::cerr << t.root->d->get_year() << std::endl;
-    std::cerr << t.root->right->d->get_year() << std::endl;*/
     record rec("47 David Williams SARS-1 Denmark 30-05-2009 20-02-2020");
     
-    std::string dis1 = rec.get_disease(); //SARS1
-    //std::cerr << dis1 << std::endl;
-    std::string *dis = &dis1;
-    std::cerr << *dis << std::endl; //SARS1
-    //block blk(dis);
-    //block blk();
-    //blk.set_id(dis1);
-    //std::cerr << blk.get_id() << std::endl;
-    //std::cerr << blk.id << std::endl;
-    
+    block* lala = new block;
+    lala->set_id(&rec, true);
+    std::cerr << lala->get_id();
+    //bucket bkt(1024);
+    //bkt.insert(&rec, true);
+    /*block * blk = bkt.search(rec.get_country());
+    if (blk==NULL)
+    {
+        std::cerr << "ekmek\n";
+    }
+    else
+    {
+        std::cerr << "ok\n";
+    }*/
+    //why is sizeof(block)==sizeof(bucket)? block should be +4 bytes due to one more unsigned int
 
+
+
+
+
+
+
+
+
+
+
+    
     //////////////////////////////////////////////////////////
     char records_file[256];
     int h1=-1; //diseaseHashtableNumOfEntries
@@ -85,6 +87,9 @@ int main(int argc, char const *argv[])
         records_num++;
     }
     ht my_ht(records_num*3/4); //ht size = 0.75 * (plithos records from file) => not the worst seek time?
+
+    aht diseaseHT(h1, b);
+    aht countryHT(h2, b);
     //reread file and actually keep info
     dataset.clear();
     dataset.seekg(0);
@@ -93,6 +98,9 @@ int main(int argc, char const *argv[])
     {
         record r(line); //temp r
         my_ht.insert(&r); //edw ginetai kai elegxos gia unique IDs
+        //if this ^ yields an error, exit the program, else:
+        //diseaseHT.ainsert(&r, false);
+        //countryHT.ainsert(&r, true);
     }
     
     //check all are saved in HT
@@ -107,8 +115,6 @@ int main(int argc, char const *argv[])
         }
         std::cerr << j <<std::endl;
     }*/
-
-
     
     //while(1)
     //{
@@ -150,20 +156,24 @@ int main(int argc, char const *argv[])
             }
             /*if (my_ht.insert(&r1)==-1) //an exoume diplotupo record ID to xeirizetai h insert epistrefontas -1
             {
-                std::cerr << "moving on!"; //skip this record
+                //if this ^ yields an error, exit the program
             }
             else
             {
-                insert sta disease & country hash table    
+                //put in my_ht
+                //insert sta disease & country hash table too
+                //continue to next command
             }*/
         }
         else if (comms[0]=="recordPatientExit") //3. /recordPatientExit recordID exitDate
         //Add exit Date to this record
         {
             //my_ht.search();
-            //if exitDate > autou tou record.entryD
+            //if exitDate > autou tou record.entryD && exitDate not already set
             //my_ht[ekei] -> set_exitD(exitDate)
             //else
+            //pes tou oti einai idi set kai continue an einai idi set
+            //pes tou oti to d2 < d1 ara le poule kai continue
         }
         else if (comms[0]=="exit")
         {

@@ -2,6 +2,7 @@
 #define _TREE_H_
 
 #include "date.h"
+#include "record.h"
 
 class tree_node
 {
@@ -10,10 +11,10 @@ public:
     date* d; //my key
     tree_node* left;
     tree_node* right;
-    //tree_node* parent;
-    //methods
+    //list of dublicate records (exoun idio entry date, den einai diplotupa ta idia ta records)
+
     tree_node();
-    tree_node(date *d1);
+    tree_node(record * r);
     ~tree_node();
 };
 
@@ -22,13 +23,13 @@ class tree
 private:
 public:
     tree_node* root;
-    //std::string name; //of country or disease
-    tree(/* args */);
+    
+    tree();
     ~tree();
-    void in_order(tree_node* rt);
-    /*void*/tree_node*  insert(tree_node* tr, date *d1);
+    void in_order(tree_node* rt); //print in order ta elements tou tree
+    tree_node* insert(tree_node* tr, date *d1);
+    tree_node* insertR(tree_node* tr, record* r);
     tree_node* search(tree_node* tr, date d1);
-    //remove
 };
 
 #endif

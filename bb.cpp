@@ -1,54 +1,93 @@
 #include "bb.h"
 
-block_node::block_node()
+//////////////////////////////BLOCKS///////////////////////////////
+block::block()
 {
     this->count_in = 0;
     this->count_all = 0;
-    this->id = "";
+    this->id = NULL;
+    this->my_tree = NULL;
 }
-block_node::block_node(std::string s)
+block::~block()
 {
-    this->id = s;
-    this->count_in=0;
-    this->count_all=0;
+    this->id = NULL;
+    delete(this->id);
 }
-block_node::~block_node(){}
-std::string block_node::get_id()
+void block::set_id(record * r, bool isCountry)
+{
+    if (isCountry==true)
+    {
+        this->id = r->get_countryPtr();
+    }
+    else
+    {
+        this->id = r->get_diseasePtr();
+    }
+    return;
+}
+std::string* block::get_id()
 {
     return this->id;
 }
-unsigned int block_node::get_count_all()
+unsigned int block::get_count_all()
 {
     return this->count_all;
 }
-unsigned int block_node::get_count_in()
+unsigned int block::get_count_in()
 {
     return this->count_in;
 }
-tree * block_node::get_tree()
+tree * block::get_tree()
 {
     return this->my_tree;
 }
-////
-
-block::block(unsigned int sz)
+void block::insert_to_tree(record * r)
 {
-    this->size = sz;
-    unsigned int posa = 0;
-    posa = sz/sizeof(block_node); //posa block nodes xwrane se ena block?
-    this->bn = new block_node[posa]; //ftianxw to array of nodes mou pou arxika einai adeia (empty contrusctor)
+    this->my_tree->insertR(this->my_tree->root, r);
+    //this->my_tree->insert(this->my_tree->root, r->get_entryDate());
+    return;
+}
+void block::update_c_all() //++ an insert aplws
+{
+    this->count_all++;
+    return;
+}
+void block::update_c_in(bool add) //++ an insert, -- an date d2 ginetai set
+{
+    if (add==true) //valame record
+    {
+        this->count_in++;
+    }
+    else //add == false, kapoios bghke apo to nosokomeio
+    {
+        this->count_in--;
+    }
 }
 
-block::~block()
-{
-    this->bn = NULL;
-    delete(this->bn);
-}
-//
-bucket::bucket()
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////BUCKET//////////////////////
+
+bucket::bucket(int bsize) //-b bsize
 {
     this->next = NULL;
-    this->blocks = NULL;
+    unsigned int posa = 0;
+    bsize -= sizeof(bucket*);//prepei na afairesw kai sizeof(bucket*) = next
+    bsize -= sizeof(unsigned int); //afairw to megethos tou bucksize
+    posa = floor(bsize/sizeof(block)); //posa block nodes xwrane se ena block?
+    this->num_of_blocks = posa;
+    this->blocks = new block[posa]; //pinakas apo blocks, energopoieitai o constructor tou block
 }
 bucket::~bucket()
 {
@@ -64,4 +103,101 @@ bucket * bucket::get_next()
 block * bucket::get_block()
 {
     return this->blocks;
+}
+
+unsigned int bucket::get_bucket_size()
+{
+    return this->num_of_blocks;
+}
+block * bucket::search(std::string srch) //orisma: ti psaxnoume?
+{
+    for (unsigned int i = 0; i < this->num_of_blocks; i++)
+    {
+        if (this->blocks[i].get_id()==&srch) //an sto block[i] moy exw auto to srch string (disease or country ID)
+        {
+            return &(this->blocks[i]); //epistrepse mou auto to block
+        }
+        //else continue
+    }
+    //if it's not found from the above for:
+    return NULL;    
+}
+void bucket::insert(record* r, bool isCountry) //herein lies all the zoumi
+{
+    if (isCountry == true)
+    {
+        if (this->blocks == NULL) //den uparxei tpt sta blocks tou bcket
+        {
+            this->blocks = new block;
+            this->blocks[0].set_id(r, isCountry);
+            this->blocks[0].update_c_all();
+            if (r->get_exitDate().is_set()==false) //den exei exit Date ara einai allos enas pou menei mesa, ara to c_in ++;
+            {
+                this->blocks[0].update_c_in(true);
+            }
+            //this->blocks[0].insert_to_tree(r);
+        }
+        else //not null dld uparxoun blocks ara thelw na dw an uparxei block me to country ID mou
+        {   
+            unsigned int i = 0;
+            std::string c = r->get_country();
+            std::string * cPtr = this->blocks[i].get_id();
+            while (*cPtr != c)
+            {
+                i++;
+                cPtr = this->blocks[i].get_id();
+            }
+            if (i+1==this->num_of_blocks) //xwraei 10 blocks kai esu exeis psaksei 10 xwris na brethei to Country ID ara pame sto next bucket
+            {
+                this->next->insert(r, isCountry);
+            }
+            else //psaksame ligotero kai to brhkame
+            {
+                this->blocks[i].update_c_all();
+                if (r->get_exitDate().is_set()==false) //den exei exit Date ara einai allos enas pou menei mesa, ara to c_in ++;
+                {
+                    this->blocks->update_c_in(true);
+                }
+                //this->blocks->insert_to_tree(r);
+            }
+        }
+    }
+    else
+    {
+        if (this->blocks == NULL) //den uparxei tpt sta blocks tou bcket
+        {
+            this->blocks = new block;
+            this->blocks[0].set_id(r, isCountry);
+            this->blocks[0].update_c_all();
+            if (r->get_exitDate().is_set()==false)
+            {
+                this->blocks[0].update_c_in(false);
+            }
+            //this->blocks[0].insert_to_tree(r);
+        }
+        else //not null dld uparxoun blocks ara thelw na dw an uparxei block me to country ID mou
+        {   
+            unsigned int i = 0;
+            std::string c = r->get_disease();
+            std::string * cPtr = this->blocks[i].get_id();
+            while (*cPtr != c)
+            {
+                i++;
+                cPtr = this->blocks[i].get_id();
+            }
+            if (i+1==this->num_of_blocks) //xwraei 10 blocks kai esu exeis psaksei 10 xwris na brethei to Country ID ara pame sto next bucket
+            {
+                this->next->insert(r, isCountry);
+            }
+            else //psaksame ligotero kai to brhkame
+            {
+                this->blocks[i].update_c_all();
+                if (r->get_exitDate().is_set()==false) //den exei exit Date ara einai allos enas pou menei mesa, ara to c_in ++;
+                {
+                    this->blocks->update_c_in(false);
+                }
+                //this->blocks->insert_to_tree(r);
+            }
+        }
+    }
 }

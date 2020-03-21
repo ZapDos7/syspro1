@@ -5,7 +5,6 @@ using namespace std;
 record::record() {}
 record::record(string line)
 {
-    //tokenize line by tab delims and fix the rest!
     char * cstr = new char[line.length() + 1]; //auto 8a kanw tokenize
     strcpy (cstr, line.c_str()); //copy as string to line sto cstr
     char * pch;
@@ -93,12 +92,18 @@ std::string record::get_disease()
 {
     return this->disease;
 }
-
+std::string * record::get_diseasePtr()
+{
+    return &disease;
+}
 std::string record::get_country()
 {
     return this->country;
 }
-
+std::string * record::get_countryPtr()
+{
+    return &country;
+}
 date record::get_entryDate()
 {
     return this->entryD;
@@ -113,7 +118,10 @@ bool record::hasLeft()
 {
     return this->exitD.is_set(); //if exit date is set (true) aka it exists and isn't "-", then he has left (true)
 }
-
+date * record::get_entryDatePtr()
+{
+    return &entryD;
+}
 void record::set_id(std::string id_to_be)
 {
     this->id = id_to_be;

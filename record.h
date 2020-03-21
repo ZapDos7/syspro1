@@ -26,8 +26,11 @@ public:
     std::string get_fname();
     std::string get_lname();
     std::string get_disease();
+    std::string * get_diseasePtr();
     std::string get_country();
+    std::string * get_countryPtr();
     date get_entryDate();
+    date * get_entryDatePtr();
     date get_exitDate();
     bool hasLeft();
     void set_id(std::string id_to_be);

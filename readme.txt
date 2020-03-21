@@ -18,19 +18,21 @@ Contents:
 Use:
 - While in the project folder, run "$make" to create the .o files and the executable
 - execute "$make run" to execute (to see the parameters values and alter them, see the Makefile file)
-- execute "$make val" to execute using valgrind
+- execute "$make val" to execute using valgrind (requires it to be installed: sudo apt-get install valgrind)
 - execute "$make clean" to clean the working folder.
 
 Notes:
 - In the class "record" we check if the exit date is greater than the entry date, if it is set (if it's just a dash, we do not check this, obviously)
 - The insert function of the hash table checks whether the ID's inserted are unique or not.
-- On the disease and country hash tables: in the bb.h/bb.cpp files I created the assisting classes "block_node", "block" and "bucket". A block node contains the country or disease name, two counters to assist with the instructions and a pointer to the country's/disease's tree. A block contains an array of these block_nodes, and their amount is based on the "-b" parameter given via command line. Lastly, a bucket contains a pointer to its corresponding block, and a pointer to the next bucket, as it should.
-
+- On the disease and country hash tables: in the bb.h/bb.cpp files I created the assisting classes "block" and "bucket". A bucket contains an array of blocks.
+- Since my implementation of these hash tables is unified, the insertion methods and some constructors (wherever it is needed, basically) take a boolean arguement "isCountry" which is true when it comes to the country hash table and its methods, else it is false.
 
 Sources:
 - Makefile - Software Dev. for Algorithmic Problems, 2019-20
-- date.h, date.cpp - my code from last years 1st assignment, without the time stamp class.
-- hash function based on this: http://www.cse.yorku.ca/~oz/hash.html
+- date.h, date.cpp - my code from last years 1st assignment, without the time stamp class & with another assisting function.
+- The hash function for my hash table based on this: http://www.cse.yorku.ca/~oz/hash.html
+- The hash function for the disease and country hash tables is a variation of this, but with a bit more complex math & with a better distribution.
 
 Future Expansions:
 - Turn the BST into a BBST
+- Do the top-k methods
