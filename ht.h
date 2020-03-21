@@ -29,9 +29,10 @@ public:
     unsigned int get_size();
     ht_item* get_table();
     unsigned int hash(record r); //the hash function, based on a record r(its ID, basically) returns an int.
-    void insert(record* r); //mporei na epistrefei rec* gia na to parw ws orisma sta alla hash tables of satan
+    int insert(record* r); //mporei na epistrefei rec* gia na to parw ws orisma sta alla hash tables of satan
     ht_item* search(record *r); //epistrefei to se poio index uparxei to record, else error msg
     //prolly useles?//delete //delete from hash table //delete(a, k): delete the k:v pair associated with k, or do nothing if k does not exist
+    void print_ht();
 };
 
 #endif

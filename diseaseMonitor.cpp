@@ -17,22 +17,15 @@ System Programming Project #1, Spring 2020
 int main(int argc, char const *argv[])
 {
     //test chamber/////////////////////////////////////////////
-    /*
-    record rec("47 David Williams SARS-1 Denmark 30-05-2009 20-02-2020");
     
+    /*record rec("47 David Williams SARS-1 Denmark 30-05-2009 20-02-2020");
+    record rec2("39 Mary Sanders FLU-2018 France 12-06-2012 04-01-2017");
     bucket bkt(1024);
     
     bkt.insert(&rec, true);
-    block * blk = bkt.search(rec.get_country());
-    if (blk==NULL)
-    {
-        std::cerr << "ekmek\n";
-    }
-    else
-    {
-        std::cerr << "ok\n";
-    }
-    std::cerr << blk->get_id() << "\n";
+    
+    bkt.insert(&rec2, true);
+    std::cerr << "2ok\n\n";
     */
     //why is sizeof(block)==sizeof(bucket)? block should be +4 bytes due to one more unsigned int
 
@@ -98,24 +91,31 @@ int main(int argc, char const *argv[])
     while (std::getline(dataset, line))
     {
         record r(line); //temp r
-        my_ht.insert(&r); //edw ginetai kai elegxos gia unique IDs
-        //if this ^ yields an error, exit the program, else:
-        //diseaseHT.ainsert(&r, false);
-        //countryHT.ainsert(&r, true);
-    }
-    
-    //check all are saved in HT
-    /*for (unsigned int j = 0; j < my_ht.get_size(); j++)
-    {
-        my_ht.get_table()[j].print_ht_item();//1o stoixeio 
-        ht_item * temp = my_ht.get_table()[j].next;
-        while (temp != NULL)
+        /*if (r.get_exitDate().set==true)
         {
-            temp->print_ht_item();
-            temp = temp->next;
+            std::cerr << r.get_exitDate().get_date_as_string() << "\n";
+        }*/
+        
+        int elegxos = my_ht.insert(&r); //edw ginetai kai elegxos gia unique IDs
+        if (elegxos == -1)
+        {
+            std::cerr << "Record error. Exiting.\n";
         }
-        std::cerr << j <<std::endl;
-    }*/
+        else
+        {
+            diseaseHT.ainsert(&r, false);
+            countryHT.ainsert(&r, true);
+        }
+        
+    }
+    std::cerr << "\n\n";
+    my_ht.print_ht();
+    std::cerr << "\n\n";
+    diseaseHT.print_aht();
+    std::cerr << "\n\n";
+    countryHT.print_aht();
+    
+    
     
     //while(1)
     //{

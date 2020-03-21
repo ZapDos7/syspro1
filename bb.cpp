@@ -6,16 +6,16 @@ block::block()
     this->count_in = 0;
     this->count_all = 0;
     //this->id = new std::string;
-    //this->id = NULL;
+    this->id = NULL;
     //this->my_tree = new tree;
-    //this->my_tree = NULL;
+    this->my_tree = NULL;
 }
 block::~block()
 {
-    this->id = NULL;
     delete(this->id);
-    this->my_tree = NULL;
+    //this->id = NULL;
     delete(this->my_tree);
+    //this->my_tree = NULL;
 }
 void block::set_id(record * r, bool isCountry)
 {
@@ -30,14 +30,14 @@ void block::set_id(record * r, bool isCountry)
     }
     else
     {
-        this->id = new std::string;
-        this->id = r->get_diseasePtr();
+        std::string c = r->get_disease();
+        id = new std::string(c);
     }
     return;
 }
 std::string* block::get_idPtr()
 {
-    return this->id;
+    return id;
 }
 std::string block::get_id()
 {
@@ -71,13 +71,22 @@ void block::update_c_in(bool add) //++ an insert, -- an date d2 ginetai set
     if (add==true) //valame record
     {
         this->count_in++;
+        return;
     }
     else //add == false, kapoios bghke apo to nosokomeio
     {
         this->count_in--;
+        return;
     }
 }
-
+void block::print_blk()
+{
+    if (id!=NULL)
+    {
+        std::cerr << "Exw id: " << *id << " kai metrites: " << count_all << ", " << count_in << "\n";
+    }
+    return;
+}
 
 
 
@@ -102,6 +111,10 @@ bucket::bucket(int bsize) //-b bsize
     posa = floor(bsize/sizeof(block)); //posa block nodes xwrane se ena block?
     this->num_of_blocks = posa;
     this->blocks = new block[posa]; //pinakas apo blocks, energopoieitai o constructor tou block
+    /*for (unsigned int i=0;i<num_of_blocks;i++)
+    {
+        blocks[i].id = NULL;
+    }*/
 }
 bucket::~bucket()
 {
@@ -136,86 +149,118 @@ block * bucket::search(std::string srch) //orisma: ti psaxnoume?
     //if it's not found from the above for:
     return NULL;    
 }
+
+
 void bucket::insert(record* r, bool isCountry) //herein lies all the zoumi
 {
     if (isCountry == true)
     {
         if (this->blocks[0].get_idPtr() == NULL) //den uparxei tpt sta blocks tou bcket
         {
-            this->blocks = new block;
             this->blocks[0].set_id(r, isCountry);
-            //this->blocks->set_id(r, isCountry);
             this->blocks[0].update_c_all();
-            //this->blocks->update_c_all();
-            if (r->get_exitDate().is_set()==false) //den exei exit Date ara einai allos enas pou menei mesa, ara to c_in ++;
+            if (r->get_exitDate().set == false) //den exei exit Date ara einai allos enas pou menei mesa, ara to c_in ++;
             {
                 this->blocks[0].update_c_in(true);
-                //this->blocks->update_c_in(true);
             }
             //this->blocks[0].insert_to_tree(r);
-            ////this->blocks->insert_to_tree(r);
+            return;
         }
         else //not null dld uparxoun blocks ara thelw na dw an uparxei block me to country ID mou
-        {   
-            unsigned int i = 0;
-            std::string c = r->get_country();
-            std::string * cPtr = this->blocks[i].get_idPtr();
-            while (*cPtr != c)
+        {
+            for (unsigned int i = 0;i<this->num_of_blocks;i++)
             {
-                i++;
-                cPtr = this->blocks[i].get_idPtr();
-            }
-            if (i+1==this->num_of_blocks) //xwraei 10 blocks kai esu exeis psaksei 10 xwris na brethei to Country ID ara pame sto next bucket
-            {
-                this->next->insert(r, isCountry);
-            }
-            else //psaksame ligotero kai to brhkame
-            {
-                this->blocks[i].update_c_all();
-                if (r->get_exitDate().is_set()==false) //den exei exit Date ara einai allos enas pou menei mesa, ara to c_in ++;
+                //std::cerr << i << "\n";
+                if (this->blocks[i].id == nullptr) //brika keni thesi prin to telos
                 {
-                    this->blocks->update_c_in(true);
+                    //std::cerr << "Brika xwro gia na mpw\n";
+                    this->blocks[i].set_id(r, isCountry);
+                    this->blocks[i].update_c_all();
+                    if (r->get_exitDate().get_date_as_string() == "-") //den exei exit Date ara einai allos enas pou menei mesa, ara to c_in ++;
+                    {
+                        this->blocks[i].update_c_in(true);
+                    }
+                    //this->blocks[i].insert_to_tree(r);
+                    return;
                 }
-                //this->blocks->insert_to_tree(r);
+                else if (this->blocks[i].get_id() != r->get_country())
+                {
+                    //std::cerr << "Den einai i xwra m!\n";
+                }
+                else //brika to countryid mou
+                {
+                    this->blocks[i].update_c_all();
+                    if (r->get_exitDate().set==false) //den exei exit Date ara einai allos enas pou menei mesa, ara to c_in ++;
+                    {
+                        this->blocks[i].update_c_in(true);
+                    }
+                    //this->blocks[i].insert_to_tree(r);
+                    return;
+                }
             }
+            this->next->insert(r, isCountry); //edw 9a paw an i while ftasei i = 0 ara bgainei kai den to exei brei se autou tou bucket ta blocks//ara to bazw sto next bucket
         }
     }
-    else
+    else //disease
     {
-        if (this->blocks == NULL) //den uparxei tpt sta blocks tou bcket
+        if (this->blocks[0].get_idPtr() == NULL) //den uparxei tpt sta blocks tou bcket
         {
-            this->blocks = new block;
             this->blocks[0].set_id(r, isCountry);
             this->blocks[0].update_c_all();
-            if (r->get_exitDate().is_set()==false)
+            if (r->get_exitDate().get_date_as_string() == "-") //den exei exit Date ara einai allos enas pou menei mesa, ara to c_in ++;
             {
-                this->blocks[0].update_c_in(false);
+                this->blocks[0].update_c_in(true);
             }
             //this->blocks[0].insert_to_tree(r);
+            return;
         }
         else //not null dld uparxoun blocks ara thelw na dw an uparxei block me to country ID mou
-        {   
-            unsigned int i = 0;
-            std::string c = r->get_disease();
-            std::string * cPtr = this->blocks[i].get_idPtr();
-            while (*cPtr != c)
+        {
+            for (unsigned int i = 0;i<this->num_of_blocks;i++)
             {
-                i++;
-                cPtr = this->blocks[i].get_idPtr();
-            }
-            if (i+1==this->num_of_blocks) //xwraei 10 blocks kai esu exeis psaksei 10 xwris na brethei to Country ID ara pame sto next bucket
-            {
-                this->next->insert(r, isCountry);
-            }
-            else //psaksame ligotero kai to brhkame
-            {
-                this->blocks[i].update_c_all();
-                if (r->get_exitDate().is_set()==false) //den exei exit Date ara einai allos enas pou menei mesa, ara to c_in ++;
+                //std::cerr << i << "\n";
+                if (this->blocks[i].id == nullptr) //brika keni thesi prin to telos
                 {
-                    this->blocks->update_c_in(false);
+                    //std::cerr << "Brika xwro gia na mpw\n";
+                    this->blocks[i].set_id(r, isCountry);
+                    this->blocks[i].update_c_all();
+                    if (r->get_exitDate().get_date_as_string() == "-") //den exei exit Date ara einai allos enas pou menei mesa, ara to c_in ++;
+                    {
+                        this->blocks[i].update_c_in(true);
+                    }
+                    //this->blocks[i].insert_to_tree(r);
+                    return;
                 }
-                //this->blocks->insert_to_tree(r);
+                else if (this->blocks[i].get_id() != r->get_disease())
+                {
+                    std::cerr << "Den einai i xwra m!\n";
+                }
+                else //brika to countryid mou
+                {
+                    this->blocks[i].update_c_all();
+                    if (r->get_exitDate().get_date_as_string() == "-") //den exei exit Date ara einai allos enas pou menei mesa, ara to c_in ++;
+                    {
+                        this->blocks[i].update_c_in(true);
+                    }
+                    //this->blocks[i].insert_to_tree(r);
+                    return;
+                }
             }
+            this->next->insert(r, isCountry); //edw 9a paw an i while ftasei i = 0 ara bgainei kai den to exei brei se autou tou bucket ta blocks//ara to bazw sto next bucket
         }
     }
+}
+void bucket::print_bkt()
+{
+    //tupwse ta dika mou
+    for (unsigned int i = 0; i < num_of_blocks; i++)
+    {
+        blocks[i].print_blk();
+    }
+    //tupwse tou next m
+    if (next != NULL)
+    {
+        next->print_bkt();
+    }
+    return; //asfaleia
 }

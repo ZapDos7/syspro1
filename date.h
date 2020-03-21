@@ -13,9 +13,11 @@ private:
     short unsigned int day;
     short unsigned int month;
     short unsigned int year;
-    bool set; //if true, date exists, if not, no matter the int fields, this is a "-" date aka doesn't exist.
+    
     
 public:
+
+    bool set; //if true, date exists, if not, no matter the int fields, this is a "-" date aka doesn't exist.
     date();
     date(std::string str);
     date(date &d);
@@ -24,9 +26,9 @@ public:
     int get_month();
     int get_year();
     std::string get_date_as_string();
-    bool is_set();
+    /*bool is_set();
     void make_set();
-    void unset();
+    void unset();*/
     void set_day(int d);
     void set_month(int m);
     void set_year(int y);

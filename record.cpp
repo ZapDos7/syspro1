@@ -23,7 +23,6 @@ record::record(string line)
     for (unsigned int i = 0; i < 7; i++)
     {
         string tmp(parts[i]);
-        //partsStr[i] = tmp;
         if (i==0) id=tmp;
         else if (i==1) fname=tmp;
         else if (i==2) lname=tmp;
@@ -36,9 +35,16 @@ record::record(string line)
             entryD.set_month(tmpD.get_month());
             entryD.set_year(tmpD.get_year());
         }
-        else /*i==6*/
+        else if (i==6)
         {
-            if (tmp!="-") //it's an actual date!
+            //std::cerr << tmp << "\n";
+            if (tmp=="-")
+            {
+                date tmpD(tmp);
+                exitD.set = false; //date's set == false so it's just a dash!
+                //std::cerr << "I'm a dash!: " << exitD.get_date_as_string() << "\n";
+            }
+            else
             {
                 date tmpD(tmp);
                 exitD.set_day(tmpD.get_day());
@@ -50,13 +56,9 @@ record::record(string line)
                     exit(-1);
                 }*/
             }
-            else //not set date
-            {
-                exitD.unset(); //date's set == false so it's just a dash!
-            }
         }
     }
-    
+    delete[] cstr;
 }
 record::record(record &r) //copy constructor //kaleitai ws record r1 = r2;
 {
@@ -116,7 +118,7 @@ date record::get_exitDate()
 
 bool record::hasLeft()
 {
-    return this->exitD.is_set(); //if exit date is set (true) aka it exists and isn't "-", then he has left (true)
+    return this->exitD.set; //if exit date is set (true) aka it exists and isn't "-", then he has left (true)
 }
 date * record::get_entryDatePtr()
 {

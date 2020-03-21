@@ -53,7 +53,7 @@ unsigned int ht::hash(record r) //the hash function, based on a record r(its ID,
     return result % this->size;
 }
 
-void ht::insert(record* r) //mporei na epistrefei rec* gia na to parw ws orisma sta alla hash tables of satan
+int ht::insert(record* r) //mporei na epistrefei rec* gia na to parw ws orisma sta alla hash tables of satan
 {   //antigrafw ta stoixeia tou r sto dynamic record pou tha mpei sto ht mas
     unsigned int where = hash(*r);
     //paw sto table[where] pou einai ena ht_item, oxi ht_item*
@@ -61,19 +61,21 @@ void ht::insert(record* r) //mporei na epistrefei rec* gia na to parw ws orisma 
     {
         table[where].rec = new record(*r);
         //std::cerr << table[where].rec->get_id();
+        return 0;
     }
     else if (table[where].next == NULL) //exw record alla den exw next
     {
         if (table[where].rec->get_id()==r->get_id())
         {
             std::cerr << "Dublicate record ID. Fix your dataset and try again.\n";
-            exit(-1);
+            return -1;
         }
         else //grafw ston next moy
         {
             table[where].next = new ht_item;
             table[where].next->rec =  new record(*r);
             //std::cerr << table[where].rec->get_id();
+            return 0;
         }
     }
     else //uparxei kai next
@@ -82,7 +84,7 @@ void ht::insert(record* r) //mporei na epistrefei rec* gia na to parw ws orisma 
         if (temp->rec->get_id()==r->get_id())
         {
             std::cerr << "Dublicate record ID. Fix your dataset and try again(1).\n";
-            exit(-1);
+            return -1;
         }
         else
         {
@@ -92,13 +94,14 @@ void ht::insert(record* r) //mporei na epistrefei rec* gia na to parw ws orisma 
                 if (temp->rec->get_id()==r->get_id()) //an edw mesa vrw to ID tou r, exit
                 {
                     std::cerr << "Dublicate record ID. Fix your dataset and try again(2).\n";
-                    exit(-1);
+                    return -1;
                 }
             }
             //else, exw brei to telos twn buckets kai paw kai grafw
             temp->next = new ht_item;
             temp->next->rec = new record(*r);
             //std::cerr << table[where].rec->get_id();
+            return 0;
         }
     }
 }
@@ -127,4 +130,17 @@ ht_item* ht::search(record *r)
             }            
         }        
     }    
+}
+void ht::print_ht()
+{
+    for (unsigned int i = 0; i < size; i++)
+    {
+        table[i].print_ht_item();
+        ht_item * temp = table[i].next;
+        while (temp!=NULL)
+        {
+            temp->print_ht_item();
+            temp = temp->next;
+        }
+    }
 }

@@ -7,7 +7,17 @@ aht::aht()
 }
 aht::aht(int hsize, int bsize)
 {
-    this->table = new bucket(bsize);
+    this->table = new bucket[hsize];
+    unsigned int posa = 0;
+    bsize -= sizeof(bucket*);//prepei na afairesw kai sizeof(bucket*) = next
+    bsize -= sizeof(unsigned int); //afairw to megethos tou bucksize
+    posa = floor(bsize/sizeof(block)); //posa block nodes xwrane se ena block?
+    for (unsigned int i = 0; i < hsize; i++)
+    {
+        table[i].next = NULL;
+        table[i].num_of_blocks = posa;
+        table[i].blocks = new block[posa]; //pinakas apo blocks, energopoieitai o constructor tou block
+    }
     this->size = hsize;
 }
 aht::~aht()
@@ -48,4 +58,13 @@ void aht::ainsert(record *r, bool isCountry)
         this->table[where].insert(r, isCountry);
     }
     return;
+}
+void aht::print_aht()
+{
+    
+    for (unsigned int i = 0; i < size; i++)
+    {
+        table[i].print_bkt();
+    }
+    
 }
