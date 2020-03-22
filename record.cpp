@@ -171,3 +171,8 @@ void record::set_exitD(std::string exD)
         return;
     }
 }
+void record::print_record()
+{
+    std::cerr << id << " " << fname << " " << lname << " " << disease << " " << country << " " << entryD.get_date_as_string() << " " << exitD.get_date_as_string() << "\n";
+    return;
+}

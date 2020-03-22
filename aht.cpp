@@ -22,8 +22,7 @@ aht::aht(int hsize, int bsize)
 }
 aht::~aht()
 {
-    this->table = NULL;
-    delete(this->table);
+    delete[] table;
 }
 unsigned int aht::get_size()
 {

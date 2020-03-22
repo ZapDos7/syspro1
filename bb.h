@@ -13,8 +13,9 @@ private:
     
     unsigned int count_all; //ola ta krousmata
     unsigned int count_in; //ola ta krousmata pou einai akoma mesa
-    tree * my_tree; //dentro me oles tis eggrafes
+    
 public:
+    tree * my_tree; //dentro me oles tis eggrafes
     std::string* id;//either country or disease name
     
     block();

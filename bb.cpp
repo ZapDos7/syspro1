@@ -5,14 +5,12 @@ block::block()
 {
     this->count_in = 0;
     this->count_all = 0;
-    //this->id = new std::string;
     this->id = NULL;
-    //this->my_tree = new tree;
     this->my_tree = NULL;
 }
 block::~block()
 {
-    delete[] id; //to ekana new stin set_id
+    //delete[] id; //to ekana new stin set_id
 }
 void block::set_id(record * r, bool isCountry)
 {
@@ -48,11 +46,6 @@ tree * block::get_tree()
 {
     return this->my_tree;
 }
-void block::insert_to_tree(record * r)
-{
-    my_tree->root = my_tree->insert(my_tree->root, r);
-    return;
-}
 void block::update_c_all() //++ an insert aplws
 {
     this->count_all++;
@@ -79,7 +72,15 @@ void block::print_blk()
     }
     return;
 }
-
+void block::insert_to_tree(record * r)
+{
+    if (my_tree==NULL)
+    {
+        my_tree = new tree;
+    }    
+    my_tree->root = my_tree->insert(my_tree->root, r);
+    return;
+}
 
 
 

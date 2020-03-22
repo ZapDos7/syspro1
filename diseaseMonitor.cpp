@@ -13,22 +13,36 @@ System Programming Project #1, Spring 2020
 #include "record.h" //record class
 #include "bb.h" //blocks and buckets
 
-//./$(EXECUTABLE) -p patientRecordsFile.csv -h1 diseaseHashtableNumOfEntries -h2 countryHashtableNumOfEntries -b bucketSize
 int main(int argc, char const *argv[])
 {
     //test chamber/////////////////////////////////////////////
     
+    /*
     record rec("47 David Williams SARS-1 Denmark 30-05-2009 20-02-2020");
     record rec2("39 Mary Sanders FLU-2018 France 12-06-2012 04-01-2017");
     
-    //bucket bkt(1024);
+    tree t;
+    t.root = t.insert(t.root, &rec);
+
+    std::cerr << "tree insert is ok!\n";
+
+    tree * tPtr = new tree;
+    tPtr->root = tPtr->insert(tPtr->root, &rec);
+
+    std::cerr << "tree insert (2)is ok!\n";
+
     block blk;
+    
     blk.insert_to_tree(&rec);
-    //bkt.insert(&rec, true);
+    std::cerr << "block insert is ok!\n";
     
-    //bkt.insert(&rec2, true);
-    //std::cerr << "2ok\n\n";
+    bucket bkt(1024);
+    bkt.insert(&rec, true);
+    std::cerr << "bucket insert is ok!\n";
     
+    bkt.insert(&rec2, true);
+    std::cerr << "2ok\n\n";
+    */
     //why is sizeof(block)==sizeof(bucket)? block should be +4 bytes due to one more unsigned int
 
 
@@ -105,8 +119,8 @@ int main(int argc, char const *argv[])
         }
         else
         {
-            //diseaseHT.ainsert(&r, false);
-            //countryHT.ainsert(&r, true);
+            diseaseHT.ainsert(&r, false);
+            countryHT.ainsert(&r, true);
         }
         
     }
@@ -136,9 +150,9 @@ int main(int argc, char const *argv[])
         if (comms[0]=="insertPatientRecord") //1. /insertPatientRecord recordID patientFirstName patientLastName diseaseID entryDate [exitDate]
         //Eisagoume nea eggrafi (exit date may be missiing)
         {
-            /*
             while (pch != NULL)
             {
+                std::cerr << pch;
                 comms[counter] = pch;
                 counter++;
                 pch = strtok(NULL, delim);
@@ -158,6 +172,7 @@ int main(int argc, char const *argv[])
             {
                 r1.set_exitD(comms[7]);
             }
+            r1.print_record();
             int elegxos2 = my_ht.insert(&r1); //edw ginetai kai elegxos gia unique IDs
             if (elegxos2 == -1)
             {
@@ -168,38 +183,44 @@ int main(int argc, char const *argv[])
                 diseaseHT.ainsert(&r1, false);
                 countryHT.ainsert(&r1, true);
             }
-            */
+            //working example: insertPatientRecord 1010 Mitsos Mitsou SARS-1 France 16-02-1995
         }
         else if (comms[0]=="recordPatientExit") //3. /recordPatientExit recordID exitDate
         //Add exit Date to this record
         {
-/*            while (pch != NULL)
+            //e.g.: recordPatientExit 47 06-04-2021
+            while (pch != NULL)
             {
                 comms[counter] = pch;
                 counter++;
                 pch = strtok(NULL, delim);
             }
-            ht_item * h = my_ht.search(comms[1]);
-            record rec0 = *(h->rec);
+            const ht_item * h = my_ht.search(comms[1]);
+            //record rec0 = *(my_ht.search(comms[1])->rec);
+            record * rec0 = h->rec;
+            date *drecPtr = h->rec->get_entryDatePtr();
             date d2(comms[2]);
-            if (isLater(rec0.get_entryDate(), d2)==1) //to entry date mou einai pio meta apo to exit date pou pas na valeis
+            if (isLater(*drecPtr, d2)==1) //to entry date mou einai pio meta apo to exit date pou pas na valeis
             {
                 std::cerr << "Entry date later than desired exit date. You're not The Doctor.\n";
                 //continue;
             }
-            else if (rec0.get_exitDate().set == false) //den exw idi date
+            else if (rec0->get_exitDate().set == false) //den exw idi date
             {
-                rec0.set_exitD(comms[2]);
-                
+                rec0->set_exitD(comms[2]);
                 //update metrites sta disease & country hash tables
+                unsigned int where = diseaseHT.ahash(comms[1]);
+                diseaseHT.get_table()[where].search(comms[1])->update_c_in(false);
+                where = countryHT.ahash(comms[1]);
+                countryHT.get_table()[where].search(comms[1])->update_c_in(false);
             }
-            else if (rec0.get_exitDate().set == true) //exw idi exit date bruh
+            else if (rec0->get_exitDate().set == true) //exw idi exit date bruh
             {
                 //h->rec->set_exitD(comms[2]); //allakse to exit date
                 //or just say so and move on
                 std::cerr << "Record " << comms[1] << " already has exit date.\n";
                 //continue;
-            }*/
+            }
         }
         else if (comms[0]=="exit")
         {

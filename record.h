@@ -40,6 +40,7 @@ public:
     void set_country(std::string cntr);
     void set_entryD(std::string enD);
     void set_exitD(std::string exD);
+    void print_record();
 };
 
 #endif

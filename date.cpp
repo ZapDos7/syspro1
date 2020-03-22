@@ -55,6 +55,7 @@ date::date(string str)
             this->day = atoi(parts[0]);
         }
         this->set=true;
+        delete[] cstr;
     }
 }
 date::date(date &d) { //copy constructor, kaleitai ws: date d1 = d2;

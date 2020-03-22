@@ -16,13 +16,6 @@ tree_node::tree_node()
 tree_node::~tree_node()
 {
     delete[] this->d;
-    this->d = NULL;
-
-    //delete[] this->left;//an den kanw new de thelw delete
-    this->left = NULL;
-    
-    //delete[] this->right;//an den kanw new de thelw delete
-    this->right = NULL;
 }
 
 
@@ -31,15 +24,13 @@ tree_node::~tree_node()
 tree::tree()
 {
     this->root = NULL;
-    //this->root = new tree_node;
 }
 
 tree::~tree()
 {
     //delete[] this->root;  //an den kanw new de thelw delete[]
-    this->root = NULL;
 }
-tree_node* tree::insert(tree_node* tr, record* r)
+tree_node* tree::insert(tree_node* tr, record* r) //arxiki klisi tis: t.root = t.insert(t.root, record * r)
 {
     date d; //to date pou paw na balw
     d.set_day(r->get_entryDate().get_day());

@@ -31,8 +31,7 @@ ht::ht(unsigned int sz)
 }
 ht::~ht()
 {
-    this->table = NULL;
-    delete this->table;
+    delete[] table;
 }
 unsigned int ht::get_size()
 {

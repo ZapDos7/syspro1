@@ -3,7 +3,7 @@ sdi1400044
 
 1st System Programming Assignment
 
-Used: C++11 (Developed on Linux Ubuntu 18.04), used git for version control and valgrind for debugging purposes.
+Used: C++11 (Developed on Linux Ubuntu 16.04), used git for version control and valgrind for debugging purposes.
 
 Contents:
 - this readme
