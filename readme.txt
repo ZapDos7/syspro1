@@ -35,4 +35,5 @@ Sources:
 
 Future Expansions:
 - Turn the BST into a BBST
+- Create lists to handle dublicate dates in the trees
 - Do the top-k methods
