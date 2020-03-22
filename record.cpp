@@ -152,11 +152,22 @@ void record::set_country(std::string cntr)
 }
 void record::set_entryD(std::string enD)
 {
-    this->entryD = enD; //this wont work
+    date d(enD);
+    entryD = d;
     return;
 }
 void record::set_exitD(std::string exD)
 {
-    this->exitD = exD;
-    return;
+    if (exD == "-")
+    {
+        exitD.set=false;
+        return;
+    }
+    else
+    {
+        date d(exD);
+        exitD = d;
+        exitD.set = true;
+        return;
+    }
 }

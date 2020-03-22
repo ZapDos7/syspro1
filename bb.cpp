@@ -12,21 +12,14 @@ block::block()
 }
 block::~block()
 {
-    delete(this->id);
-    //this->id = NULL;
-    delete(this->my_tree);
-    //this->my_tree = NULL;
+    delete[] id; //to ekana new stin set_id
 }
 void block::set_id(record * r, bool isCountry)
 {
     if (isCountry==true)
     {
         std::string c = r->get_country(); //katastrefetai me to peras ths klisis tis function
-        //std::cerr << c << "\n";
-        //this->id = r->get_countryPtr();
-        //this->id = &c;
         id = new std::string(c);
-        //*(this->id) = c;
     }
     else
     {
@@ -57,8 +50,7 @@ tree * block::get_tree()
 }
 void block::insert_to_tree(record * r)
 {
-    this->my_tree->insertR(this->my_tree->root, r);
-    //this->my_tree->insert(this->my_tree->root, r->get_entryDate());
+    my_tree->root = my_tree->insert(my_tree->root, r);
     return;
 }
 void block::update_c_all() //++ an insert aplws
@@ -118,10 +110,10 @@ bucket::bucket(int bsize) //-b bsize
 }
 bucket::~bucket()
 {
-    this->next = NULL;
-    this->blocks = NULL;
-    delete(this->next);
-    delete(this->blocks);
+    //delete(this->next);
+    delete[] this->blocks;
+    //this->next = NULL;
+    //this->blocks = NULL;
 }
 bucket * bucket::get_next()
 {
@@ -163,7 +155,7 @@ void bucket::insert(record* r, bool isCountry) //herein lies all the zoumi
             {
                 this->blocks[0].update_c_in(true);
             }
-            //this->blocks[0].insert_to_tree(r);
+            this->blocks[0].insert_to_tree(r);
             return;
         }
         else //not null dld uparxoun blocks ara thelw na dw an uparxei block me to country ID mou
@@ -180,7 +172,7 @@ void bucket::insert(record* r, bool isCountry) //herein lies all the zoumi
                     {
                         this->blocks[i].update_c_in(true);
                     }
-                    //this->blocks[i].insert_to_tree(r);
+                    this->blocks[i].insert_to_tree(r);
                     return;
                 }
                 else if (this->blocks[i].get_id() != r->get_country())
@@ -194,7 +186,7 @@ void bucket::insert(record* r, bool isCountry) //herein lies all the zoumi
                     {
                         this->blocks[i].update_c_in(true);
                     }
-                    //this->blocks[i].insert_to_tree(r);
+                    this->blocks[i].insert_to_tree(r);
                     return;
                 }
             }
@@ -211,7 +203,7 @@ void bucket::insert(record* r, bool isCountry) //herein lies all the zoumi
             {
                 this->blocks[0].update_c_in(true);
             }
-            //this->blocks[0].insert_to_tree(r);
+            this->blocks[0].insert_to_tree(r);
             return;
         }
         else //not null dld uparxoun blocks ara thelw na dw an uparxei block me to country ID mou
@@ -228,7 +220,7 @@ void bucket::insert(record* r, bool isCountry) //herein lies all the zoumi
                     {
                         this->blocks[i].update_c_in(true);
                     }
-                    //this->blocks[i].insert_to_tree(r);
+                    this->blocks[i].insert_to_tree(r);
                     return;
                 }
                 else if (this->blocks[i].get_id() != r->get_disease())
@@ -242,7 +234,7 @@ void bucket::insert(record* r, bool isCountry) //herein lies all the zoumi
                     {
                         this->blocks[i].update_c_in(true);
                     }
-                    //this->blocks[i].insert_to_tree(r);
+                    this->blocks[i].insert_to_tree(r);
                     return;
                 }
             }
