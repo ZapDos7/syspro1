@@ -18,15 +18,17 @@ int main(int argc, char const *argv[])
 {
     //test chamber/////////////////////////////////////////////
     
-    /*record rec("47 David Williams SARS-1 Denmark 30-05-2009 20-02-2020");
+    record rec("47 David Williams SARS-1 Denmark 30-05-2009 20-02-2020");
     record rec2("39 Mary Sanders FLU-2018 France 12-06-2012 04-01-2017");
-    bucket bkt(1024);
     
-    bkt.insert(&rec, true);
+    //bucket bkt(1024);
+    block blk;
+    blk.insert_to_tree(&rec);
+    //bkt.insert(&rec, true);
     
-    bkt.insert(&rec2, true);
-    std::cerr << "2ok\n\n";
-    */
+    //bkt.insert(&rec2, true);
+    //std::cerr << "2ok\n\n";
+    
     //why is sizeof(block)==sizeof(bucket)? block should be +4 bytes due to one more unsigned int
 
 
@@ -99,22 +101,22 @@ int main(int argc, char const *argv[])
         int elegxos = my_ht.insert(&r); //edw ginetai kai elegxos gia unique IDs
         if (elegxos == -1)
         {
-            std::cerr << "Record error. Exiting.\n";
+            break;//sto piazza eipw8ike oti an brethei kapoio ID duplicate, na proxwrame stis entoles & na mhn sunexizoun ta insertions.
         }
         else
         {
-            diseaseHT.ainsert(&r, false);
-            countryHT.ainsert(&r, true);
+            //diseaseHT.ainsert(&r, false);
+            //countryHT.ainsert(&r, true);
         }
         
     }
-    std::cerr << "\n\n";
+    /*std::cerr << "\n\n";
     my_ht.print_ht();
     std::cerr << "\n\n";
     diseaseHT.print_aht();
     std::cerr << "\n\n";
     countryHT.print_aht();
-    
+    */
     
     
     //while(1)
@@ -134,6 +136,7 @@ int main(int argc, char const *argv[])
         if (comms[0]=="insertPatientRecord") //1. /insertPatientRecord recordID patientFirstName patientLastName diseaseID entryDate [exitDate]
         //Eisagoume nea eggrafi (exit date may be missiing)
         {
+            /*
             while (pch != NULL)
             {
                 comms[counter] = pch;
@@ -155,37 +158,76 @@ int main(int argc, char const *argv[])
             {
                 r1.set_exitD(comms[7]);
             }
-            /*if (my_ht.insert(&r1)==-1) //an exoume diplotupo record ID to xeirizetai h insert epistrefontas -1
+            int elegxos2 = my_ht.insert(&r1); //edw ginetai kai elegxos gia unique IDs
+            if (elegxos2 == -1)
             {
-                //if this ^ yields an error, exit the program
+                std::cerr << "Record error. Exiting.\n";
             }
             else
             {
-                //put in my_ht
-                //insert sta disease & country hash table too
-                //continue to next command
-            }*/
+                diseaseHT.ainsert(&r1, false);
+                countryHT.ainsert(&r1, true);
+            }
+            */
         }
         else if (comms[0]=="recordPatientExit") //3. /recordPatientExit recordID exitDate
         //Add exit Date to this record
         {
-            //my_ht.search();
-            //if exitDate > autou tou record.entryD && exitDate not already set
-            //my_ht[ekei] -> set_exitD(exitDate)
-            //else
-            //pes tou oti einai idi set kai continue an einai idi set
-            //pes tou oti to d2 < d1 ara le poule kai continue
+/*            while (pch != NULL)
+            {
+                comms[counter] = pch;
+                counter++;
+                pch = strtok(NULL, delim);
+            }
+            ht_item * h = my_ht.search(comms[1]);
+            record rec0 = *(h->rec);
+            date d2(comms[2]);
+            if (isLater(rec0.get_entryDate(), d2)==1) //to entry date mou einai pio meta apo to exit date pou pas na valeis
+            {
+                std::cerr << "Entry date later than desired exit date. You're not The Doctor.\n";
+                //continue;
+            }
+            else if (rec0.get_exitDate().set == false) //den exw idi date
+            {
+                rec0.set_exitD(comms[2]);
+                
+                //update metrites sta disease & country hash tables
+            }
+            else if (rec0.get_exitDate().set == true) //exw idi exit date bruh
+            {
+                //h->rec->set_exitD(comms[2]); //allakse to exit date
+                //or just say so and move on
+                std::cerr << "Record " << comms[1] << " already has exit date.\n";
+                //continue;
+            }*/
         }
         else if (comms[0]=="exit")
         {
-            //make sure stuff is free
+            //make sure stuff is free'd
+            delete[] cstr;
             return 0;
         }
         else if (comms[0]=="numCurrentPatients") //4. /numCurrentPatients [disease]
         //an dw8ei to [disease] print posoi patients exoun auto to disease AKOMA (exitDate based)
         //if not, print posoi patient exoun kathe disease AKOMA
         {
-
+            /*while (pch != NULL)
+            {
+                comms[counter] = pch;
+                counter++;
+                pch = strtok(NULL, delim);
+            }
+            if (counter < 1) //den exoume 2o orisma
+            {
+                //gia KATHE disease ara peridiavenw to diseaseHT
+            }
+            else //exoume 2o orisma
+            {
+                std::string dis(comms[1]);
+                int where = diseaseHT.ahash(dis);
+                block * blok =  diseaseHT.get_table()[where].search(dis);
+                std::cerr << blok->get_count_in();
+            }*/
         }
         else if (comms[0]=="globalDiseaseStats") //6. /globalDiseaseStats [date1 date2]
         //Print for each disease posa krousmata [metaksu twn 2 dates] //an uparxei date1 prepei na uparxei date2, alla mporei na leipoun kai ta 2
@@ -196,7 +238,7 @@ int main(int argc, char const *argv[])
         //An oxi country orisma, gia kathe country, print posa Virus metaksu twn 2 dates
         //An nai, mono gi auto to country print posa Virus metaksu twn 2 dates
         {
-
+            //if not exists, return 0
         }
         else if (comms[0]=="topk-Diseases") //10. /topk-Diseases k country [date1 date2]
         //Gia to country, which k viruses are top (most krousmata) [between dates if given] //an uparxei date1 prepei na uparxei date2, alla mporei na leipoun kai ta 2
@@ -212,6 +254,7 @@ int main(int argc, char const *argv[])
         {
             std::cerr << "Unknown Command!\n"; //doesn't exit the program, gives the user another chance to type properly this time.
         }
+        delete[] cstr;
     //} //end while(1)
     return 0;
 }

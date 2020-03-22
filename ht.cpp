@@ -52,6 +52,16 @@ unsigned int ht::hash(record r) //the hash function, based on a record r(its ID,
     }
     return result % this->size;
 }
+unsigned int ht::hash(std::string s) //the hash function, based on a record r(its ID, basically) returns an int.
+{
+    //based on djb2
+    unsigned int result = 5381;
+    for (unsigned int i = 0; i < s.size(); i++)
+    {
+        result = 33 * result + (unsigned char)s[i];
+    }
+    return result % this->size;
+}
 
 int ht::insert(record* r) //mporei na epistrefei rec* gia na to parw ws orisma sta alla hash tables of satan
 {   //antigrafw ta stoixeia tou r sto dynamic record pou tha mpei sto ht mas
@@ -120,6 +130,31 @@ ht_item* ht::search(record *r)
         while (now->next != NULL) //iterate through these buckets opou exw collision gia na vrw an uparxei to r
         {
             if (now->rec->get_id() == r->get_id())
+            {
+                std::cerr << "Found!\n";
+                return now;
+            }
+            else
+            {
+                now = now->next; //pame sto epomeno
+            }            
+        }        
+    }    
+}
+ht_item * ht::search(std::string s)
+{
+    unsigned int where = hash(s);
+    if(table[where].rec == NULL) //den exw kanena record edw
+    {
+        std::cerr << "This record isn't in my hash table\n";
+        return NULL;
+    }
+    else//den einai null auto to .rec ara exw eggrafi alla isws den einai i diki m => elegxw ID
+    {
+        ht_item * now = &(table[where]);
+        while (now->next != NULL) //iterate through these buckets opou exw collision gia na vrw an uparxei to r
+        {
+            if (now->rec->get_id() == s)
             {
                 std::cerr << "Found!\n";
                 return now;
