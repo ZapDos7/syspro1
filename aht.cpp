@@ -67,3 +67,8 @@ void aht::print_aht()
     }
     
 }
+block * aht::search(std::string s)
+{
+    unsigned int where = this->ahash(s);
+    return table[where].search(s); //to zoumi einai stin search tou bucket
+}

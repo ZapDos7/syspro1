@@ -21,20 +21,6 @@ int main(int argc, char const *argv[])
     record rec("47 David Williams SARS-1 Denmark 30-05-2009 20-02-2020");
     record rec2("39 Mary Sanders FLU-2018 France 12-06-2012 04-01-2017");
     
-    tree t;
-    t.root = t.insert(t.root, &rec);
-
-    std::cerr << "tree insert is ok!\n";
-
-    tree * tPtr = new tree;
-    tPtr->root = tPtr->insert(tPtr->root, &rec);
-
-    std::cerr << "tree insert (2)is ok!\n";
-
-    block blk;
-    
-    blk.insert_to_tree(&rec);
-    std::cerr << "block insert is ok!\n";
     
     bucket bkt(1024);
     bkt.insert(&rec, true);
@@ -42,6 +28,15 @@ int main(int argc, char const *argv[])
     
     bkt.insert(&rec2, true);
     std::cerr << "2ok\n\n";
+    block *blockaki =  bkt.search("France");
+    if (blockaki==NULL)
+    {
+        std::cerr << "this shouldnt happen\n";
+    }
+    else
+    {
+        blockaki->print_blk();
+    }
     */
     //why is sizeof(block)==sizeof(bucket)? block should be +4 bytes due to one more unsigned int
 
@@ -144,7 +139,7 @@ int main(int argc, char const *argv[])
         const char delim[2] = " ";
         pch = strtok(cstr, delim);
         std::string comms[7];//i entoli me ta perissotera orismata einai h insertPatientRecord me d2
-        int counter = 1;
+        int counter = 0;
         comms[0] = pch;
         //check first word to match with command, check entire command if correct
         if (comms[0]=="insertPatientRecord") //1. /insertPatientRecord recordID patientFirstName patientLastName diseaseID entryDate [exitDate]
@@ -232,23 +227,33 @@ int main(int argc, char const *argv[])
         //an dw8ei to [disease] print posoi patients exoun auto to disease AKOMA (exitDate based)
         //if not, print posoi patient exoun kathe disease AKOMA
         {
-            /*while (pch != NULL)
+            //eg: numCurrentPatients SARS-1
+            while (pch != NULL)
             {
                 comms[counter] = pch;
                 counter++;
                 pch = strtok(NULL, delim);
             }
-            if (counter < 1) //den exoume 2o orisma
+            if (counter == 1) //den exoume 2o orisma
             {
                 //gia KATHE disease ara peridiavenw to diseaseHT
+                std::cerr << "Posa krousmata exoun OLA ta diseases?\n";
             }
             else //exoume 2o orisma
             {
-                std::string dis(comms[1]);
-                int where = diseaseHT.ahash(dis);
-                block * blok =  diseaseHT.get_table()[where].search(dis);
-                std::cerr << blok->get_count_in();
-            }*/
+                std::string dis(comms[2]);
+                std::cerr << "Psaxnw posa krousmata exei to: " << dis << "\n";
+                block * blockPtr = diseaseHT.search(dis);
+                /*if (blockPtr==NULL)
+                {
+                    std::cout << "0\n"; //den eixame kanena krousma
+                }
+                else
+                {
+                    std::cout << blockPtr->get_count_in() << "\n"; //eixame tosa krousmata
+                }*/
+                
+            }
         }
         else if (comms[0]=="globalDiseaseStats") //6. /globalDiseaseStats [date1 date2]
         //Print for each disease posa krousmata [metaksu twn 2 dates] //an uparxei date1 prepei na uparxei date2, alla mporei na leipoun kai ta 2

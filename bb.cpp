@@ -75,7 +75,7 @@ void block::insert_to_tree(record * r)
     if (my_tree==NULL)
     {
         my_tree = new tree;
-    }    
+    }
     my_tree->root = my_tree->insert(my_tree->root, r);
     return;
 }
@@ -127,16 +127,33 @@ unsigned int bucket::get_bucket_size()
 }
 block * bucket::search(std::string srch) //orisma: ti psaxnoume?
 {
-    for (unsigned int i = 0; i < this->num_of_blocks; i++)
+    //prwta psaxnw emena
+    if (blocks==NULL) //an den exw ti na psaksw
     {
-        if (this->blocks[i].get_id()==srch) //an sto block[i] moy exw auto to srch string (disease or country ID)
-        {
-            return &(this->blocks[i]); //epistrepse mou auto to block
-        }
-        //else continue
+        return NULL; //de 8a exei oute o epomenos mou giati mpainoun grammika
     }
-    //if it's not found from the above for:
-    return NULL;    
+    else //exw pliroforia ara psaxnw edw
+    {
+        for (unsigned int i = 0; i < num_of_blocks; i++)
+        {
+            //if (blocks[i].)
+            if (blocks[i].get_id()==srch) //an sto block[i] moy exw auto to srch string (disease or country ID)
+            {
+                return &(blocks[i]); //epistrepse mou auto to block
+            }
+            //else continue
+        }
+    }
+    //edw ftanei an exw pliroforia (blocks!=null) kai i for loop elikse kai den egine return ara den einai mesa mou auto p theloume
+    //opote elegxw ton next mou, an autos den einai null
+    if (next==NULL)
+    {
+        return NULL;
+    }
+    else
+    {
+        return this->next->search(srch);    
+    }
 }
 
 

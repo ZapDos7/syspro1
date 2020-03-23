@@ -18,6 +18,7 @@ public:
     unsigned int ahash(std::string tbhashed); //a slightly better hash function compared to the simple HT
     void ainsert(record *r, bool isCountry); //if isCountry == true, we hash a country, if false, we hash a disease
     void print_aht();
+    block * search(std::string s);
 };
 
 #endif
