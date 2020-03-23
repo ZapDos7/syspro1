@@ -16,11 +16,15 @@ void block::set_id(record * r, bool isCountry)
 {
     if (isCountry==true)
     {
-        id = r->get_countryPtr();
+        //id = r->get_countryPtr();
+        std::string c = r->get_country();
+        id = new std::string(c);
     }
     else
     {
-        id = r->get_diseasePtr();
+        //id = r->get_diseasePtr();
+        std::string c = r->get_disease();
+        id = new std::string(c);
     }
     return;
 }
@@ -66,7 +70,7 @@ void block::print_blk()
 {
     if (id!=NULL)
     {
-        std::cerr << "Exw id: " << *id << " kai metrites: " << count_all << ", " << count_in << "\n";
+        std::cerr << "Disease id: " << *id << " has " << count_in << " people still hospitalized.\n";
     }
     return;
 }
@@ -127,31 +131,38 @@ unsigned int bucket::get_bucket_size()
 }
 block * bucket::search(std::string srch) //orisma: ti psaxnoume?
 {
-    //prwta psaxnw emena
-    if (blocks==NULL) //an den exw ti na psaksw
+    //std::cerr << "Checking if I got " << srch << " in my bucket.\n";
+    if (blocks[0].get_count_all() == 0) //to 1o m stoixeio den exei tipote
     {
-        return NULL; //de 8a exei oute o epomenos mou giati mpainoun grammika
+        //std::cerr << "i got nothing bro.\n";
+        return NULL; //den exw pliroforia mesa moy
     }
-    else //exw pliroforia ara psaxnw edw
+    else
     {
         for (unsigned int i = 0; i < num_of_blocks; i++)
         {
-            //if (blocks[i].)
-            if (blocks[i].get_id()==srch) //an sto block[i] moy exw auto to srch string (disease or country ID)
+            if (blocks[i].id==NULL)
             {
+                //std::cerr << "Got nothing bro.\n";
+                //psakse to next
+            }
+            else if (*(blocks[i].id) == srch) //if (blocks[i].id == &srch)
+            {
+                //std::cerr << "Found " << srch << "!\n";
                 return &(blocks[i]); //epistrepse mou auto to block
             }
-            //else continue
         }
     }
-    //edw ftanei an exw pliroforia (blocks!=null) kai i for loop elikse kai den egine return ara den einai mesa mou auto p theloume
+    //edw ftanei an to for loop elikse kai den egine return ara den einai mesa mou auto p theloume
     //opote elegxw ton next mou, an autos den einai null
     if (next==NULL)
     {
+        //std::cerr << "my next is null\n";
         return NULL;
     }
     else
     {
+        //std::cerr << "gonna check my next\n";
         return this->next->search(srch);    
     }
 }

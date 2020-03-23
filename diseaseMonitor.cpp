@@ -119,13 +119,13 @@ int main(int argc, char const *argv[])
         }
         
     }
-    /*std::cerr << "\n\n";
-    my_ht.print_ht();
-    std::cerr << "\n\n";
-    diseaseHT.print_aht();
-    std::cerr << "\n\n";
-    countryHT.print_aht();
-    */
+    //std::cerr << "\n\n";
+    //my_ht.print_ht();
+    //std::cerr << "\n\n";
+    //diseaseHT.print_aht();
+    //std::cerr << "\n\n";
+    //countryHT.print_aht();
+    
     
     
     //while(1)
@@ -224,34 +224,34 @@ int main(int argc, char const *argv[])
             return 0;
         }
         else if (comms[0]=="numCurrentPatients") //4. /numCurrentPatients [disease]
-        //an dw8ei to [disease] print posoi patients exoun auto to disease AKOMA (exitDate based)
-        //if not, print posoi patient exoun kathe disease AKOMA
         {
             //eg: numCurrentPatients SARS-1
+            //an dw8ei to [disease] print posoi patients exoun auto to disease AKOMA (exitDate based)
             while (pch != NULL)
             {
                 comms[counter] = pch;
                 counter++;
                 pch = strtok(NULL, delim);
             }
-            if (counter == 1) //den exoume 2o orisma
+            if (counter > 1) //exoume 2o orisma
             {
-                //gia KATHE disease ara peridiavenw to diseaseHT
-                std::cerr << "Posa krousmata exoun OLA ta diseases?\n";
-            }
-            else //exoume 2o orisma
-            {
-                std::string dis(comms[2]);
-                std::cerr << "Psaxnw posa krousmata exei to: " << dis << "\n";
+                std::string dis(comms[1]);
                 block * blockPtr = diseaseHT.search(dis);
-                /*if (blockPtr==NULL)
+                if (blockPtr==NULL)
                 {
                     std::cout << "0\n"; //den eixame kanena krousma
                 }
                 else
                 {
-                    std::cout << blockPtr->get_count_in() << "\n"; //eixame tosa krousmata
-                }*/
+                    blockPtr->print_blk();
+                }
+            }
+            else //den exoume 2o orisma
+            {   //if not, print posoi patient exoun kathe disease AKOMA - gia KATHE disease ara peridiavenw to diseaseHT
+                for (unsigned int i = 0; i < h2; i++) //gia kathe bucket* sto hash table
+                {
+                    diseaseHT.get_table()[i].print_bkt();
+                }
                 
             }
         }
