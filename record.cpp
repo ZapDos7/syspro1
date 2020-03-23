@@ -59,6 +59,8 @@ record::record(string line)
         }
     }
     delete[] cstr;
+    delete pch;
+    //delete[] parts;
 }
 record::record(record &r) //copy constructor //kaleitai ws record r1 = r2;
 {

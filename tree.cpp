@@ -2,7 +2,6 @@
 
 tree_node::tree_node(record *r)
 {
-    this->d = new date;
     this->d = r->get_entryDatePtr();
     this->left = NULL;
     this->right = NULL;
@@ -15,7 +14,9 @@ tree_node::tree_node()
 }
 tree_node::~tree_node()
 {
-    delete[] this->d;
+    delete this->left;
+    delete this->right;
+    //delete this->d;
 }
 
 
@@ -25,10 +26,9 @@ tree::tree()
 {
     this->root = NULL;
 }
-
 tree::~tree()
 {
-    //delete[] this->root;  //an den kanw new de thelw delete[]
+    delete root;
 }
 tree_node* tree::insert(tree_node* tr, record* r) //arxiki klisi tis: t.root = t.insert(t.root, record * r)
 {

@@ -10,19 +10,17 @@ block::block()
 }
 block::~block()
 {
-    //delete[] id; //to ekana new stin set_id
+    delete my_tree;
 }
 void block::set_id(record * r, bool isCountry)
 {
     if (isCountry==true)
     {
-        std::string c = r->get_country(); //katastrefetai me to peras ths klisis tis function
-        id = new std::string(c);
+        id = r->get_countryPtr();
     }
     else
     {
-        std::string c = r->get_disease();
-        id = new std::string(c);
+        id = r->get_diseasePtr();
     }
     return;
 }
@@ -111,10 +109,8 @@ bucket::bucket(int bsize) //-b bsize
 }
 bucket::~bucket()
 {
-    //delete(this->next);
     delete[] this->blocks;
-    //this->next = NULL;
-    //this->blocks = NULL;
+    delete this->next;
 }
 bucket * bucket::get_next()
 {

@@ -10,7 +10,10 @@ ht_item::ht_item(record* r)
     this->rec = r;
     this->next = NULL;
 }
-ht_item::~ht_item(){}
+ht_item::~ht_item()
+{
+    
+}
 void ht_item::print_ht_item()
 {
     std::cerr << this->rec->get_id() << " " 
@@ -69,6 +72,7 @@ int ht::insert(record* r) //mporei na epistrefei rec* gia na to parw ws orisma s
     if(table[where].rec == NULL) //den exw idi record edw
     {
         table[where].rec = new record(*r);
+        //table[where].rec = r;
         //std::cerr << table[where].rec->get_id();
         return 0;
     }

@@ -224,7 +224,7 @@ int main(int argc, char const *argv[])
         }
         else if (comms[0]=="exit")
         {
-            //make sure stuff is free'd
+            //exoun akoma leaks oi: tree::insert kai ht::insert
             delete[] cstr;
             return 0;
         }
@@ -275,7 +275,7 @@ int main(int argc, char const *argv[])
         {
             std::cerr << "Unknown Command!\n"; //doesn't exit the program, gives the user another chance to type properly this time.
         }
-        delete[] cstr;
+        delete[] cstr; //just in case
     //} //end while(1)
     return 0;
 }
