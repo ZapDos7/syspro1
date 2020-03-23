@@ -196,7 +196,7 @@ void date::print_date() {
             {
                 return -1;
             }
-            else
+            else //if (d1.get_day()==d2.get_day())
             {
                 return 0; //same dates
             }
@@ -220,5 +220,5 @@ bool isBetween(date d, date d1, date d2) //is d between d1 kai d2
     {
         return false; //estw kai 1 na pige lathos
     }
-    
+    //auti tha xrhsimopoii8ei gia [date1 date2] entoles
 }

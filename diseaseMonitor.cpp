@@ -138,7 +138,7 @@ int main(int argc, char const *argv[])
         char * pch;
         const char delim[2] = " ";
         pch = strtok(cstr, delim);
-        std::string comms[7];//i entoli me ta perissotera orismata einai h insertPatientRecord me d2
+        std::string comms[8];//i entoli me ta perissotera orismata einai h insertPatientRecord me d2
         int counter = 0;
         comms[0] = pch;
         //check first word to match with command, check entire command if correct
@@ -147,7 +147,7 @@ int main(int argc, char const *argv[])
         {
             while (pch != NULL)
             {
-                std::cerr << pch;
+                //std::cerr << pch;
                 comms[counter] = pch;
                 counter++;
                 pch = strtok(NULL, delim);
@@ -159,15 +159,14 @@ int main(int argc, char const *argv[])
             r1.set_disease(comms[4]);
             r1.set_country(comms[5]);
             r1.set_entryD(comms[6]);
-            if (counter==6) //den uparxei date 2
+            if (counter==8) //uparxei date 2
             {
-                r1.set_exitD("-");
+                r1.set_exitD(comms[counter-1]);
             }
             else
             {
-                r1.set_exitD(comms[7]);
-            }
-            r1.print_record();
+                r1.set_exitD("-");
+            }            
             int elegxos2 = my_ht.insert(&r1); //edw ginetai kai elegxos gia unique IDs
             if (elegxos2 == -1)
             {
@@ -175,6 +174,7 @@ int main(int argc, char const *argv[])
             }
             else
             {
+                std::cerr << "OK!\n";
                 diseaseHT.ainsert(&r1, false);
                 countryHT.ainsert(&r1, true);
             }
@@ -183,38 +183,44 @@ int main(int argc, char const *argv[])
         else if (comms[0]=="recordPatientExit") //3. /recordPatientExit recordID exitDate
         //Add exit Date to this record
         {
-            //e.g.: recordPatientExit 47 06-04-2021
+            //e.g.: recordPatientExit 47 06-04-2021 //epistrefei already has exit date
+            //e.g.: recordPatientExit 89 06-04-2021 //epistrefei ok
+            //e.g.: recordPatientExit 89 06-04-1500 //epistrefei oti den eisai o Doctor
             while (pch != NULL)
             {
                 comms[counter] = pch;
                 counter++;
                 pch = strtok(NULL, delim);
             }
-            const ht_item * h = my_ht.search(comms[1]);
-            //record rec0 = *(my_ht.search(comms[1])->rec);
-            record * rec0 = h->rec;
-            date *drecPtr = h->rec->get_entryDatePtr();
-            date d2(comms[2]);
-            if (isLater(*drecPtr, d2)==1) //to entry date mou einai pio meta apo to exit date pou pas na valeis
+            ht_item * h = my_ht.search(comms[1]);
+            if (h==NULL)
             {
-                std::cerr << "Entry date later than desired exit date. You're not The Doctor.\n";
-                //continue;
+                std::cerr << "Can't update this record as it doesn't exist.\n";
             }
-            else if (rec0->get_exitDate().set == false) //den exw idi date
+            else
             {
-                rec0->set_exitD(comms[2]);
-                //update metrites sta disease & country hash tables
-                unsigned int where = diseaseHT.ahash(comms[1]);
-                diseaseHT.get_table()[where].search(comms[1])->update_c_in(false);
-                where = countryHT.ahash(comms[1]);
-                countryHT.get_table()[where].search(comms[1])->update_c_in(false);
-            }
-            else if (rec0->get_exitDate().set == true) //exw idi exit date bruh
-            {
-                //h->rec->set_exitD(comms[2]); //allakse to exit date
-                //or just say so and move on
-                std::cerr << "Record " << comms[1] << " already has exit date.\n";
-                //continue;
+                date d2(comms[2]);
+                //std::cerr << "Paw na balw: "  <<d2.get_date_as_string() << "\n";
+                date *d1 = h->rec->get_exitDatePtr();
+                std::cerr << "My exit date is " << h->rec->get_exitDate().get_date_as_string() << "\n";
+                date *din = h->rec->get_entryDatePtr();
+                if (d1->get_date_as_string()=="-") //eixe paulitsa
+                {
+                    if ( isLater(d2, *din)==1)
+                    {
+                        std::cerr << "Entry date later than desired exit date. You're not The Doctor.\n";
+                    }
+                    else
+                    {
+                        h->rec->set_exitD(d2.get_date_as_string()); //twra den exei!
+                        std::cerr << "Updated record: " << comms[1] << " with exit date: " << h->rec->get_exitDate().get_date_as_string() << "\n";
+                    }
+                }
+                else
+                {
+                    std::cerr << "This record alread has an exit date.\n";
+                }
+                
             }
         }
         else if (comms[0]=="exit")

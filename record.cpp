@@ -126,6 +126,10 @@ date * record::get_entryDatePtr()
 {
     return &entryD;
 }
+date * record::get_exitDatePtr()
+{
+    return &exitD;
+}
 void record::set_id(std::string id_to_be)
 {
     this->id = id_to_be;
@@ -162,19 +166,30 @@ void record::set_exitD(std::string exD)
 {
     if (exD == "-")
     {
+        //std::cerr << "den exeis exit date\n";
         exitD.set=false;
         return;
     }
     else
     {
+        //std::cerr << "exeis exit date\n";
         date d(exD);
         exitD = d;
-        exitD.set = true;
+        //exitD.set = true;
         return;
     }
 }
 void record::print_record()
 {
-    std::cerr << id << " " << fname << " " << lname << " " << disease << " " << country << " " << entryD.get_date_as_string() << " " << exitD.get_date_as_string() << "\n";
+    std::cerr << id << " " << fname << " " << lname << " " << disease << " " << country << " " << entryD.get_date_as_string() << " ";
+    if (exitD.set==true)
+    {
+        std::cerr << exitD.get_date_as_string() << "\n";
+    }
+    else
+    {
+        std::cerr << "\n";
+    }
+    
     return;
 }
