@@ -6,8 +6,7 @@
 #include <iostream>
 #include "date.h"
 
-class record
-{
+class record {
 private:
     std::string id; //unique
     std::string fname; //oxi kena, mono grammata

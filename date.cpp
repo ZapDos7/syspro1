@@ -2,17 +2,17 @@
 
 using namespace std;
 
-date::date(){}
+date::date() {}
+
 date::date(string str)
 {
-    if (str=="-")
+    if (str == "-")
     {
         this->set = false;
-    }
-    else
+    } else
     {
         char * cstr = new char[str.length() + 1]; //auto 8a kanw tokenize
-        strcpy (cstr, str.c_str()); //copy as string to str sto cstr
+        strcpy(cstr, str.c_str()); //copy as string to str sto cstr
         char * pch;
         const char delim[2] = "-";
         pch = strtok(cstr, delim);
@@ -23,9 +23,9 @@ date::date(string str)
             //printf ("%s ",pch);
             parts[counter] = pch;
             counter++;
-            pch = strtok (NULL, delim);
+            pch = strtok(NULL, delim);
         }
-        if (atoi(parts[2])<0)
+        if (atoi(parts[2]) < 0)
         {
             cout << "Before Christ.\n";
         }
@@ -34,7 +34,7 @@ date::date(string str)
             this->year = atoi(parts[2]);
         }
 
-        if ((atoi(parts[1])<=0) || (atoi(parts[1])>12))
+        if ((atoi(parts[1]) <= 0) || (atoi(parts[1]) > 12))
         {
             cout << "Wrong month.\n";
             exit(-1);
@@ -45,7 +45,7 @@ date::date(string str)
         }
 
 
-        if ((atoi(parts[0])<0) || (atoi(parts[0])>31))
+        if ((atoi(parts[0]) < 0) || (atoi(parts[0]) > 31))
         {
             cout << "Wrong day.\n";
             exit(-1);
@@ -54,145 +54,156 @@ date::date(string str)
         {
             this->day = atoi(parts[0]);
         }
-        this->set=true;
+        this->set = true;
         delete[] cstr;
     }
 }
-date::date(date &d) { //copy constructor, kaleitai ws: date d1 = d2;
-    if (d.get_date_as_string()=="-")
+
+date::date(date &d) //copy constructor, kaleitai ws: date d1 = d2;
+{
+    if (d.get_date_as_string() == "-")
     {
         this->set = false;
     }
     else
     {
-        if ((d.get_month()<0)||(d.get_month()>12)) {
-        fprintf(stderr, "Invalid month\n");
-        exit(1);
+        if ((d.month < 0) || (d.month > 12))
+        {
+            fprintf(stderr, "Invalid month\n");
+            exit(1);
         }
-        if ((d.get_day()<0)||(d.get_day()>31)) {
+        if ((d.day < 0) || (d.day > 31))
+        {
             fprintf(stderr, "Invalid day\n");
             exit(1);
         }
-        if ((d.get_month()==2)&&(d.get_year()%4==0)&&(d.get_day()>29)) { //leap yeared feb
+        if ((d.month == 2)&&(d.year % 4 == 0)&&(d.day > 29))
+        { //leap yeared feb
             fprintf(stderr, "Invalid date format\n");
             exit(1);
         }
-        if (((d.get_month()==4)||(d.get_month()==6)||(d.get_month()==9)||(d.get_month()==11))&&(d.get_day()>30)) { //30 day-d months
+        if (((d.month == 4) || (d.month == 6) || (d.month == 9) || (d.month == 11))&&(d.day > 30))
+        { //30 day-d months
             fprintf(stderr, "Invalid date format\n");
             exit(1);
         }
-        this->day = d.get_day();
-        this->month = d.get_month();
-        this->year = d.get_year();
+        this->day = d.day;
+        this->month = d.month;
+        this->year = d.year;
         this->set = true;
     }
 }
+
 date::~date() {}
+
 int date::get_day() {
-    if (this->set==true)
+    if (this->set == true)
         return this->day;
     else
-        return -1;    
+        return -1;
 }
+
 int date::get_month() {
-    if (this->set==true)
+    if (this->set == true)
         return this->month;
     else
-        return -1;    
+        return -1;
 }
+
 int date::get_year() {
-    if (this->set==true)
+    if (this->set == true)
         return this->year;
     else
-        return -1;    
+        return -1;
 }
-std::string date::get_date_as_string()
-{
-    if (set==true)
-    {
+
+std::string date::get_date_as_string() {
+    if (set == true) {
         std::string day = std::to_string(this->get_day());
         std::string month = std::to_string(this->get_month());
         std::string year = std::to_string(this->get_year());
-        std::string date = day+"-"+month+"-"+year;
+        std::string date = day + "-" + month + "-" + year;
         return date;
     }
     else
+    {
         return "-";
+    }
 }
-/*bool date::is_set() {
-    return this->set;
-}
-void date::make_set()
+
+void date::set_day(int d)
 {
-    if (this->is_set()==false) this->set==true;
-    else {cout << "Error in make_set"; exit(-1);} //it's already set
-}
-void date::unset()
-{
-    if (this->set==true) this->set==false;
-    else {cout << "Error in unset"; return;}
-}*/
-void date::set_day(int d) {
-    if ((d<0)||(d>31)) {
+    if ((d < 0) || (d > 31))
+    {
         fprintf(stderr, "Invalid day\n");
         exit(1);
     }
-    else {
+    else
+    {
         this->day = d;
         this->set = true;
     }
     return;
 }
-void date::set_month(int m) {
-    if ((m<0)||(m>12)) {
+
+void date::set_month(int m)
+{
+    if ((m < 0) || (m > 12))
+    {
         fprintf(stderr, "Invalid month\n");
         exit(1);
     }
-    else {
+    else
+    {
         this->month = m;
         this->set = true;
-    } 
+    }
     return;
 }
-void date::set_year(int y) {
+
+void date::set_year(int y)
+{
     this->year = y;
     this->set = true;
     return;
 }
-void date::print_date() {
-    if (this->set==true)
+
+void date::print_date()
+{
+    if (this->set == true)
     {
-        fprintf(stdout, " %d-%d-%d ",this->get_day(), this->get_month(), this->get_year());
+        fprintf(stdout, " %d-%d-%d ", this->get_day(), this->get_month(), this->get_year());
     }
     else
     {
-        fprintf(stdout," - ");
+        fprintf(stdout, " - ");
     }
-    
     return;
 }
 
 //check if d1 is between d2 & d3 => d2...d1...d3
+
 /*bool*/short int isLater(date d1, date d2) //is d1 later than d2?
 {
-    if ((d1.set==false)||d2.set==false)
+    if ((d1.set == false) || (d2.set == false))
     {
         fprintf(stderr, "No dates set to compare!\n");
-        return -32,768; //error
+        return -32; //error
+        //allo error analoga to poios einai not set?
     }
-    if (d1.get_year()>d2.get_year())
+    if (d1.get_year() > d2.get_year())
     {
         return -1;
     }
-    else if (d1.get_year()==d2.get_year())
+    else if (d1.get_year() == d2.get_year())
     {
-        if (d1.get_month()>d2.get_month())
+        if (d1.get_month() > d2.get_month())
         {
             return -1;
         }
-        else if (d1.get_month()==d2.get_month())
+        else if (d1.get_month() == d2.get_month())
         {
-            if (d1.get_day()>d2.get_day())
+            if (d1.get_day() > d2.get_day())
             {
                 return -1;
             }
@@ -205,14 +216,15 @@ void date::print_date() {
     //else
     return 1;
 }
+
 bool isBetween(date d, date d1, date d2) //is d between d1 kai d2
 {
-    if ((d.set==false)||(d1.set==false)||(d2.set=false))
+    if ((d.set == false) || (d1.set == false) || (d2.set = false))
     {
         fprintf(stderr, "No dates set to compare!\n");
         exit(-1);
     }
-    if ((isLater(d,d1)==1)&&(isLater(d2,d)==1))
+    if ((isLater(d, d1) == 1)&&(isLater(d2, d) == 1))
     {
         return true; //pane d1 < d < d2
     }

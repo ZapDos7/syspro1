@@ -4,9 +4,7 @@
 #include "date.h"
 #include "record.h"
 
-
-class tree_node
-{
+class tree_node {
 private:
 public:
     date* d; //my key alla stin periptwsi pou einai diplotupa, exw list of these here
@@ -18,17 +16,17 @@ public:
     ~tree_node();
 };
 
-class tree
-{
+class tree {
 private:
 public:
     tree_node* root;
-    
+
     tree();
     ~tree();
     void in_order(tree_node* rt); //print in order ta elements tou tree
     tree_node* insert(tree_node* tr, record* r);
     tree_node* search(tree_node* tr, date d1);
 };
+
 
 #endif

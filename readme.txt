@@ -20,6 +20,7 @@ Use:
 - execute "$make run" to execute (to see the parameters values and alter them, see the Makefile file)
 - execute "$make val" to execute using valgrind (requires it to be installed: sudo apt-get install valgrind)
 - execute "$make clean" to clean the working folder.
+- When writing the desired command, don't tupe "/command <args>" but merely "command <args>".
 
 Notes:
 - In the class "record" we check if the exit date is greater than the entry date, if it is set (if it's just a dash, we do not check this, obviously)

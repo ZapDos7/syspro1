@@ -1,5 +1,5 @@
 CC=g++  -std=c++11
-CFLAGS=-c -Wpedantic -Ofast
+CFLAGS=-c -Wpedantic -Ofast -Wall
 LDFLAGS=
 SOURCES=diseaseMonitor.cpp date.cpp record.cpp ht.cpp aht.cpp bb.cpp tree.cpp
 OBJECTS=$(SOURCES:.cpp=.o)

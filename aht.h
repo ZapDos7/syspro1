@@ -4,8 +4,8 @@
 #include "bb.h"
 #include "record.h"
 #include <cmath>
-class aht
-{
+
+class aht {
 private:
     unsigned int size; //size of ht, h1 or h2
     bucket* table; //the items
@@ -17,7 +17,7 @@ public:
     bucket* get_table();
     unsigned int ahash(std::string tbhashed); //a slightly better hash function compared to the simple HT
     void ainsert(record *r, bool isCountry); //if isCountry == true, we hash a country, if false, we hash a disease
-    void print_aht();
+    void print_aht(bool isCountry);
     block * search(std::string s);
 };
 
