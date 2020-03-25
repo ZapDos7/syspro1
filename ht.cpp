@@ -48,7 +48,7 @@ ht::ht(unsigned int sz)
 
 ht::~ht()
 {
-    std::cout << "destroying ht \n";
+    //std::cout << "destroying ht \n";
     delete[] table;
 }
 

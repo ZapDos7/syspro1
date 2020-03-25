@@ -88,20 +88,19 @@ void block::print_blk(bool isCountry)
         if (isCountry == false)
         {
             std::cerr << "Disease " << *id << " has " << count_in << " people still hospitalized.\n";
-            if (my_tree != NULL)
+            /*if (my_tree != NULL)
             {
                 my_tree->in_order(my_tree->root);
-            }
+            }*/
         }
         else
         {
             std::cerr << "Country " << *id << " has " << count_in << " people still hospitalized.\n";
-            if (my_tree != NULL)
+            /*if (my_tree != NULL)
             {
                 my_tree->in_order(my_tree->root);
-            }
+            }*/
         }
-
     }
     return;
 }
@@ -114,6 +113,29 @@ void block::insert_to_tree(record * r)
         my_tree = new tree;
     }
     my_tree->root = my_tree->insert(my_tree->root, r);
+    return;
+}
+void block::print_blk_all(bool isCountry)
+{
+    if (id != NULL)
+    {
+        if (isCountry == false)
+        {
+            std::cerr << "Disease " << *id << " has had " << count_all << " records.\n";
+            /*if (my_tree != NULL)
+            {
+                my_tree->in_order(my_tree->root);
+            }*/
+        }
+        else
+        {
+            std::cerr << "Country " << *id << " has had " << count_all << " records.\n";
+            /*if (my_tree != NULL)
+            {
+                my_tree->in_order(my_tree->root);
+            }*/
+        }
+    }
     return;
 }
 
@@ -316,6 +338,21 @@ void bucket::print_bkt(bool isCountry)
     if (next != NULL)
     {
         next->print_bkt(isCountry);
+    }
+    return; //asfaleia
+}
+
+void bucket::print_bkt_all(bool isCountry)
+{
+    //tupwse ta dika mou
+    for (unsigned int i = 0; i < num_of_blocks; i++)
+    {
+        blocks[i].print_blk_all(isCountry);
+    }
+    //tupwse tou next m
+    if (next != NULL)
+    {
+        next->print_bkt_all(isCountry);
     }
     return; //asfaleia
 }

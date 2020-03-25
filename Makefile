@@ -4,6 +4,10 @@ LDFLAGS=
 SOURCES=diseaseMonitor.cpp date.cpp record.cpp ht.cpp aht.cpp bb.cpp tree.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=diseaseMonitor
+FILE=-p small.txt
+ARGS=-h1 40 -h2 40 -b 1024
+VAL=valgrind --leak-check=full
+GDB=gdb
 
 
 all: $(SOURCES) $(EXECUTABLE)
@@ -15,10 +19,13 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 run:
-	./$(EXECUTABLE) -p small.csv -h1 40 -h2 40 -b 1024
+	./$(EXECUTABLE) $(FILE) $(ARGS)
 
 clean:
 	rm -f $(OBJECTS) $(EXECUTABLE)
 
 val:
-	valgrind --leak-check=full ./$(EXECUTABLE) -p small.csv -h1 40 -h2 40 -b 1024
+	$(VAL) ./$(EXECUTABLE) $(FILE) $(ARGS)
+
+gdb:
+	$(GDB) $(EXECUTABLE)
