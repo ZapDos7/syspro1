@@ -86,11 +86,14 @@ int main(int argc, char const *argv[])
     //blooook->my_tree->stats(blooook->my_tree->root, d1, d2, &magkaki);
     //std::cerr << magkaki << "\n";
 
-    while (1) {	
-        std::string com; //command	
-        std::cout << "Enter desired function:\n";	
-        std::getline(std::cin, com); //std::cin >> com; doesn't work due to spaces	
-        if (com.length() == 0)	
+    std::string com; //command
+
+    std::cout << "Enter desired function:\n";
+    //while (1) { //an den dinei apo file
+    while (std::getline(std::cin, com)) { //aposxoliase otan bgaloun output format
+        //std::cout << "Enter desired function:\n";                                     //an den dinei apo file
+        //std::getline(std::cin, com); //std::cin >> com; doesn't work due to spaces    //an den dinei apo file
+        if (com.length() == 0)
         {	
             continue; //ama m dwseis enter, sunexizw na zhtaw entoles	
         }	
@@ -238,7 +241,7 @@ int main(int argc, char const *argv[])
                 counter++;	
                 pch = strtok(NULL, delim);	
             }	
-            if (counter==1)	
+            if (counter==1)
             {	
                 for (int i = 0; i < h1; i++) //gia kathe bucket* sto hash table	
                 {	
