@@ -30,7 +30,6 @@ tree_node::~tree_node()
     }
 }
 
-
 /////////////////////////////////////////
 
 tree::tree()
@@ -43,7 +42,7 @@ tree::~tree()
     delete root;
 }
 
-tree_node* tree::insert(tree_node* tr, record* r) //arxiki klisi tis: t.root = t.insert(t.root, record * r)
+tree_node *tree::insert(tree_node *tr, record *r) //arxiki klisi tis: t.root = t.insert(t.root, record * r)
 {
     date d0; //to date pou paw na balw
     d0.set_day(r->get_entryDate().get_day());
@@ -56,7 +55,7 @@ tree_node* tree::insert(tree_node* tr, record* r) //arxiki klisi tis: t.root = t
 
     if (tr == NULL)
     {
-        tree_node * tn = new tree_node(r);
+        tree_node *tn = new tree_node(r);
         tn->left = NULL;
         tn->right = NULL;
         //std::cerr << "Molis ekana insert auto: " << tn->d->get_date_as_string() << "\n";
@@ -79,7 +78,7 @@ tree_node* tree::insert(tree_node* tr, record* r) //arxiki klisi tis: t.root = t
     }
 }
 
-void tree::in_order(tree_node* rt) //https://www.programiz.com/dsa/tree-traversal
+void tree::in_order(tree_node *rt)
 {
     if (rt == NULL)
     {
@@ -90,7 +89,7 @@ void tree::in_order(tree_node* rt) //https://www.programiz.com/dsa/tree-traversa
     in_order(rt->right);
 }
 
-tree_node* tree::search(tree_node* tr, date d1) //tin 1i fora prepei na kli8ei me 1o orisma to root tou tree
+tree_node *tree::search(tree_node *tr, date d1) //tin 1i fora prepei na kli8ei me 1o orisma to root tou tree
 {
     if (tr->d->get_date_as_string() == d1.get_date_as_string())
     {
@@ -113,3 +112,34 @@ tree_node* tree::search(tree_node* tr, date d1) //tin 1i fora prepei na kli8ei m
         return NULL; //it's not there
     }
 }
+
+long int tree::stats(tree_node *tr, date d1, date d2)
+{
+    long int metritis = 0;
+    if (tr == NULL) //recursion end
+    {
+        return metritis;
+    }
+    metritis += stats(tr->left, d1, d2);
+    if (isBetween(*(tr->d), d1, d2) == true)
+    {
+        metritis++;
+    }
+    metritis += stats(tr->right, d1, d2);
+    return metritis;
+}
+/*
+void tree::stats(tree_node * tr, date d1, date d2, int * counter)
+{
+    if (tr == NULL)
+    {
+        return;
+    }
+    stats(tr->left, d1, d2, counter);
+    if (isBetween(*(tr->d), d1, d2) == true)
+    {
+        *counter += 1;
+    }
+    stats(tr->right, d1, d2, counter);
+}
+*/

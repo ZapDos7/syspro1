@@ -19,6 +19,7 @@ public:
     void ainsert(record *r, bool isCountry); //if isCountry == true, we hash a country, if false, we hash a disease
     void print_aht(bool isCountry);
     block * search(std::string s);
+    void global_stats(date date1, date date2);
 };
 
 #endif

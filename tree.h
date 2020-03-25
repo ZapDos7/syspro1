@@ -26,6 +26,8 @@ public:
     void in_order(tree_node* rt); //print in order ta elements tou tree
     tree_node* insert(tree_node* tr, record* r);
     tree_node* search(tree_node* tr, date d1);
+    long int stats(tree_node * tr, date d1, date d2);
+    //void stats(tree_node * tr, date d1, date d2, int * counter);
 };
 
 

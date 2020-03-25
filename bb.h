@@ -32,6 +32,7 @@ public:
     void update_c_in(bool add); //pairnei ws orisma to false otan BGAINEI kapoios dld stin recordExit blabla
     void print_blk(bool isCountry);
     void print_blk_all(bool isCountry);
+    long int stats(date date1, date date2);
 };
 
 class bucket {
@@ -51,6 +52,7 @@ public:
     block * search(std::string srch);
     void print_bkt(bool isCountry);
     void print_bkt_all(bool isCountry);
+    long int buck_stats(date d1, date d2);
 };
 
 #endif

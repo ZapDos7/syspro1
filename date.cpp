@@ -191,19 +191,19 @@ void date::print_date()
         return -32; //error
         //allo error analoga to poios einai not set?
     }
-    if (d1.get_year() > d2.get_year())
+    if (d1.get_year() > d2.get_year()) //2009 > 2008
     {
         return -1;
     }
     else if (d1.get_year() == d2.get_year())
     {
-        if (d1.get_month() > d2.get_month())
+        if (d1.get_month() > d2.get_month()) //may after january
         {
             return -1;
         }
         else if (d1.get_month() == d2.get_month())
         {
-            if (d1.get_day() > d2.get_day())
+            if (d1.get_day() > d2.get_day()) //3 > 2
             {
                 return -1;
             }
@@ -216,15 +216,17 @@ void date::print_date()
     //else
     return 1;
 }
-
+//isLater(a,b): an a>b -> -1
+//an a=b -> 0
+//an a<b -> 1
 bool isBetween(date d, date d1, date d2) //is d between d1 kai d2
 {
-    if ((d.set == false) || (d1.set == false) || (d2.set = false))
+    if ((d.set == false) || (d1.set == false) || (d2.set == false))
     {
         fprintf(stderr, "No dates set to compare!\n");
         exit(-1);
     }
-    if ((isLater(d, d1) == 1)&&(isLater(d2, d) == 1))
+    if ((isLater(d, d1) == -1)&&(isLater(d, d2) == 1))
     {
         return true; //pane d1 < d < d2
     }

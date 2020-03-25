@@ -138,7 +138,10 @@ void block::print_blk_all(bool isCountry)
     }
     return;
 }
-
+long int block::stats(date date1, date date2)
+{
+    return my_tree->stats(my_tree->root, date1, date2);
+}
 
 
 
@@ -355,4 +358,32 @@ void bucket::print_bkt_all(bool isCountry)
         next->print_bkt_all(isCountry);
     }
     return; //asfaleia
+}
+
+long int bucket::buck_stats(date d1, date d2) //edw diatrexw tin alusida
+{
+    long int posa = 0;
+    if (blocks[0].id == NULL)
+    {
+        return posa; //return 0, an den exoun mpei se mena de 8a exw kan next
+    }
+    else /*(blocks[0].id != NULL)*/ //exw kati na psaksw (an oute to block 0 den exei id, den exei mpei tpt edw)
+    {
+        for (unsigned int i = 0; i < num_of_blocks; i++) //trekse ola sou ta block
+        {
+            if (blocks[i].id!=NULL)
+            {
+                posa += blocks[i].stats(d1, d2);
+            }
+        }
+    }
+    if (next == NULL)
+    {
+        return posa;
+    }
+    else
+    {
+        posa += next->buck_stats(d1, d2);
+    }
+    return posa;
 }
