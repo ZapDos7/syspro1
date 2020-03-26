@@ -2,14 +2,15 @@
 Ioanna Zapalidi, sdi1400044	
 System Programming Project #1, Spring 2020	
  */	
-#include <iostream>	
+#include <iostream>
 #include <fstream>
-#include "date.h" //my date class	
-#include "ht.h" //hash table - diki mas domi	
-#include "aht.h" //"advanced" hash table	
-#include "tree.h" //bst	
-#include "record.h" //record class	
-#include "bb.h" //blocks and buckets	
+#include "date.h" //my date class
+#include "ht.h" //hash table - diki mas domi
+#include "aht.h" //"advanced" hash table
+#include "tree.h" //bst
+#include "record.h" //record class
+#include "bb.h" //blocks and buckets
+#include "heap.h"
 
 bool date_format(std::string); //elegxei oti ena string einai stin morfi XX-YY-ZZZZ
 

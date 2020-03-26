@@ -14,6 +14,7 @@ Contents:
 - ht.h, ht.cpp (classic hash table class and methods, it's used to store the actual records and acts as the data structure of my choice, as the assignment dictates)
 - aht.h, aht.cpp (advance hash table)
 - tree.h, tree.cpp (BST class and methods)
+- heap.h, heap.cpp (heap (& heap_node) class and methods)
 
 Use:
 - While in the project folder, run "$make" to create the .o files and the executable
@@ -26,14 +27,11 @@ Notes:
 - The insert function of the hash table checks whether the ID's inserted are unique or not.
 - On the disease and country hash tables: in the bb.h/bb.cpp files I created the assisting classes "block" and "bucket". A bucket contains an array of blocks.
 - Since my implementation of these hash tables is unified, the insertion methods and some constructors (wherever it is needed, basically) take a boolean arguement "isCountry" which is true when it comes to the country hash table and its methods, else it is false.
+- The supporting function "isLater(d1,d2)" (date files) returns -1 if date d1 is later than d2, 0 if they are the same and 1 if d2 is later than d1.
+- The supporting function "isBetween(d,d1,d2)" returns true if d1<d<d2 (datewise), else false.
 
 Sources:
 - Makefile - Software Dev. for Algorithmic Problems, 2019-20
 - date.h, date.cpp - my code from last years 1st assignment, without the time stamp class & with another assisting function.
 - The hash function for my hash table based on this: http://www.cse.yorku.ca/~oz/hash.html
 - The hash function for the disease and country hash tables is a variation of this, but with a bit more complex math & with a better distribution.
-
-Future Expansions:
-- Turn the BST into a BBST
-- Create lists to handle dublicate dates in the trees
-- Do the top-k methods
