@@ -28,7 +28,9 @@ public:
     tree_node* insert(tree_node* tr, record* r);
     tree_node* search(tree_node* tr, date d1);
     long int stats(tree_node * tr, date d1, date d2);
-    long int statsCx(tree_node * tr, date d1, date d2, std::string countryName);
+    long int statsCx(tree_node * tr, date d1, date d2, std::string countryName); //gia global stats me country name
+    long int statsAllDisease(tree_node * tr, std::string nm); //epistrefei posa stoixeia exei mesa tou to tree - gia pairs gia heap gia topk
+    long int statsAllCountry(tree_node * tr, std::string nm); //idio alla tr exoume country name
 };
 
 

@@ -147,18 +147,34 @@ long int tree::statsCx(tree_node * tr, date d1, date d2, std::string countryName
     metritis += statsCx(tr->right, d1, d2, countryName);
     return metritis;
 }
-/*
-void tree::stats(tree_node * tr, date d1, date d2, int * counter)
+long int tree::statsAllDisease(tree_node *tr, std::string nm)
 {
-    if (tr == NULL)
+    long int metritis = 0;
+    if (tr == NULL) //recursion end
     {
-        return;
+        return metritis;
     }
-    stats(tr->left, d1, d2, counter);
-    if (isBetween(*(tr->d), d1, d2) == true)
+    metritis += statsAllDisease(tr->left, nm);
+    if (tr->rec->get_disease()==nm)
     {
-        *counter += 1;
+        metritis++;
     }
-    stats(tr->right, d1, d2, counter);
+    metritis += statsAllDisease(tr->right, nm);
+    return metritis;
 }
-*/
+
+long int tree::statsAllCountry(tree_node *tr, std::string nm)
+{
+    long int metritis = 0;
+    if (tr == NULL) //recursion end
+    {
+        return metritis;
+    }
+    metritis += statsAllCountry(tr->left, nm);
+    if (tr->rec->get_country()==nm)
+    {
+        metritis++;
+    }
+    metritis += statsAllCountry(tr->right, nm);
+    return metritis;
+}

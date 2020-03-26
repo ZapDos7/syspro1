@@ -77,16 +77,6 @@ int main(int argc, char const *argv[])
     std::cerr << "\n\n";	
     countryHT.print_aht(true);	
 */
-/*    block * blooook = diseaseHT.search("EVD");
-    date d1("1-1-2000");
-    date d2("1-1-2005");
-    date sdate("2-1-2003");
-    std::cerr << blooook->my_tree->stats(blooook->my_tree->root, d1, d2);
-    */
-    //int magkaki = 0;
-    //blooook->my_tree->stats(blooook->my_tree->root, d1, d2, &magkaki);
-    //std::cerr << magkaki << "\n";
-
     std::string com; //command
 
     std::cout << "Enter desired function:\n";
@@ -323,8 +313,46 @@ int main(int argc, char const *argv[])
             }
         }	
         else if (comms[0] == "/topk-Diseases") //10. /topk-Diseases k country [date1 date2]	
-        {	
-            //Gia to country, which k viruses are top (most krousmata) [between dates if given] //an uparxei date1 prepei na uparxei date2, alla mporei na leipoun kai ta 2	
+        {//Gia to country, which k viruses are top (most krousmata) [between dates if given]
+            while (pch != NULL)
+            {	
+                comms[counter] = pch;	
+                counter++;	
+                pch = strtok(NULL, delim);	
+            }
+            int k = atoi(comms[1].c_str());
+            std::string countryName = comms[2];
+            std::string wannabedate1;
+            std::string wannabedate2;
+            if (counter==4)
+            {
+                wannabedate1 = comms[3];
+                wannabedate2 = comms[4];
+            }
+            if ((date_format(wannabedate1)==false)||(date_format(wannabedate2)==false))
+            {
+                std::cerr << "Type properly.(6)";
+                break;
+            }
+            //else
+            date d1(wannabedate1);
+            date d2(wannabedate2);
+            if (isLater(d1,d2)==-1) /*an d1>d2, epistrefei -1*/
+            {
+                std::cerr << "Type properly.(7)";
+                break;
+            }
+            //else pame stin entoli:
+            block * b = countryHT.search(countryName);
+            if (b==NULL)
+            {
+                std::cerr << countryName << " has no records.\n";
+            }
+            else
+            {
+                //
+            }
+            
         }	
         else if (comms[0] == "/topk-Countries") //11. /topk-Countries k disease [date1 date2]	
         {	
