@@ -33,6 +33,7 @@ public:
     void print_blk(bool isCountry);
     void print_blk_all(bool isCountry);
     long int stats(date date1, date date2);
+    long int statsC(date date1, date date2, std::string cntrn);
 };
 
 class bucket {

@@ -142,7 +142,10 @@ long int block::stats(date date1, date date2)
 {
     return my_tree->stats(my_tree->root, date1, date2);
 }
-
+long int block::statsC(date date1, date date2, std::string cntrn)
+{
+    return my_tree->statsCx(my_tree->root, date1, date2, cntrn);
+}
 
 
 

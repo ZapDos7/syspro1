@@ -9,6 +9,7 @@ tree_node::tree_node(record *r)
     this->d = r->get_entryDatePtr();
     this->left = NULL;
     this->right = NULL;
+    this->rec = r;
 }
 
 tree_node::tree_node()
@@ -126,6 +127,24 @@ long int tree::stats(tree_node *tr, date d1, date d2)
         metritis++;
     }
     metritis += stats(tr->right, d1, d2);
+    return metritis;
+}
+long int tree::statsCx(tree_node * tr, date d1, date d2, std::string countryName)
+{
+    long int metritis = 0;
+    if (tr == NULL) //recursion end
+    {
+        return metritis;
+    }
+    metritis += statsCx(tr->left, d1, d2, countryName);
+    if (isBetween(*(tr->d), d1, d2) == true)
+    {
+        if (tr->rec->get_country()==countryName)
+        {
+            metritis++;
+        }
+    }
+    metritis += statsCx(tr->right, d1, d2, countryName);
     return metritis;
 }
 /*

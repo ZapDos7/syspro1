@@ -4,20 +4,23 @@ using namespace std;
 
 record::record() {}
 
-record::record(string line)
+record::record(string line) //thewrw oti dineis sxetika swsto record kai xeirizomai merika ksekathara lathi
 {
     char * cstr = new char[line.length() + 1]; //auto 8a kanw tokenize
     strcpy(cstr, line.c_str()); //copy as string to line sto cstr
     char * pch;
-    const char delim[2] = " ";
+    const char delim[5] = " \r\n\t";//\0
     pch = strtok(cstr, delim);
     short unsigned int counter = 0;
     char* parts[7];
-    //string partsStr[7];
     while (pch != NULL)
     {
-        //printf ("%s ",pch);
         parts[counter] = pch;
+        if (counter==7) //ama dw8ei o,ti na nai gia record, yeet -> this saves us from a seg fault an dw8ei dld record swsta kai meta akura strings
+        {
+            pch = strtok(NULL, delim);
+            break;            
+        }
         counter++;
         pch = strtok(NULL, delim);
     }
@@ -51,11 +54,11 @@ record::record(string line)
                 exitD.set_day(tmpD.get_day());
                 exitD.set_month(tmpD.get_month());
                 exitD.set_year(tmpD.get_year());
-                /*if (isLater(entryD,exitD)==true) //mpike meta poy bgike
+                if (isLater(entryD,exitD)==-1) //mpike meta poy bgike
                 {
                     std::cerr << "Error in record dates.\n";
                     exit(-1);
-                }*/
+                }
             }
         }
     }

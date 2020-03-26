@@ -275,9 +275,51 @@ int main(int argc, char const *argv[])
         }	
         else if (comms[0] == "/diseaseFrequency") //8. /diseaseFrequency virusName date1 date2 [country]	
         {	
-            //if not exists, return 0	
-            //An oxi country orisma, gia kathe country, print posa Virus metaksu twn 2 dates	
-            //An nai, mono gi auto to country print posa Virus metaksu twn 2 dates	
+            while (pch != NULL)
+            {	
+                comms[counter] = pch;	
+                counter++;	
+                pch = strtok(NULL, delim);	
+            }
+            std::string virusName = comms[1];
+            std::string wannabedate1 = comms[2];
+            std::string wannabedate2 = comms[3];
+            if ((date_format(wannabedate1)==false)||(date_format(wannabedate2)==false))
+            {
+                std::cerr << "Type properly.(6)";
+                break;
+            }
+            //else
+            date d1(wannabedate1);
+            date d2(wannabedate2);
+            if (isLater(d1,d2)==-1) /*an d1>d2, epistrefei -1*/
+            {
+                std::cerr << "Type properly.(7)";
+                break;
+            }
+            //else ok
+            block * apantisi = diseaseHT.search(virusName);
+            if (apantisi==NULL) //mou zitas na brw kati pou den exw sti vasi m
+            {
+                std::cerr << "Disease named " << virusName << " has 0 records.\n"; //if not exists, return 0
+            }
+            else //to brika
+            {//An oxi country orisma, gia kathe country, print posa Virus metaksu twn 2 dates
+                if (counter==4) //posa virusName krousmata anamesa sto date1 date2
+                {//den exw country
+                    std::cerr << "Disease named " << virusName << " has " << apantisi->stats(d1,d2) << " records.\n";
+                }
+                else if(counter==5) //exei country
+                {//An nai, mono gi auto to country print posa Virus metaksu twn 2 dates
+                    std::string cntrName = comms[4];
+                    std::cerr << "Disease named " << virusName << " has " << apantisi->statsC(d1, d2, cntrName) << " records for country named " << cntrName << ".\n";
+                }
+                else //mou edwses alla m nt alla
+                {
+                    std::cerr << "Type properly.(8)\n";
+                }
+                
+            }
         }	
         else if (comms[0] == "/topk-Diseases") //10. /topk-Diseases k country [date1 date2]	
         {	

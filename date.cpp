@@ -20,8 +20,12 @@ date::date(string str)
         char* parts[3];
         while (pch != NULL)
         {
-            //printf ("%s ",pch);
             parts[counter] = pch;
+            if (counter==3) //ama dw8ei o,ti na nai gia date, yeet -> this saves us from a seg fault an dw8ei kati san 2-3-4-5
+            {
+                pch = strtok(NULL, delim);
+                break;            
+            }
             counter++;
             pch = strtok(NULL, delim);
         }

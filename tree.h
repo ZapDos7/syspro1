@@ -8,6 +8,7 @@ class tree_node {
 private:
 public:
     date* d; //my key alla stin periptwsi pou einai diplotupa, exw list of these here
+    record *rec;
     tree_node* left;
     tree_node* right;
 
@@ -27,7 +28,7 @@ public:
     tree_node* insert(tree_node* tr, record* r);
     tree_node* search(tree_node* tr, date d1);
     long int stats(tree_node * tr, date d1, date d2);
-    //void stats(tree_node * tr, date d1, date d2, int * counter);
+    long int statsCx(tree_node * tr, date d1, date d2, std::string countryName);
 };
 
 
