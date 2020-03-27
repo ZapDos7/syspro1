@@ -34,6 +34,7 @@ public:
     heap_node();
     ~heap_node();
     bool isLeftNode();
+    void print_heap_node();
 };
 
 pair countDis (tree* tr, std::string disName);
@@ -49,6 +50,7 @@ public:
 
     heap(); //arxika empty
     ~heap();
+    void print_heap(heap_node* hn);
     void heapify();//diatirisi morfis heap
     void insert(pair p); //ws orisma pairnei pair
     heap_node * pop_root(); //pop root, return new root after calling heapify

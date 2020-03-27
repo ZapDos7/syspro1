@@ -17,20 +17,18 @@ bool date_format(std::string); //elegxei oti ena string einai stin morfi XX-YY-Z
 int main(int argc, char const *argv[])
 {
     //test
-    //pair p1("a");p1.pair_counter=1;
-    //pair p2("b");p2.pair_counter=2;
-    //pair p3("c");p3.pair_counter=3;
-    //pair p4("d");p3.pair_counter=4;
+/*    pair p1("1");p1.pair_counter=1;
+    pair p2("2");p2.pair_counter=2;
+    pair p3("3");p3.pair_counter=3;
+    pair p4("4");p4.pair_counter=4;
 
-    //heap heapp;
-    //heapp.insert(p1);
-    //std::cerr << "ok1\n";
-    //heapp.insert(p2);
-    //std::cerr << "ok2\n";
-    //heapp.insert(p3);
-    //std::cerr << "ok3\n";
-    //heapp.insert(p4);
-    //std::cerr << "ok4\n";
+    heap heapp;
+    heapp.insert(p1);
+    heapp.insert(p2);
+    heapp.insert(p3);
+    heapp.insert(p4);
+
+    heapp.print_heap(heapp.root);*/
     
 
 
