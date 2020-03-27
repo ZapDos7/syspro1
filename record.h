@@ -32,7 +32,6 @@ public:
     date * get_entryDatePtr();
     date get_exitDate();
     date * get_exitDatePtr();
-    bool hasLeft();
     void set_id(std::string id_to_be);
     void set_fname(std::string fn);
     void set_lname(std::string ln);

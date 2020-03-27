@@ -16,6 +16,27 @@ bool date_format(std::string); //elegxei oti ena string einai stin morfi XX-YY-Z
 
 int main(int argc, char const *argv[])
 {
+    //test
+    //pair p1("a");p1.pair_counter=1;
+    //pair p2("b");p2.pair_counter=2;
+    //pair p3("c");p3.pair_counter=3;
+    //pair p4("d");p3.pair_counter=4;
+
+    //heap heapp;
+    //heapp.insert(p1);
+    //std::cerr << "ok1\n";
+    //heapp.insert(p2);
+    //std::cerr << "ok2\n";
+    //heapp.insert(p3);
+    //std::cerr << "ok3\n";
+    //heapp.insert(p4);
+    //std::cerr << "ok4\n";
+    
+
+
+
+    /////////////////////////////////////
+
     char records_file[256];	
     int h1 = -1; //diseaseHashtableNumOfEntries	
     int h2 = -1; //countryHashtableNumOfEntries	
@@ -124,15 +145,17 @@ int main(int argc, char const *argv[])
             record * elegxos2 = my_ht.insert(&r1); //edw ginetai kai elegxos gia unique IDs	
             if (elegxos2 == NULL)	
             {	
-                std::cerr << "Record error. Exiting.\n";	
+                //std::cerr << "Record error. Exiting.\n";
+                std::cerr << "error\n";
             }	
             else	
             {	
                 diseaseHT.ainsert(elegxos2, false);	
-                countryHT.ainsert(elegxos2, true);	
-                std::cerr << "Inserted: ";	
-                r1.print_record();	
-                std::cerr << std::endl;	
+                countryHT.ainsert(elegxos2, true);
+                std::cerr << "Record added\n";
+                //std::cerr << "Inserted: ";	
+                //r1.print_record();	
+                //std::cerr << std::endl;	
             }	
             //working example: insertPatientRecord 1010 Mitsos Mitsou SARS-1 France 16-02-1995	
             //working example: /insertPatientRecord 1010 Mitsos Mitsou SARS-1 France 16-02-1995 10-10-2010	
@@ -148,11 +171,12 @@ int main(int argc, char const *argv[])
                 counter++;	
                 pch = strtok(NULL, delim);	
             }	
-            std::cerr << "Psaxnw to " << comms[1] << "\n";	
+            //std::cerr << "Psaxnw to " << comms[1] << "\n";
             ht_item * h = my_ht.search(comms[1]);	
             if (h == NULL)	
             {	
-                std::cerr << "Can't update this record as it doesn't exist.\n";	
+                //std::cerr << "Can't update this record as it doesn't exist.\n";
+                std::cerr << "error\n";
             }	
             else	
             {	
@@ -160,13 +184,14 @@ int main(int argc, char const *argv[])
                 date d2(comms[2]); //d2 = ti paw na valw
                 date *d1 = h->rec->get_exitDatePtr(); //to uparxon exit date
                 bool magkas = d1->set; //ama eixa prin set=true ara eixa idi exit date, true, else false
-                std::cerr << "My exit date is " << d1->get_date_as_string() << "\n";
+                //std::cerr << "My exit date is " << d1->get_date_as_string() << "\n";
                 date *din = h->rec->get_entryDatePtr(); //to entry date
                 /*if ((d1->get_date_as_string() == "-")&&(d1->set == 0))
                 {*/	
                     if (isLater(d2, *din) == 1)
                     {	
-                        std::cerr << "Entry date later than desired exit date. You're not The Doctor.\n";	
+                        //std::cerr << "Entry date later than desired exit date. You're not The Doctor.\n";
+                        std::cerr << "Not found\n";
                     }	
                     else	
                     {	
@@ -179,7 +204,8 @@ int main(int argc, char const *argv[])
                             blokaki->update_c_in(false);
                         }
                         //eidallws oi metrites den allazoun!
-                        std::cerr << "Updated record: " << comms[1] << " with exit date: " << h->rec->get_exitDate().get_date_as_string() << "\n";	
+                        //std::cerr << "Updated record: " << comms[1] << " with exit date: " << h->rec->get_exitDate().get_date_as_string() << "\n";
+                        std::cerr << "Record updated\n";
                     }	
                 /*}
                 else //den eixe paulitsa ara itan set	
@@ -190,7 +216,8 @@ int main(int argc, char const *argv[])
         }	
         else if (comms[0] == "/exit")	
         {	
-            delete[] cstr;	
+            delete[] cstr;
+            std::cerr << "exiting\n";
             return 0;	
         }	
         else if (comms[0] == "/numCurrentPatients") //4. /numCurrentPatients [disease]	
@@ -208,8 +235,9 @@ int main(int argc, char const *argv[])
                 std::string dis(comms[1]);	
                 block * blockPtr = diseaseHT.search(dis);	
                 if (blockPtr == NULL)	
-                {	
-                    std::cout << "0\n"; //den eixame kanena krousma	
+                {
+                    std::cerr << dis <<" 0\n";
+                    //std::cout << "0\n"; //den eixame kanena krousma
                 }	
                 else	
                 {	
@@ -236,14 +264,15 @@ int main(int argc, char const *argv[])
             {	
                 for (int i = 0; i < h1; i++) //gia kathe bucket* sto hash table	
                 {	
-                    diseaseHT.get_table()[i].print_bkt_all(false);	
+                    diseaseHT.get_table()[i].print_bkt_all(false);
                 }	
             }  //an uparxei date1 prepei na uparxei date2, alla mporei na leipoun kai ta 2
             else if(counter==3) //0 = globalDiseaseStats, 1 = d1, 2 = d2	
             {
                 if ((date_format(comms[1])==false)||(date_format(comms[2])==false))
                 {
-                    std::cerr << "Format dates as: XX-YY-ZZZZ or X-Y-Z.\n";
+                    //std::cerr << "Format dates as: XX-YY-ZZZZ or X-Y-Z.\n";
+                    std::cerr << "error\n";
                     break;
                 }
 
@@ -252,7 +281,8 @@ int main(int argc, char const *argv[])
                 
                 if ((isLater(date1, date2)==-1)||(isLater(date1, date2)==0))	//an mou dwseis date1 > date 2 akuro, an tautizontai episis giati den exw diastima honey
                 {
-                    std::cerr << "Type properly(3).\n";
+                    //std::cerr << "Type properly(3).\n";
+                    std::cerr << "error\n";
                 }	
                 else	
                 {	
@@ -261,7 +291,8 @@ int main(int argc, char const *argv[])
             }	
             else	
             {	
-                std::cerr << "Type properly(4).\n";	
+                //std::cerr << "Type properly(4).\n";	
+                std::cerr << "error\n";
             }
         }	
         else if (comms[0] == "/diseaseFrequency") //8. /diseaseFrequency virusName date1 date2 [country]	
@@ -277,7 +308,8 @@ int main(int argc, char const *argv[])
             std::string wannabedate2 = comms[3];
             if ((date_format(wannabedate1)==false)||(date_format(wannabedate2)==false))
             {
-                std::cerr << "Type properly.(6)";
+                //std::cerr << "Type properly.(6)\n";
+                std::cerr << "error\n";
                 break;
             }
             //else
@@ -285,29 +317,33 @@ int main(int argc, char const *argv[])
             date d2(wannabedate2);
             if (isLater(d1,d2)==-1) /*an d1>d2, epistrefei -1*/
             {
-                std::cerr << "Type properly.(7)";
+                //std::cerr << "Type properly.(7)\n";
+                std::cerr << "error\n";
                 break;
             }
             //else ok
             block * apantisi = diseaseHT.search(virusName);
             if (apantisi==NULL) //mou zitas na brw kati pou den exw sti vasi m
             {
-                std::cerr << "Disease named " << virusName << " has 0 records.\n"; //if not exists, return 0
+                std::cerr << /*"Disease named " << */virusName << /*" has 0 records.\n";*/"0\n"; //if not exists, return 0
+                //else
+                //std::cerr << "error\n";
             }
             else //to brika
             {//An oxi country orisma, gia kathe country, print posa Virus metaksu twn 2 dates
                 if (counter==4) //posa virusName krousmata anamesa sto date1 date2
                 {//den exw country
-                    std::cerr << "Disease named " << virusName << " has " << apantisi->stats(d1,d2) << " records.\n";
+                    std::cerr << /*"Disease named " <<*/ virusName << /*" has "*/" " << apantisi->stats(d1,d2) << /*" records.\n";*/"\n";
                 }
                 else if(counter==5) //exei country
                 {//An nai, mono gi auto to country print posa Virus metaksu twn 2 dates
                     std::string cntrName = comms[4];
-                    std::cerr << "Disease named " << virusName << " has " << apantisi->statsC(d1, d2, cntrName) << " records for country named " << cntrName << ".\n";
+                    std::cerr << /*"Disease named " << */virusName <</* " has " */" "<< apantisi->statsC(d1, d2, cntrName) << /*" records for country named " << cntrName << ".\n";*/ "\n";
                 }
                 else //mou edwses alla m nt alla
                 {
-                    std::cerr << "Type properly.(8)\n";
+                    //std::cerr << "Type properly.(8)\n";
+                    std::cerr << "error\n";
                 }
                 
             }
@@ -331,7 +367,8 @@ int main(int argc, char const *argv[])
             }
             if ((date_format(wannabedate1)==false)||(date_format(wannabedate2)==false))
             {
-                std::cerr << "Type properly.(6)";
+                //std::cerr << "Type properly.(6)";
+                std::cerr << "error\n";
                 break;
             }
             //else
@@ -339,18 +376,22 @@ int main(int argc, char const *argv[])
             date d2(wannabedate2);
             if (isLater(d1,d2)==-1) /*an d1>d2, epistrefei -1*/
             {
-                std::cerr << "Type properly.(7)";
+                //std::cerr << "Type properly.(7)";
+                std::cerr << "error\n";
                 break;
             }
             //else pame stin entoli:
             block * b = countryHT.search(countryName);
             if (b==NULL)
             {
-                std::cerr << countryName << " has no records.\n";
+                //std::cerr << countryName << " has no records.\n";
+                std::cerr << "error\n"; //else print
+                //std::cerr << countryName << " 0\n";
             }
             else
             {
-                //
+                //tba
+                std::cerr << countryName << " has some records.\n";
             }
             
         }	
@@ -360,7 +401,8 @@ int main(int argc, char const *argv[])
         }	
         else	
         {	
-            std::cerr << "Unknown Command!\n"; //doesn't exit the program, gives the user another chance to type properly this time.	
+            //std::cerr << "Unknown Command!\n"; //doesn't exit the program, gives the user another chance to type properly this time.	
+            std::cerr << "error\n";
         }	
         delete[] cstr; //just in case	
     } //end while(1)	

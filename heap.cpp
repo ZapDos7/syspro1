@@ -55,7 +55,7 @@ bool heap_node::isLeftNode()
     if (this->parent==NULL)
     {
         std::cerr << "You're checking the root.\n";
-        return false; //thewrw kai tin riza right paidi gia na mou shmanei thn nea katifora stin insert
+        return true;
     }
     else return (this->parent->left->id==this->id); //an isxuei i isotita -> true giati eimai tou mpampa moy to left paidi, else eimai to right
 }
@@ -87,7 +87,7 @@ void heap::insert(pair p)
             root->counter = p.pair_counter;
             root->left = NULL;
             root->right = NULL;
-            this->last = root->left;
+            this->last = root;
             //heapify den xreiazetai edw, exw 1 prama kai eimai idi swros
         }
         else if (last->isLeftNode()==true)
@@ -103,23 +103,35 @@ void heap::insert(pair p)
         else //if (last->isLeftNode()==false)
         {
             heap_node * curr;
-            curr = last->parent;
-            while((curr->isLeftNode()==false)||curr->parent!=this->root)
+            curr = last;
+            while(curr->isLeftNode()==false)
             {
                 curr = curr->parent;
             }
-            curr = curr->parent; //paw allo 1 curr = curr->parent
-            while (curr->left!=NULL) //pame sto deksi upodentro oso pio **left** ginetai
+            if(curr==this->root)
             {
-                curr = curr->left;
-            }//kai xwnomaste
-            curr->left = new heap_node;
-            curr->left->id = p.pair_id;
-            curr->left->counter = p.pair_counter;
-            curr->left->left = NULL;
-            curr->left->right = NULL;
-            this->last = curr->left;
-            //heapify()
+                while (curr->left!=NULL) //pame sto deksi upodentro oso pio **left** ginetai
+                {
+                    curr = curr->left;
+                }//kai xwnomaste
+                curr->left = new heap_node;
+                curr->left->id = p.pair_id;
+                curr->left->counter = p.pair_counter;
+                curr->left->left = NULL;
+                curr->left->right = NULL;
+                this->last = curr->left;
+                //heapify()
+            }
+            else
+            {
+                curr = curr->parent; //paw allo 1 curr = curr->parent
+                curr->right->left = new heap_node;
+                curr->right->left->id = p.pair_id;
+                curr->right->left->counter = p.pair_counter;
+                curr->right->left->left = NULL;
+                curr->right->left->right = NULL;
+                this->last = curr->right->left;
+            }
         }
     }
 }

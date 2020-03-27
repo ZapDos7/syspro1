@@ -125,11 +125,6 @@ date record::get_exitDate()
     return this->exitD;
 }
 
-bool record::hasLeft()
-{
-    return this->exitD.set; //if exit date is set (true) aka it exists and isn't "-", then he has left (true)
-}
-
 date * record::get_entryDatePtr()
 {
     return &entryD;

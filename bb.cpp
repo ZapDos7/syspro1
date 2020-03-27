@@ -87,7 +87,7 @@ void block::print_blk(bool isCountry)
     {
         if (isCountry == false)
         {
-            std::cerr << "Disease " << *id << " has " << count_in << " people still hospitalized.\n";
+            std::cerr << /*"Disease " <<*/ *id <</* " has "*/" " << count_in << /*" people still hospitalized.\n";*/"\n";
             /*if (my_tree != NULL)
             {
                 my_tree->in_order(my_tree->root);
@@ -95,7 +95,7 @@ void block::print_blk(bool isCountry)
         }
         else
         {
-            std::cerr << "Country " << *id << " has " << count_in << " people still hospitalized.\n";
+            std::cerr << /*"Country " <<*/ *id << /*" has "*/" " << count_in << /*" people still hospitalized.\n";*/"\n";
             /*if (my_tree != NULL)
             {
                 my_tree->in_order(my_tree->root);
@@ -121,7 +121,7 @@ void block::print_blk_all(bool isCountry)
     {
         if (isCountry == false)
         {
-            std::cerr << "Disease " << *id << " has had " << count_all << " records.\n";
+            std::cerr << /*"Disease " <<*/ *id << /*" has had " */ " "<< count_all << /*" records.\n";*/ "\n";
             /*if (my_tree != NULL)
             {
                 my_tree->in_order(my_tree->root);
@@ -129,7 +129,7 @@ void block::print_blk_all(bool isCountry)
         }
         else
         {
-            std::cerr << "Country " << *id << " has had " << count_all << " records.\n";
+            std::cerr << /*"Country " <<*/ *id << /*" has had "*/ " " << count_all << /*" records.\n";*/ "\n";
             /*if (my_tree != NULL)
             {
                 my_tree->in_order(my_tree->root);

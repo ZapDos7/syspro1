@@ -84,7 +84,7 @@ void aht::global_stats(date date1, date date2) //tha klithei mono gia to disease
     {
         if (table[i].blocks->id!=NULL)
         {
-            std::cerr << "Disease named " << *(table[i].blocks->id) << " has " << table[i].buck_stats(date1, date2) << " records between " << date1.get_date_as_string() << " and " << date2.get_date_as_string() << ".\n";
+            std::cerr << /*"Disease named " <<*/ *(table[i].blocks->id) << /*" has "*/ " " << table[i].buck_stats(date1, date2) <</* " records between " << date1.get_date_as_string() << " and " << date2.get_date_as_string() << ".\n";*/ "\n";
         }
     }
     return;
