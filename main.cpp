@@ -136,11 +136,18 @@ int main(int argc, char const *argv[])
             r1.set_entryD(comms[6]);	
             if (counter == 8) //uparxei date 2	
             {	
-                r1.set_exitD(comms[counter - 1]);	
+                if (comms[7]=="-")//edwses date2 mia paula
+                {
+                    r1.set_exitD("-");
+                }
+                else//edwses kanoniko date2
+                {
+                    r1.set_exitD(comms[counter - 1]);
+                }
             }	
-            else	
+            else//date2 omited --> ennoeitai paula
             {	
-                r1.set_exitD("-");	
+                r1.set_exitD("-");
             }	
             r1.print_record();	
             record * elegxos2 = my_ht.insert(&r1); //edw ginetai kai elegxos gia unique IDs	
@@ -177,7 +184,7 @@ int main(int argc, char const *argv[])
             if (h == NULL)	
             {	
                 //std::cerr << "Can't update this record as it doesn't exist.\n";
-                std::cerr << "error\n";
+                std::cout << "Not found\n";
             }	
             else	
             {	
@@ -185,7 +192,7 @@ int main(int argc, char const *argv[])
                 date d2(comms[2]); //d2 = ti paw na valw
                 date *d1 = h->rec->get_exitDatePtr(); //to uparxon exit date
                 bool magkas = d1->set; //ama eixa prin set=true ara eixa idi exit date, true, else false
-                //std::cerr << "My exit date is " << d1->get_date_as_string() << "\n";
+                //std::cerr << "magkas " << magkas << "\n";
                 date *din = h->rec->get_entryDatePtr(); //to entry date
                 /*if ((d1->get_date_as_string() == "-")&&(d1->set == 0))
                 {*/	
@@ -196,13 +203,19 @@ int main(int argc, char const *argv[])
                     }	
                     else	
                     {	
-                        h->rec->set_exitD(d2.get_date_as_string()); //twra den exei!
+                        h->rec->set_exitD(d2.get_date_as_string()); //twra exei exit date
                         if (magkas==false) //prin den imoun set ara update counters:
                         {
-                            block * blokaki = diseaseHT.search(comms[1]);
-                            blokaki->update_c_in(false);
-                            blokaki = countryHT.search(comms[1]);
-                            blokaki->update_c_in(false);
+                            block * blokaki1 = diseaseHT.search(comms[1]);
+                            if (blokaki1!=NULL)
+                            {
+                                blokaki1->update_c_in(false);
+                            }
+                            block * blokaki2 = countryHT.search(comms[1]);
+                            if (blokaki2!=NULL)
+                            {
+                                blokaki2->update_c_in(false);
+                            }
                         }
                         //eidallws oi metrites den allazoun!
                         //std::cerr << "Updated record: " << comms[1] << " with exit date: " << h->rec->get_exitDate().get_date_as_string() << "\n";
@@ -326,7 +339,7 @@ int main(int argc, char const *argv[])
             block * apantisi = diseaseHT.search(virusName);
             if (apantisi==NULL) //mou zitas na brw kati pou den exw sti vasi m
             {
-                std::cerr << /*"Disease named " << */virusName << /*" has 0 records.\n";*/"0\n"; //if not exists, return 0
+                std::cout << /*"Disease named " << */virusName << /*" has 0 records.\n";*/"0\n"; //if not exists, return 0
                 //else
                 //std::cerr << "error\n";
             }
@@ -334,12 +347,12 @@ int main(int argc, char const *argv[])
             {//An oxi country orisma, gia kathe country, print posa Virus metaksu twn 2 dates
                 if (counter==4) //posa virusName krousmata anamesa sto date1 date2
                 {//den exw country
-                    std::cerr << /*"Disease named " <<*/ virusName << /*" has "*/" " << apantisi->stats(d1,d2) << /*" records.\n";*/"\n";
+                    std::cout << /*"Disease named " <<*/ virusName << /*" has "*/" " << apantisi->stats(d1,d2) << /*" records.\n";*/"\n";
                 }
                 else if(counter==5) //exei country
                 {//An nai, mono gi auto to country print posa Virus metaksu twn 2 dates
                     std::string cntrName = comms[4];
-                    std::cerr << /*"Disease named " << */virusName <</* " has " */" "<< apantisi->statsC(d1, d2, cntrName) << /*" records for country named " << cntrName << ".\n";*/ "\n";
+                    std::cout << /*"Disease named " << */virusName <</* " has " */" "<< apantisi->statsC(d1, d2, cntrName) << /*" records for country named " << cntrName << ".\n";*/ "\n";
                 }
                 else //mou edwses alla m nt alla
                 {
