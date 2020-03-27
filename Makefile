@@ -4,7 +4,7 @@ LDFLAGS=
 SOURCES=main.cpp date.cpp record.cpp ht.cpp aht.cpp bb.cpp tree.cpp heap.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=diseaseMonitor
-FILE=-p medium.txt
+FILE=-p small.txt
 ARGS=-h1 40 -h2 40 -b 1024
 VAL=valgrind --leak-check=full
 GDB=gdb

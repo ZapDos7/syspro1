@@ -162,7 +162,7 @@ int main(int argc, char const *argv[])
         }	
         else if (comms[0] == "/recordPatientExit") //3. /recordPatientExit recordID exitDate //Add exit Date to this record	
         {	
-            //e.g.: recordPatientExit 47 06-04-2021 //epistrefei already has exit date	
+            //e.g.: recordPatientExit 47 06-04-2021 //epistrefei already has denexit date	
             //e.g.: recordPatientExit 89 06-04-2021 //epistrefei ok	
             //e.g.: recordPatientExit 89 06-04-1500 //epistrefei oti den eisai o Doctor	
             while (pch != NULL)	
@@ -188,10 +188,10 @@ int main(int argc, char const *argv[])
                 date *din = h->rec->get_entryDatePtr(); //to entry date
                 /*if ((d1->get_date_as_string() == "-")&&(d1->set == 0))
                 {*/	
-                    if (isLater(d2, *din) == 1)
+                    if (isLater(d2, *din) == 1) //pas na mou baleis kati pou den einai later tou entry date m
                     {	
                         //std::cerr << "Entry date later than desired exit date. You're not The Doctor.\n";
-                        std::cerr << "Not found\n";
+                        std::cerr << "error\n";
                     }	
                     else	
                     {	
