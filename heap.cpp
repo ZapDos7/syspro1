@@ -46,6 +46,7 @@ heap_node::heap_node()
 }
 heap_node::~heap_node()
 {
+    std::cerr << "deleting heap node\n";
     if (this->left!=NULL) delete this->left;
     if (this->right!=NULL) delete this->right;
     if (this->parent!=NULL) delete this->parent;
@@ -70,8 +71,11 @@ heap::heap()
 
 heap::~heap()
 {
-    delete this->root;
+    std::cerr << "deleting heap\n";
+    //delete this->last;
+    if (this->root!=NULL) delete this->root;
 }
+
 void heap::heapify()
 {
     return;
@@ -80,7 +84,7 @@ void heap::insert(pair p)
 {
     if (p.pair_id!="") //den mou dwses ws orisma kapoia kotsana
     {
-        if (root==NULL) //1o insert
+        if (last==root) //1o insert
         {
             root = new heap_node;
             root->id = p.pair_id;//edw mpainei to p
@@ -138,6 +142,7 @@ void heap::insert(pair p)
 
 heap_node * heap::pop_root()
 {
+    return NULL;
     //return root, heapify
 }
 /*

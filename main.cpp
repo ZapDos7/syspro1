@@ -60,8 +60,9 @@ int main(int argc, char const *argv[])
             b = atoi(argv[i + 1]);	
         }	
     }	
-    if ((h1 < 0) || (h2 < 0) || (b < 0)) {	
-        std::cerr << "No values for the parameters, please execute again properly." << std::endl;	
+    if ((h1 < 0) || (h2 < 0) || (b < 0)) {
+        //std::cerr << "No values for the parameters, please execute again properly.\n";
+        std::cerr << "error\n";
         exit(-1);	
     }	
     std::ifstream dataset(records_file); //dataset: recordID FName LName diseaseID Country entryDate exitDate	
@@ -100,7 +101,7 @@ int main(int argc, char const *argv[])
 */
     std::string com; //command
 
-    std::cout << "Enter desired function:\n";
+    //std::cout << "Enter desired function:\n";
     //while (1) { //an den dinei apo file
     while (std::getline(std::cin, com)) { //aposxoliase otan bgaloun output format
         //std::cout << "Enter desired function:\n";                                     //an den dinei apo file
@@ -152,7 +153,7 @@ int main(int argc, char const *argv[])
             {	
                 diseaseHT.ainsert(elegxos2, false);	
                 countryHT.ainsert(elegxos2, true);
-                std::cerr << "Record added\n";
+                std::cout << "Record added\n";
                 //std::cerr << "Inserted: ";	
                 //r1.print_record();	
                 //std::cerr << std::endl;	
@@ -205,7 +206,7 @@ int main(int argc, char const *argv[])
                         }
                         //eidallws oi metrites den allazoun!
                         //std::cerr << "Updated record: " << comms[1] << " with exit date: " << h->rec->get_exitDate().get_date_as_string() << "\n";
-                        std::cerr << "Record updated\n";
+                        std::cout << "Record updated\n";
                     }	
                 /*}
                 else //den eixe paulitsa ara itan set	
@@ -217,7 +218,7 @@ int main(int argc, char const *argv[])
         else if (comms[0] == "/exit")	
         {	
             delete[] cstr;
-            std::cerr << "exiting\n";
+            std::cout << "exiting\n";
             return 0;	
         }	
         else if (comms[0] == "/numCurrentPatients") //4. /numCurrentPatients [disease]	
@@ -236,7 +237,7 @@ int main(int argc, char const *argv[])
                 block * blockPtr = diseaseHT.search(dis);	
                 if (blockPtr == NULL)	
                 {
-                    std::cerr << dis <<" 0\n";
+                    std::cout << dis <<" 0\n";
                     //std::cout << "0\n"; //den eixame kanena krousma
                 }	
                 else	
@@ -425,7 +426,8 @@ bool date_format(std::string str)
         }
         else
         {
-            std::cerr << "Type properly(1).\n";	 //continue to next command
+            //std::cerr << "Type properly(1).\n";	 //continue to next command
+            std::cout << "error\n";
         }
     }
     char * cstr = new char[a0.length() + 1]; //auto 8a kanw tokenize

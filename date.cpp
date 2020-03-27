@@ -31,7 +31,7 @@ date::date(string str)
         }
         if (atoi(parts[2]) < 0)
         {
-            cout << "Before Christ.\n";
+            //cout << "Before Christ.\n";
         }
         else
         {
@@ -40,7 +40,7 @@ date::date(string str)
 
         if ((atoi(parts[1]) <= 0) || (atoi(parts[1]) > 12))
         {
-            cout << "Wrong month.\n";
+            //cout << "Wrong month.\n";
             exit(-1);
         }
         else
@@ -51,7 +51,7 @@ date::date(string str)
 
         if ((atoi(parts[0]) < 0) || (atoi(parts[0]) > 31))
         {
-            cout << "Wrong day.\n";
+            //cout << "Wrong day.\n";
             exit(-1);
         }
         else
@@ -73,22 +73,22 @@ date::date(date &d) //copy constructor, kaleitai ws: date d1 = d2;
     {
         if ((d.month < 0) || (d.month > 12))
         {
-            fprintf(stderr, "Invalid month\n");
+            //fprintf(stderr, "Invalid month\n");
             exit(1);
         }
         if ((d.day < 0) || (d.day > 31))
         {
-            fprintf(stderr, "Invalid day\n");
+            //fprintf(stderr, "Invalid day\n");
             exit(1);
         }
         if ((d.month == 2)&&(d.year % 4 == 0)&&(d.day > 29))
         { //leap yeared feb
-            fprintf(stderr, "Invalid date format\n");
+            //fprintf(stderr, "Invalid date format\n");
             exit(1);
         }
         if (((d.month == 4) || (d.month == 6) || (d.month == 9) || (d.month == 11))&&(d.day > 30))
         { //30 day-d months
-            fprintf(stderr, "Invalid date format\n");
+            //fprintf(stderr, "Invalid date format\n");
             exit(1);
         }
         this->day = d.day;
@@ -139,7 +139,7 @@ void date::set_day(int d)
 {
     if ((d < 0) || (d > 31))
     {
-        fprintf(stderr, "Invalid day\n");
+        //fprintf(stderr, "Invalid day\n");
         exit(1);
     }
     else
@@ -154,7 +154,7 @@ void date::set_month(int m)
 {
     if ((m < 0) || (m > 12))
     {
-        fprintf(stderr, "Invalid month\n");
+        //fprintf(stderr, "Invalid month\n");
         exit(1);
     }
     else
@@ -191,7 +191,7 @@ void date::print_date()
 {
     if ((d1.set == false) || (d2.set == false))
     {
-        fprintf(stderr, "No dates set to compare!\n");
+        //fprintf(stderr, "No dates set to compare!\n");
         return -32; //error
         //allo error analoga to poios einai not set?
     }
@@ -227,7 +227,7 @@ bool isBetween(date d, date d1, date d2) //is d between d1 kai d2
 {
     if ((d.set == false) || (d1.set == false) || (d2.set == false))
     {
-        fprintf(stderr, "No dates set to compare!\n");
+        //fprintf(stderr, "No dates set to compare!\n");
         exit(-1);
     }
     if ((isLater(d, d1) == -1)&&(isLater(d, d2) == 1))

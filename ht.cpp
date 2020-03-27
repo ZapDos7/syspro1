@@ -96,7 +96,8 @@ record* ht::insert(record* r) //mporei na epistrefei rec* gia na to parw ws oris
     else if (table[where].next == NULL) //exw record alla den exw next
     {
         if (table[where].rec->get_id() == r->get_id()) {
-            std::cerr << "Dublicate record ID. Fix your dataset and try again.\n";
+            //std::cerr << "Dublicate record ID. Fix your dataset and try again.\n";
+            std::cerr << "error\n";
             return NULL;
         }
         else //grafw ston next moy
@@ -111,7 +112,8 @@ record* ht::insert(record* r) //mporei na epistrefei rec* gia na to parw ws oris
     {
         ht_item * temp = &table[where];
         if (temp->rec->get_id() == r->get_id()) {
-            std::cerr << "Dublicate record ID. Fix your dataset and try again(1).\n";
+            //std::cerr << "Dublicate record ID. Fix your dataset and try again(1).\n";
+            std::cerr << "error\n";
             return NULL;
         }
         else
@@ -121,7 +123,8 @@ record* ht::insert(record* r) //mporei na epistrefei rec* gia na to parw ws oris
                 temp = temp->next; //paw ston epomeno mou kai elegxw an uparxei idi to ID ekei
                 if (temp->rec->get_id() == r->get_id()) //an edw mesa vrw to ID tou r, exit
                 {
-                    std::cerr << "Dublicate record ID. Fix your dataset and try again(2).\n";
+                    //std::cerr << "Dublicate record ID. Fix your dataset and try again(2).\n";
+                    std::cerr << "error\n";
                     return NULL;
                 }
             }
@@ -139,7 +142,7 @@ ht_item* ht::search(record *r)
     unsigned int where = hash(*r);
     if (table[where].rec == NULL) //den exw kanena record edw
     {
-        std::cerr << "This record isn't in my hash table\n";
+        //std::cerr << "This record isn't in my hash table\n";
         return NULL;
     }
     else//den einai null auto to .rec ara exw eggrafi alla isws den einai i diki m => elegxw ID
@@ -164,7 +167,7 @@ ht_item * ht::search(std::string s) {
     unsigned int where = hash(s);
     if (table[where].rec == NULL) //den exw kanena record edw
     {
-        std::cerr << "This record isn't in my hash table\n";
+        //std::cerr << "This record isn't in my hash table\n";
         return NULL;
     }
     else//den einai null auto to .rec ara exw eggrafi alla isws den einai i diki m => elegxw ID

@@ -56,7 +56,7 @@ record::record(string line) //thewrw oti dineis sxetika swsto record kai xeirizo
                 exitD.set_year(tmpD.get_year());
                 if (isLater(entryD,exitD)==-1) //mpike meta poy bgike
                 {
-                    std::cerr << "Error in record dates.\n";
+                    //std::cerr << "Error in record dates.\n";
                     exit(-1);
                 }
             }
@@ -189,11 +189,11 @@ void record::set_exitD(std::string exD)
 
 void record::print_record()
 {
-    std::cerr << id << " " << fname << " " << lname << " " << disease << " " << country << " " << entryD.get_date_as_string() << " ";
+    std::cout << id << " " << fname << " " << lname << " " << disease << " " << country << " " << entryD.get_date_as_string() << " ";
     if (exitD.set == true) {
-        std::cerr << exitD.get_date_as_string() << "\n";
+        std::cout << exitD.get_date_as_string() << "\n";
     } else {
-        std::cerr << "\n";
+        std::cout << "\n";
     }
 
     return;

@@ -74,7 +74,7 @@ tree_node *tree::insert(tree_node *tr, record *r) //arxiki klisi tis: t.root = t
     }
     else
     {
-        std::cerr << "How?\n";
+        //std::cerr << "How?\n";
         return NULL;
     }
 }
@@ -86,7 +86,7 @@ void tree::in_order(tree_node *rt)
         return;
     }
     in_order(rt->left);
-    std::cerr << rt->d->get_date_as_string() << std::endl;
+    std::cout << rt->d->get_date_as_string() << std::endl;
     in_order(rt->right);
 }
 
@@ -94,22 +94,22 @@ tree_node *tree::search(tree_node *tr, date d1) //tin 1i fora prepei na kli8ei m
 {
     if (tr->d->get_date_as_string() == d1.get_date_as_string())
     {
-        std::cerr << tr->d->get_date_as_string() << "found\n";
+        //std::cerr << tr->d->get_date_as_string() << "found\n";
         return tr;
     }
     else if (isLater(*(tr->d), d1) == 1) //node's date is later compared to d1 so it should be to d1's right (greater)
     {
-        std::cerr << "searching right\n";
+        //std::cerr << "searching right\n";
         return search(tr->right, d1);
     }
     else if (isLater(*(tr->d), d1) < 1) //0 or -1 ara less or equal
     {
-        std::cerr << "searching left\n";
+        //std::cerr << "searching left\n";
         return search(tr->left, d1);
     }
     else
     {
-        std::cerr << "No such date exists here: " << d1.get_date_as_string() << std::endl;
+        //std::cerr << "No such date exists here: " << d1.get_date_as_string() << std::endl;
         return NULL; //it's not there
     }
 }
