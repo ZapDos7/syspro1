@@ -2,24 +2,12 @@
 #define _HEAP_H_
 
 #include <string>
+#include <cmath>
 #include "date.h"
 #include "tree.h"
 #include "aht.h"
 
 //domi "max heap" oxi vasei array alla vasei dentrou, opws protathike sto eclass
-
-class pair
-{
-private:
-public:
-    long int pair_counter;
-    std::string pair_id;
-
-    pair();
-    pair(std::string pid);
-    ~pair();
-};
-
 class heap_node
 {
 private:
@@ -30,15 +18,15 @@ public:
     heap_node * right;
     heap_node * parent;
 
-    heap_node(pair p);
+    heap_node(std::string id0);
     heap_node();
     ~heap_node();
     bool isLeftNode();
     void print_heap_node();
+    void delete_heap_node();
+    void sink();
+    void swim();
 };
-
-pair countDis (tree* tr, std::string disName);
-pair countCtr (tree* tr, std::string ctrName);
 
 class heap
 {
@@ -50,17 +38,16 @@ public:
 
     heap(); //arxika empty
     ~heap();
-    void print_heap(heap_node* hn);
-    void heapify();//diatirisi morfis heap
-    void insert(pair p); //ws orisma pairnei pair
+    void print_heap(heap_node* hn); //kaleitai me 1o orisma to root
+    heap_node * prev_last(); //epistrefei deikti ston proteleutaio node
+    //heap_node * search(heap_node* hn, std::string s); //kaleitai me 1o orisma to root
+    void search(heap_node* hn, std::string s, heap_node** hnn);
+    void insert(std::string id0); //ws orisma pairnei ena string pou psaxnei kai ekei kanei insert
+    //meta kalw swim
     heap_node * pop_root(); //pop root, return new root after calling heapify
-
-    //top-k functions, tr = b->my_tree opou block * b = aht->search(bla) //main
-    //void topkDiseases(aht * countryht, int k, std::string countryName); //pas sto record kathe kombou, take disease name, kai se zeugaria (diseasename, counter) kane counter ++. Auta ta zeugaria apothikeuontai se ena array apo zeugaria. Ola auta 1-1 -> heap::insert, heap::heapify. Telos, pop k times to head, heapify.
-    //void topkDiseasesDates(aht * countryht, int k, std::string countryName, date d1, date d2); //to idio alla elegxw an entrydate tou tree_node anamesa se d1, d2
-    //void topkCountries(aht * diseaseht, int k, std::string diseaseName); //pas sto record kathe kombou, take country name, kai se zeugaria (countryname, counter) kane counter ++. Auta ta zeugaria apothikeuontai se ena array apo zeugaria. Ola auta 1-1 -> heap::insert, heap::heapify. Telos, pop k times to head, heapify.
-    //void topkCountriesDates(aht * diseaseht, int k, std::string diseaseName, date d1, date d2); //to idio alla elegxw an entrydate tou tree_node anamesa se d1, d2
-    //sto telos prepei na diagrafetai o swros
+    //meta kalw katadusi
+    void delete_heap(); //kaleitai prin liksei to /command topk gia na einai on the fly o swros
 };
 //
+std::string binarify(int n);
 #endif

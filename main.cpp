@@ -17,22 +17,36 @@ bool date_format(std::string); //elegxei oti ena string einai stin morfi XX-YY-Z
 int main(int argc, char const *argv[])
 {
     //test
-/*    pair p1("1");p1.pair_counter=1;
-    pair p2("2");p2.pair_counter=2;
-    pair p3("3");p3.pair_counter=3;
-    pair p4("4");p4.pair_counter=4;
-
+    
     heap heapp;
-    heapp.insert(p1);
-    heapp.insert(p2);
-    heapp.insert(p3);
-    heapp.insert(p4);
 
-    heapp.print_heap(heapp.root);*/
+    heapp.insert("a");
+    heapp.insert("b");
+    heapp.insert("c");
+    heapp.insert("d");
+    heapp.insert("d");
+    
+    //heapp.print_heap(heapp.root);
+
+    heapp.insert("c");
+    heapp.insert("c");
+    heapp.insert("c");
+
+    //heapp.print_heap(heapp.root);
+
+
+    heapp.insert("b");
+    heapp.insert("b");
+    //heapp.print_heap(heapp.root);
+    
+    heapp.last->print_heap_node();
+    heapp.prev_last()->print_heap_node();
     
 
 
-
+    //std::cerr << "\n\n";
+    //heap_node * hn = heapp.pop_root();
+    //hn->print_heap_node();
     /////////////////////////////////////
 
     char records_file[256];	
@@ -162,9 +176,7 @@ int main(int argc, char const *argv[])
                 //std::cerr << "Inserted: ";	
                 //r1.print_record();	
                 //std::cerr << std::endl;	
-            }	
-            //working example: insertPatientRecord 1010 Mitsos Mitsou SARS-1 France 16-02-1995	
-            //working example: /insertPatientRecord 1010 Mitsos Mitsou SARS-1 France 16-02-1995 10-10-2010	
+            }
         }	
         else if (comms[0] == "/recordPatientExit") //3. /recordPatientExit recordID exitDate //Add exit Date to this record	
         {	
@@ -370,29 +382,7 @@ int main(int argc, char const *argv[])
             }
             int k = atoi(comms[1].c_str());
             std::string countryName = comms[2];
-            std::string wannabedate1;
-            std::string wannabedate2;
-            if (counter==4)
-            {
-                wannabedate1 = comms[3];
-                wannabedate2 = comms[4];
-            }
-            if ((date_format(wannabedate1)==false)||(date_format(wannabedate2)==false))
-            {
-                //std::cerr << "Type properly.(6)";
-                std::cerr << "error\n";
-                break;
-            }
-            //else
-            date d1(wannabedate1);
-            date d2(wannabedate2);
-            if (isLater(d1,d2)==-1) /*an d1>d2, epistrefei -1*/
-            {
-                //std::cerr << "Type properly.(7)";
-                std::cerr << "error\n";
-                break;
-            }
-            //else pame stin entoli:
+            //pame stin entoli:
             block * b = countryHT.search(countryName);
             if (b==NULL)
             {
@@ -402,12 +392,34 @@ int main(int argc, char const *argv[])
             }
             else
             {
-                //tba
-                std::cerr << countryName << " has some records.\n";
+                std::cerr << countryName << " " << k <<"\n";
+                
+                /*std::string wannabedate1;
+                std::string wannabedate2;
+                if (counter==4)
+                {
+                    wannabedate1 = comms[3];
+                    wannabedate2 = comms[4];
+                }
+                if ((date_format(wannabedate1)==false)||(date_format(wannabedate2)==false))
+                {
+                    //std::cerr << "Type properly.(6)";
+                    std::cerr << "error\n";
+                    break;
+                }
+                //else
+                date d1(wannabedate1);
+                date d2(wannabedate2);
+                if (isLater(d1,d2)==-1) //an d1>d2, epistrefei -1
+                {
+                    //std::cerr << "Type properly.(7)";
+                    std::cerr << "error\n";
+                    break;
+                }*/
             }
             
         }	
-        else if (comms[0] == "/topk-Countries") //11. /topk-Countries k disease [date1 date2]	
+        else if (comms[0] == "/topk-Countries") //11. /topk-Countries k disease [date1 date2]
         {	
             //Gia to virus, which k countries are top (most krousmata) [between dates if given] //an uparxei date1 prepei na uparxei date2, alla mporei na leipoun kai ta 2	
         }	

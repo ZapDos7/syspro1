@@ -5,6 +5,9 @@ sdi1400044
 
 Used: C++11 (Developed on Linux Ubuntu 16.04), used git for version control and valgrind for debugging purposes.
 
+Validator results:
+- Passes all tests minus 5-12 (topk)
+
 Contents:
 - this readme
 - Makefile
@@ -29,6 +32,11 @@ Notes:
 - Since my implementation of these hash tables is unified, the insertion methods and some constructors (wherever it is needed, basically) take a boolean arguement "isCountry" which is true when it comes to the country hash table and its methods, else it is false.
 - The supporting function "isLater(d1,d2)" (date files) returns -1 if date d1 is later than d2, 0 if they are the same and 1 if d2 is later than d1.
 - The supporting function "isBetween(d,d1,d2)" returns true if d1<d<d2 (datewise), else false.
+
+Conclusions:
+- Trees are optimal for ranged search (between two values) in a dataset.
+- Hash tables are optimal for searching based on an ID (equality checking).
+- Heaps are optimal for retrieving max or min value(s) of a dataset.
 
 Sources:
 - Makefile - Software Dev. for Algorithmic Problems, 2019-20

@@ -1,49 +1,15 @@
 #include "heap.h"
 
-////////////////proswrina zeugaria pou kratane info pou tha mpei se heap
-pair::pair()
-{
-    this->pair_counter = 0;
-    this->pair_id = "";
-}
-pair::pair(std::string pid)
-{
-    this->pair_counter = 0;
-    this->pair_id = pid;
-}
-pair::~pair(){}
-/////////////////boithitikes
-pair countDis (tree* tr, std::string disName)
-{
-    pair p;
-    p.pair_counter = tr->statsAllDisease(tr->root, disName); //posa krousmata exei auto to dentro gia auto to disease
-    p.pair_id = disName;
-    return p;
-}
-pair countCtr (tree* tr, std::string ctrName)
-{
-    pair p;
-    p.pair_counter = tr->statsAllCountry(tr->root, ctrName); //posa krousmata exei auto to dentro gia auto to country
-    p.pair_id = ctrName;
-    return p;
-}
-
 /////////////////heap node
-heap_node::heap_node(pair p)
+heap_node::heap_node(std::string id0)
 {
-    this->counter = p.pair_counter;
-    this->id = p.pair_id;
+    this->counter = 0;
+    this->id = id0;
     this->left = NULL;
     this->right = NULL;
     this->parent = NULL;
 }
-heap_node::heap_node()
-{
-    this->counter = 0;
-    this->id = "";
-    this->left = NULL;
-    this->right = NULL;
-}
+heap_node::heap_node(){}
 heap_node::~heap_node()
 {
     //std::cerr << "deleting heap node\n";
@@ -72,6 +38,71 @@ void heap_node::print_heap_node()
     std::cout << this->id << " " << this->counter << "\n";
     return;
 }
+void heap_node::delete_heap_node()
+{
+    //id, metritis yeet
+    if (this->left!=NULL) delete this->left;
+    if (this->right!=NULL) delete this->right;
+    if (this->parent!=NULL) //exw mpampa
+    {
+        if (this->isLeftNode()==true) delete this->parent->left;
+        else delete this->parent->right;
+    }
+    return;
+}
+void heap_node::sink() //katadusi
+{
+    if (this->left==NULL) //den exw paidia na sugkri8w mazi tous, exw den exw left de 8a exw kan right
+    {
+        return;
+    }
+    else if (this->right==NULL)//(hn->left!=NULL) exw left alla oxi right paidi
+    {
+        if (this->left->counter > this->counter) //swap
+        {
+            int tmp1 = this->left->counter; std::string tmp2 = this->left->id;
+            this->left->counter = this->counter; this->left->id = this->id;
+            this->counter = tmp1; this->id = tmp2;
+            this->left->sink();
+        }//else do nothing
+    }
+    else //exw 2 paidia
+    {
+        if (this->left->counter >= this->right->counter) //left >= right ara antallazw me ton left opws panw
+        {
+            int tmp1 = this->left->counter; std::string tmp2 = this->left->id;
+            this->left->counter = this->counter; this->left->id = this->id;
+            this->counter = tmp1; this->id = tmp2;
+            this->left->sink();
+        }
+        else if (this->left->counter < this->right->counter) //right > left
+        {
+            int tmp1 = this->right->counter; std::string tmp2 = this->right->id;
+            this->right->counter = this->counter; this->right->id = this->id;
+            this->counter = tmp1; this->id = tmp2;
+            this->right->sink();
+        }
+    }
+}
+void heap_node::swim() //anadusi
+{
+    if (this->parent==NULL)
+    {
+        return;
+    }
+    else //exw gonio kai tha sugkri8w mazi tou
+    {
+        if (this->counter > this->parent->counter) //o mpampas m exei ligotero metriti apo mena ara swap
+        {
+            int tmp1 = this->counter; std::string tmp2 = this->id;
+            this->counter = this->parent->counter; this->id = this->parent->id;
+            this->parent->counter = tmp1; this->parent->id = tmp2;
+            this->parent->swim();
+        }
+        return;
+    }
+}
+
 
 ///////////////////heap
 heap::heap()
@@ -81,48 +112,107 @@ heap::heap()
     this->last = this->root;
 }
 
-heap::~heap()
+heap::~heap() //den prepei na klithei pote giati kanoume delete ton heap prin liksei to programma
 {
-    std::cerr << "deleting heap\n";
     //delete this->last;
-    if (this->root!=NULL) delete this->root;
+    if (this->root!=NULL){
+        std::cerr << "deconstructing heap\n";
+        delete this->root;
+    }
 }
+
 void heap::print_heap(heap_node* hn)
 {
     if (hn==NULL) return;
-    if (hn->isLeftNode()==true)
+    print_heap(hn->left);
+    /*if (hn->parent==NULL)
+    {
+        std::cerr << "eimai root ";
+    }
+    else if (hn->isLeftNode()==true)
     {
         std::cerr << "eimai left ";
     }
     else if (hn->isLeftNode()==false)
     {
         std::cerr << "eimai right ";
-    }
+    }*/
     hn->print_heap_node();
-    print_heap(hn->left);
     print_heap(hn->right);
 }
-void heap::heapify()
+
+heap_node * heap::prev_last()
 {
-    return;
+    if (this->root==NULL) return NULL; //den exw tpt
+    else if (root==last) return NULL; //exw 1 stoixeio /*this->last->parent==NULL*/
+    else if (this->last->isLeftNode()==false) return this->last->parent->left; //an last einai right paidi, to aristero tou aderfaki einai to proteleutaio
+    else if (this->last->isLeftNode()==true) //last itan left
+    {
+        if (this->size==2) return this->root; //exei 2 stoixeia o swros ara proteleutaia i riza
+        else // > 2 stoixeia
+        {
+            heap_node * curr = this->last;
+            while (curr->isLeftNode()==true) //eite anevainw foul aristeros eite eftasa riza
+            {
+                curr = curr->parent;
+            }
+            if (curr==root) //eftasa stin korifi tou dentrou giati last is aristero node, 1o tou katwterou epipedou
+            {
+                while (curr!=NULL)
+                {
+                    curr = curr->right;
+                }
+                return curr;
+            }
+            else //den itan plires to epipedo
+            {
+                return curr->parent->left->right; //epistrepse ton deksi ksaderfo mou
+            }
+        }
+    }
+    else
+    {
+        std::cerr << "How?\n";
+        return NULL;
+    }
 }
-void heap::insert(pair p)
+
+void heap::search(heap_node* hn, std::string s, heap_node** hnn) //O(n) --> can become better using a hash table
 {
-    if (p.pair_id!="") //den mou dwses ws orisma kapoia kotsana
+    //DFS gia na brw to kombo pou exei to info pou thelw, an den uparxei epistrefw NULL
+    if (hn==NULL)
+    {
+        //return NULL;
+        return;
+    }
+    //std::cerr << hn->id << " vs " << s << "\n";
+    if (hn->id==s)
+    {
+        //std::cerr << "found!\n";
+        *hnn = hn;
+        return;
+    }
+    search(hn->left, s, hnn);
+    search(hn->right, s, hnn);
+}
+
+void heap::insert(std::string id0)
+{
+    heap_node * pou = NULL;
+    search(this->root, id0, &pou);
+    if (pou == NULL) //den brika pouthena idi auto to string
     {
         if (root==NULL) //1o insert
         {
-            std::cerr << "vazw riza\n";
+            //std::cerr << "vazw riza\n";
             root = new heap_node;
-            root->id = p.pair_id;//edw mpainei to p
-            root->counter = p.pair_counter;
+            root->id = id0;//edw mpainei to p
+            root->counter = 1;
             root->left = NULL;
             root->right = NULL;
             root->parent = NULL;
-            //this->last = root;
-            //std::cerr << "evala: ";
-            //root->print_heap_node();
-            //heapify den xreiazetai edw, exw 1 prama kai eimai idi swros
+            this->last = root;
+            this->size++;
         }
         else if (last->isLeftNode()==true) //mazi kai i riza
         {
@@ -130,38 +220,31 @@ void heap::insert(pair p)
             {
                 //std::cerr << "to teleutaio pou evala itan left kai oxi i riza\n";
                 last->parent->right = new heap_node;
-                last->parent->right->id = p.pair_id;//edw mpainei to p
-                last->parent->right->counter = p.pair_counter;
+                last->parent->right->id = id0;//edw mpainei to p
+                last->parent->right->counter = 1;
                 last->parent->right->left = NULL;
                 last->parent->right->right = NULL;
                 last->parent->right->parent = last->parent;
                 this->last = last->parent->right; //to neo last einai to deksi paidi tou mpampa tou proigoumenou last
-                //std::cerr << "evala: ";
-                //last->print_heap_node();
-                //std::cerr << "o right tou mpampa mou leei: ";
-                //last->parent->right->print_heap_node();
-                //this->parent->left->id==this->id
+                this->size++;
             }
             else //paw na valw meta ti riza
             {
                 //std::cerr << "vazw meta ti riza\n";
                 last->left = new heap_node;
-                last->left->id = p.pair_id;
-                last->left->counter = p.pair_counter;
+                last->left->id = id0;
+                last->left->counter = 1;
                 last->left->left = NULL;
                 last->left->right = NULL;
                 last->left->parent = last;
                 this->last = last->left;
-                //std::cerr << "evala: ";
-                //last->print_heap_node();
+                this->size++;
             }
-            //heapify()
         }
         else if (last->isLeftNode()==false)
         {
             //std::cerr << "to teleutaio pou evala itan right\n";
-            heap_node * curr;
-            curr = last;
+            heap_node * curr = last;
             //std::cerr << "paw na kanw backtrack\n";
             while(curr->isLeftNode()==false)
             {
@@ -175,62 +258,79 @@ void heap::insert(pair p)
                     curr = curr->left;
                 }//kai xwnomaste
                 curr->left = new heap_node;
-                curr->left->id = p.pair_id;
-                curr->left->counter = p.pair_counter;
+                curr->left->id = id0;
+                curr->left->counter = 1;
                 curr->left->left = NULL;
                 curr->left->right = NULL;
                 curr->left->parent = curr;
                 this->last = curr->left;
-                //std::cerr << "\nevala: ";
-                //last->print_heap_node();
-                //heapify()
+                this->size++;
             }
             else
             {
                 curr = curr->parent; //paw allo 1 curr = curr->parent
                 curr->right->left = new heap_node;
-                curr->right->left->id = p.pair_id;
-                curr->right->left->counter = p.pair_counter;
+                curr->right->left->id = id0;
+                curr->right->left->counter = 1;
                 curr->right->left->left = NULL;
                 curr->right->left->right = NULL;
                 curr->right->left->parent = curr->right;
                 this->last = curr->right->left;
-                //std::cerr << "\nevala: ";
-                //last->print_heap_node();
-                //heapify()
+                this->size++;
             }
-        }/*
-        else
-        {
-            std::cerr << "You can't be here!\n";
-        }*/
-        
+        }
+        this->last->swim();
+    }
+    else //uparxei idi auto to string
+    {
+        pou->counter++;
+        pou->swim();
     }
 }
 
 heap_node * heap::pop_root()
 {
-    return NULL;
-    //return root, heapify
-}
-/*
-void heap::topkDiseases(aht * countryht, int k, std::string countryName)
-{
-    block * b = countryht->search(countryName);
-    //array apo pair i
-    //insert to heap ta pairs
-    //pop k times to root, print.
-    //heapify
-}
-void heap::topkDiseasesDates(aht * countryht, int k, std::string countryName, date d1, date d2)
-{
+    if (this->root==NULL) return NULL;
+    //else exw kati na kanw pop
+    else
+    {
+        heap_node * res = new heap_node;
+        res->id = root->id;
+        res->counter = root->counter;
+        //res->print_heap_node();
+        this->root->id = this->last->id; //sti nea riza valw to palio ID
+        this->root->counter = this->last->counter; //kai to palio counter
+        //this->root->print_heap_node(); //root values swapped with last
+        root->sink(); //sink to neo root
+        //this->root->print_heap_node(); //new root is okay
 
+        this->last->delete_heap_node();
+        std::cerr << "deleted last\n";
+        this->last = this->prev_last();
+        std::cerr << "brika ton proteleutaio m\n";
+        //sto telos
+        size--;
+        //tupwnei previously max
+        //res->print_heap_node();
+        std::cerr << "returning...\n";
+        return res; //epistrefei deikti sto neo root
+    }
 }
-void heap::topkCountries(aht * diseaseht, int k, std::string diseaseName)
-{
 
+void heap::delete_heap()
+{
+    if (this->last==NULL)
+    {
+        return;
+    }
+    else //diagrafw to last kai enimerwnw to last kai oso last!=root diagrafw
+    {
+        heap_node * h = this->pop_root();
+        while (h!=NULL) //tha bgazei ti riza mexri na papsei na uparxei heap
+        {
+            h = this->pop_root();
+        }
+        
+    }
+    return;
 }
-void heap::topkCountriesDates(aht * diseaseht, int k, std::string diseaseName, date d1, date d2)
-{
-
-}*/
