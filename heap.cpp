@@ -329,20 +329,12 @@ heap_node * heap::pop_root()
         return res; //epistrefei deikti sto popped root
     }
 }
-
 void heap::delete_heap()
 {
-    if (this->root==NULL)
+    for (int i = 0; i < size; i++)
     {
-        return;
+        pop_root();
     }
-    else //diagrafw to last (kai enimerwnw to last) kai oso root!=NULL diagrafw
-    {
-        heap_node * h;// = this->pop_root();
-        do
-        {
-            h = this->pop_root();
-        } while (h!=NULL);
-    }
-    return;
+    this->root = NULL;
+    delete this->root;
 }

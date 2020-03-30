@@ -19,7 +19,6 @@ int main(int argc, char const *argv[])
     //test
     
     heap heapp;
-
     heapp.insert("a");
     heapp.insert("b");
     heapp.insert("c");
@@ -32,17 +31,9 @@ int main(int argc, char const *argv[])
     heapp.insert("b");
     heapp.insert("e");
     heapp.insert("f");
-    /*
-    std::cerr << "1i fasi: "; heapp.print_heap(heapp.root);
-    std::cerr << "bgazw ti riza: \n"; 
-    heap_node * proin_riza = heapp.pop_root();
-    proin_riza->print_heap_node();
-    std::cerr << "2i fasi: "; heapp.print_heap(heapp.root);
-    */
+    //heapp.print_heap(heapp.root);
     heapp.delete_heap();
-    if (heapp.root!=NULL) std::cerr << "den adeiase\n";
-    //heap_node * hn = heapp.pop_root();
-    //hn->print_heap_node();
+    //if (heapp.root!=NULL) std::cerr << "den adeiase\n"; else std::cerr << "yeet\n";
     /////////////////////////////////////
 
     char records_file[256];	
@@ -388,6 +379,7 @@ int main(int argc, char const *argv[])
             }
             else
             {
+                //b->my_tree->
                 std::cerr << countryName << " " << k <<"\n";
                 
                 /*std::string wannabedate1;

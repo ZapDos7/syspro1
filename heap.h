@@ -39,14 +39,10 @@ public:
     ~heap();
     void print_heap(heap_node* hn); //kaleitai me 1o orisma to root
     heap_node * prev_last(); //epistrefei deikti ston proteleutaio node
-    //heap_node * search(heap_node* hn, std::string s); //kaleitai me 1o orisma to root
     void search(heap_node* hn, std::string s, heap_node** hnn);
     void insert(std::string id0); //ws orisma pairnei ena string pou psaxnei kai ekei kanei insert
-    //meta kalw swim
     heap_node * pop_root(); //pop root, return new root after calling heapify
-    //meta kalw katadusi
+    void delete_heap(heap_node* hn); 
     void delete_heap(); //kaleitai prin liksei to /command topk gia na einai on the fly o swros
 };
-//
-std::string binarify(int n);
 #endif
