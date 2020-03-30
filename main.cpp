@@ -25,26 +25,22 @@ int main(int argc, char const *argv[])
     heapp.insert("c");
     heapp.insert("d");
     heapp.insert("d");
-    
-    //heapp.print_heap(heapp.root);
-
     heapp.insert("c");
     heapp.insert("c");
     heapp.insert("c");
-
-    //heapp.print_heap(heapp.root);
-
-
     heapp.insert("b");
     heapp.insert("b");
-    //heapp.print_heap(heapp.root);
-    
-    heapp.last->print_heap_node();
-    heapp.prev_last()->print_heap_node();
-    
-
-
-    //std::cerr << "\n\n";
+    heapp.insert("e");
+    heapp.insert("f");
+    /*
+    std::cerr << "1i fasi: "; heapp.print_heap(heapp.root);
+    std::cerr << "bgazw ti riza: \n"; 
+    heap_node * proin_riza = heapp.pop_root();
+    proin_riza->print_heap_node();
+    std::cerr << "2i fasi: "; heapp.print_heap(heapp.root);
+    */
+    heapp.delete_heap();
+    if (heapp.root!=NULL) std::cerr << "den adeiase\n";
     //heap_node * hn = heapp.pop_root();
     //hn->print_heap_node();
     /////////////////////////////////////

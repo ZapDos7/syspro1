@@ -23,7 +23,6 @@ public:
     ~heap_node();
     bool isLeftNode();
     void print_heap_node();
-    void delete_heap_node();
     void sink();
     void swim();
 };
