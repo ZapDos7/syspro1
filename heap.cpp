@@ -12,7 +12,7 @@ heap_node::heap_node(std::string id0)
 heap_node::heap_node(){}
 heap_node::~heap_node()
 {
-    //std::cerr << "destructor heap node\n";
+    //std::cerr << "destructor heap node: ";
     //this->print_heap_node();
     if (this->left!=NULL) delete this->left;
     if (this->right!=NULL) delete this->right;
@@ -56,20 +56,28 @@ void heap_node::sink() //katadusi
     }
     else //exw 2 paidia
     {
-        if (this->left->counter >= this->right->counter) //left >= right ara antallazw me ton left opws panw
+        if ((this->left->counter > this->right->counter)&&(this->left->counter > this->counter)) //left > right kai left > me
         {
             int tmp1 = this->left->counter; std::string tmp2 = this->left->id;
             this->left->counter = this->counter; this->left->id = this->id;
             this->counter = tmp1; this->id = tmp2;
             this->left->sink();
         }
-        else if (this->left->counter < this->right->counter) //right > left
+        else if ((this->left->counter < this->right->counter)&&(this->right->counter > this->counter)) //right > left kai right > me
         {
             int tmp1 = this->right->counter; std::string tmp2 = this->right->id;
             this->right->counter = this->counter; this->right->id = this->id;
             this->counter = tmp1; this->id = tmp2;
             this->right->sink();
         }
+        else if ((this->left->counter==this->right->counter)&&(this->left->counter>this->counter)) //exoun idia timi alla me pernane ara antallasw me to left m
+        {
+            int tmp1 = this->left->counter; std::string tmp2 = this->left->id;
+            this->left->counter = this->counter; this->left->id = this->id;
+            this->counter = tmp1; this->id = tmp2;
+            this->left->sink();
+        }
+        
     }
 }
 void heap_node::swim() //anadusi
@@ -102,11 +110,8 @@ heap::heap()
 
 heap::~heap() //den prepei na klithei pote giati kanoume delete ton heap prin liksei to programma
 {
-    //delete this->last;
-    if (this->root!=NULL){
-        std::cerr << "deconstructing heap\n";
-        delete this->root;
-    }
+    //std::cerr << "destroying heap\n";
+    delete this->root;
 }
 
 void heap::print_heap(heap_node* hn)
@@ -286,31 +291,40 @@ void heap::insert(std::string id0)
     }
 }
 
-heap_node * heap::pop_root()
+/*heap_node **/void heap::pop_root(heap_node * res)
 {
-    if (this->root==NULL) return NULL;
+    if (this->root==NULL)
+    {
+        res = NULL;
+        return;
+    }
     //else exw kati na kanw pop
     else
     {
-        heap_node * res = new heap_node;
+        //heap_node * res = new heap_node;
         res->id = root->id;
         res->counter = root->counter;
         res->left = NULL;
         res->right = NULL;
         res->parent = NULL;
         
-        this->root->id = this->last->id; //sti nea riza valw to palio ID tou last
-        this->root->counter = this->last->counter; //kai to palio counter tou last
-        
-        root->sink(); //sink to neo root properly
-
-
         heap_node * prevlast = this->prev_last(); //krataw poios itan o proteleutaios m
-        if (this->last==this->root)
+        //std::cerr << "o proteleutaios m einai: "; prevlast->print_heap_node();
+
+
+        this->root->id = this->last->id; //sti nea riza valw to palio ID tou last
+        this->root->counter = this->last->counter; //kai to palio counter tou last  
+        //std::cerr << "my new root (pre sink) is: "; this->root->print_heap_node();
+        this->root->sink(); //sink to neo root properly
+        //std::cerr << "my new root (post sink) is: "; this->root->print_heap_node();      
+        //std::cerr << "my new root is: "; this->root->print_heap_node();
+
+        if (this->last==this->root) //if prev_last == null
         {
             this->last = NULL;
             this->root = NULL;
-            delete this->root; //last pop'd was my root
+            this->size = 0;
+            return;
         }
         else if ((this->last->isLeftNode()==true)&&(this->last->parent!=NULL)) //last is left, not root
         {
@@ -322,19 +336,9 @@ heap_node * heap::pop_root()
         }
         delete this->last;
         this->last = prevlast;
-        
+        //this->print_heap(this->root);
         //sto telos
         size--;
-        //res->print_heap_node();
-        return res; //epistrefei deikti sto popped root
+        return;
     }
-}
-void heap::delete_heap()
-{
-    for (int i = 0; i < size; i++)
-    {
-        pop_root();
-    }
-    this->root = NULL;
-    delete this->root;
 }

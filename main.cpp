@@ -16,26 +16,7 @@ bool date_format(std::string); //elegxei oti ena string einai stin morfi XX-YY-Z
 
 int main(int argc, char const *argv[])
 {
-    //test
-    
-    heap heapp;
-    heapp.insert("a");
-    heapp.insert("b");
-    heapp.insert("c");
-    heapp.insert("d");
-    heapp.insert("d");
-    heapp.insert("c");
-    heapp.insert("c");
-    heapp.insert("c");
-    heapp.insert("b");
-    heapp.insert("b");
-    heapp.insert("e");
-    heapp.insert("f");
-    //heapp.print_heap(heapp.root);
-    heapp.delete_heap();
-    //if (heapp.root!=NULL) std::cerr << "den adeiase\n"; else std::cerr << "yeet\n";
     /////////////////////////////////////
-
     char records_file[256];	
     int h1 = -1; //diseaseHashtableNumOfEntries	
     int h2 = -1; //countryHashtableNumOfEntries	

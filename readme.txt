@@ -6,7 +6,7 @@ sdi1400044
 Used: C++11 (Developed on Linux Ubuntu 16.04), used git for version control and valgrind for debugging purposes.
 
 Validator results:
-- Passes all tests minus 5-12 (topk)
+- Passes all tests minus the ones on top-k commands (yields proper results but leads to seg fault)
 
 Contents:
 - this readme

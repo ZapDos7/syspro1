@@ -39,8 +39,6 @@ public:
     heap_node * prev_last(); //epistrefei deikti ston proteleutaio node
     void search(heap_node* hn, std::string s, heap_node** hnn);
     void insert(std::string id0); //ws orisma pairnei ena string pou psaxnei kai ekei kanei insert
-    heap_node * pop_root(); //pop root, return new root after calling heapify
-    void delete_heap(heap_node* hn); 
-    void delete_heap(); //kaleitai prin liksei to /command topk gia na einai on the fly o swros
+    /*heap_node **/ void pop_root(heap_node * res); //pop root, return new root after calling heapify
 };
 #endif

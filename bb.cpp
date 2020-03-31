@@ -150,42 +150,55 @@ void block::top_k_diseases(int k)
 {
     heap swros;
     this->my_tree->insert_to_heap_diseases(my_tree->root, &swros);
+    //swros.print_heap(swros.root);
+    heap_node node;
     if (swros.size > k) //exw > k na tupwsw
     {
         for (int i = 0; i < k; i++)
         {
-            swros.pop_root()->print_heap_node();
+            swros.pop_root(&node);
+            node.print_heap_node();
+            /*std::cerr << "\n\nMenoun: ";
+            swros.print_heap(swros.root);
+            std::cerr << swros.size << "\n\n";*/
         }
+        //std::cerr << swros.size << "\n";
+        //swros.delete_heap();
+        //swros.delete_heap(swros.root);
     }
     else //exw < k na tupwsw
     {
         for (int i = 0; i < swros.size; i++)
         {
-            swros.pop_root()->print_heap_node();
+            swros.pop_root(&node);
+            node.print_heap_node();
         }
     }
-    swros.delete_heap();
     return;
 }
 void block::top_k_diseases(int k, date d1, date d2)
 {
     heap swros;
     this->my_tree->insert_to_heap_diseases_dates(my_tree->root, &swros, d1, d2);
+    heap_node node;
     if (swros.size > k) //exw > k na tupwsw
     {
         for (int i = 0; i < k; i++)
         {
-            swros.pop_root()->print_heap_node();
+            swros.pop_root(&node);
+            node.print_heap_node();
         }
+        //swros.delete_heap();
+        //swros.delete_heap(swros.root);
     }
     else //exw < k na tupwsw
     {
         for (int i = 0; i < swros.size; i++)
         {
-            swros.pop_root()->print_heap_node();
+            swros.pop_root(&node);
+            node.print_heap_node();
         }
     }
-    swros.delete_heap();
     return;
 }
 
@@ -193,42 +206,50 @@ void block::top_k_countries(int k)
 {
     heap swros;
     this->my_tree->insert_to_heap_countries(my_tree->root, &swros);
+    heap_node node;
     if (swros.size > k) //exw > k na tupwsw
     {
         for (int i = 0; i < k; i++)
         {
-            swros.pop_root()->print_heap_node();
+            swros.pop_root(&node);
+            node.print_heap_node();
         }
+        //swros.delete_heap();
+        //swros.delete_heap(swros.root);
     }
     else //exw < k na tupwsw
     {
         for (int i = 0; i < swros.size; i++)
         {
-            swros.pop_root()->print_heap_node();
+            swros.pop_root(&node);
+            node.print_heap_node();
         }
     }
-    swros.delete_heap();
     return;
 }
 void block::top_k_countries(int k, date d1, date d2)
 {
     heap swros;
     this->my_tree->insert_to_heap_countries_dates(my_tree->root, &swros, d1, d2);
+    heap_node node;
     if (swros.size > k) //exw > k na tupwsw
     {
         for (int i = 0; i < k; i++)
         {
-            swros.pop_root()->print_heap_node();
+            swros.pop_root(&node);
+            node.print_heap_node();
         }
+        //swros.delete_heap();
+        //swros.delete_heap(swros.root);
     }
     else //exw < k na tupwsw
     {
         for (int i = 0; i < swros.size; i++)
         {
-            swros.pop_root()->print_heap_node();
+            swros.pop_root(&node);
+            node.print_heap_node();
         }
     }
-    swros.delete_heap();
     return;
 }
 
