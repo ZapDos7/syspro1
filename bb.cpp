@@ -146,8 +146,91 @@ long int block::statsC(date date1, date date2, std::string cntrn)
 {
     return my_tree->statsCx(my_tree->root, date1, date2, cntrn);
 }
+void block::top_k_diseases(int k)
+{
+    heap swros;
+    this->my_tree->insert_to_heap_diseases(my_tree->root, &swros);
+    if (swros.size > k) //exw > k na tupwsw
+    {
+        for (int i = 0; i < k; i++)
+        {
+            swros.pop_root()->print_heap_node();
+        }
+    }
+    else //exw < k na tupwsw
+    {
+        for (int i = 0; i < swros.size; i++)
+        {
+            swros.pop_root()->print_heap_node();
+        }
+    }
+    swros.delete_heap();
+    return;
+}
+void block::top_k_diseases(int k, date d1, date d2)
+{
+    heap swros;
+    this->my_tree->insert_to_heap_diseases_dates(my_tree->root, &swros, d1, d2);
+    if (swros.size > k) //exw > k na tupwsw
+    {
+        for (int i = 0; i < k; i++)
+        {
+            swros.pop_root()->print_heap_node();
+        }
+    }
+    else //exw < k na tupwsw
+    {
+        for (int i = 0; i < swros.size; i++)
+        {
+            swros.pop_root()->print_heap_node();
+        }
+    }
+    swros.delete_heap();
+    return;
+}
 
-
+void block::top_k_countries(int k)
+{
+    heap swros;
+    this->my_tree->insert_to_heap_countries(my_tree->root, &swros);
+    if (swros.size > k) //exw > k na tupwsw
+    {
+        for (int i = 0; i < k; i++)
+        {
+            swros.pop_root()->print_heap_node();
+        }
+    }
+    else //exw < k na tupwsw
+    {
+        for (int i = 0; i < swros.size; i++)
+        {
+            swros.pop_root()->print_heap_node();
+        }
+    }
+    swros.delete_heap();
+    return;
+}
+void block::top_k_countries(int k, date d1, date d2)
+{
+    heap swros;
+    this->my_tree->insert_to_heap_countries_dates(my_tree->root, &swros, d1, d2);
+    if (swros.size > k) //exw > k na tupwsw
+    {
+        for (int i = 0; i < k; i++)
+        {
+            swros.pop_root()->print_heap_node();
+        }
+    }
+    else //exw < k na tupwsw
+    {
+        for (int i = 0; i < swros.size; i++)
+        {
+            swros.pop_root()->print_heap_node();
+        }
+    }
+    swros.delete_heap();
+    return;
+}
 
 
 

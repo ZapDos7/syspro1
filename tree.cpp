@@ -147,34 +147,37 @@ long int tree::statsCx(tree_node * tr, date d1, date d2, std::string countryName
     metritis += statsCx(tr->right, d1, d2, countryName);
     return metritis;
 }
-long int tree::statsAllDisease(tree_node *tr, std::string nm)
+void tree::insert_to_heap_diseases(tree_node * tr, heap * swros)
 {
-    long int metritis = 0;
-    if (tr == NULL) //recursion end
-    {
-        return metritis;
-    }
-    metritis += statsAllDisease(tr->left, nm);
-    if (tr->rec->get_disease()==nm)
-    {
-        metritis++;
-    }
-    metritis += statsAllDisease(tr->right, nm);
-    return metritis;
+    if (tr==NULL) return;
+    insert_to_heap_diseases(tr->left, swros);
+    swros->insert(tr->rec->get_disease());
+    insert_to_heap_diseases(tr->right, swros);
 }
-
-long int tree::statsAllCountry(tree_node *tr, std::string nm)
+void tree::insert_to_heap_diseases_dates(tree_node * tr, heap * swros, date d1, date d2)
 {
-    long int metritis = 0;
-    if (tr == NULL) //recursion end
+    if (tr==NULL) return;
+    insert_to_heap_diseases_dates(tr->left, swros, d1, d2);
+    if (isBetween(*(tr->d), d1, d2) == true)
     {
-        return metritis;
+        swros->insert(tr->rec->get_disease());
     }
-    metritis += statsAllCountry(tr->left, nm);
-    if (tr->rec->get_country()==nm)
+    insert_to_heap_diseases_dates(tr->right, swros, d1, d2);
+}
+void tree::insert_to_heap_countries(tree_node * tr, heap * swros)
+{
+    if (tr==NULL) return;
+    insert_to_heap_countries(tr->left, swros);
+    swros->insert(tr->rec->get_country());
+    insert_to_heap_countries(tr->right, swros);
+}
+void tree::insert_to_heap_countries_dates(tree_node * tr, heap * swros, date d1, date d2)
+{
+    if (tr==NULL) return;
+    insert_to_heap_countries_dates(tr->left, swros, d1, d2);
+    if (isBetween(*(tr->d), d1, d2) == true)
     {
-        metritis++;
+        swros->insert(tr->rec->get_country());
     }
-    metritis += statsAllCountry(tr->right, nm);
-    return metritis;
+    insert_to_heap_countries_dates(tr->right, swros, d1, d2);
 }

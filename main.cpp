@@ -368,9 +368,12 @@ int main(int argc, char const *argv[])
                 pch = strtok(NULL, delim);	
             }
             int k = atoi(comms[1].c_str());
+            //std::cerr << k <<"\n";
             std::string countryName = comms[2];
+            //std::cerr << countryName <<"\n";
             //pame stin entoli:
             block * b = countryHT.search(countryName);
+            //b->print_blk(true);
             if (b==NULL)
             {
                 //std::cerr << countryName << " has no records.\n";
@@ -379,37 +382,94 @@ int main(int argc, char const *argv[])
             }
             else
             {
-                //b->my_tree->
-                std::cerr << countryName << " " << k <<"\n";
+                if (counter==3)
+                {
+                    b->top_k_diseases(k);
+                }
+                else if (counter==5)
+                {
+                    //std::cerr << "exw dates!\n";
+                    std::string wannabedate1 = comms[3];
+                    std::string wannabedate2 = comms[4];
+                    if ((date_format(wannabedate1)==false)||(date_format(wannabedate2)==false))
+                    {
+                        //std::cerr << "Type properly.(6)";
+                        std::cerr << "error\n";
+                        break;
+                    }
+                    //else dates are ok
+                    date d1(wannabedate1);
+                    date d2(wannabedate2);
+                    if (isLater(d1,d2)==-1) //an d1>d2, epistrefei -1
+                    {
+                        //std::cerr << "Type properly.(7)";
+                        std::cerr << "error\n";
+                        break;
+                    }//else dates are ok ok ara kaloume
+                    b->top_k_diseases(k, d1, d2);
+                }
+                else
+                {
+                    std::cerr << "error\n";
+                }
                 
-                /*std::string wannabedate1;
-                std::string wannabedate2;
-                if (counter==4)
-                {
-                    wannabedate1 = comms[3];
-                    wannabedate2 = comms[4];
-                }
-                if ((date_format(wannabedate1)==false)||(date_format(wannabedate2)==false))
-                {
-                    //std::cerr << "Type properly.(6)";
-                    std::cerr << "error\n";
-                    break;
-                }
-                //else
-                date d1(wannabedate1);
-                date d2(wannabedate2);
-                if (isLater(d1,d2)==-1) //an d1>d2, epistrefei -1
-                {
-                    //std::cerr << "Type properly.(7)";
-                    std::cerr << "error\n";
-                    break;
-                }*/
             }
-            
         }	
         else if (comms[0] == "/topk-Countries") //11. /topk-Countries k disease [date1 date2]
         {	
             //Gia to virus, which k countries are top (most krousmata) [between dates if given] //an uparxei date1 prepei na uparxei date2, alla mporei na leipoun kai ta 2	
+            while (pch != NULL)
+            {	
+                comms[counter] = pch;	
+                counter++;	
+                pch = strtok(NULL, delim);	
+            }
+            int k = atoi(comms[1].c_str());
+            //std::cerr << k <<"\n";
+            std::string diseaseName = comms[2];
+            //std::cerr << diseaseName <<"\n";
+            //pame stin entoli:
+            block * b = diseaseHT.search(diseaseName);
+            //b->print_blk(true);
+            if (b==NULL)
+            {
+                //std::cerr << countryName << " has no records.\n";
+                std::cerr << "error\n"; //else print
+                //std::cerr << countryName << " 0\n";
+            }
+            else
+            {
+                if (counter==3)
+                {
+                    b->top_k_countries(k);
+                }
+                else if (counter==5)
+                {
+                    //std::cerr << "exw dates!\n";
+                    std::string wannabedate1 = comms[3];
+                    std::string wannabedate2 = comms[4];
+                    if ((date_format(wannabedate1)==false)||(date_format(wannabedate2)==false))
+                    {
+                        std::cerr << "error\n";
+                        break;
+                    }
+                    //else dates are ok
+                    date d1(wannabedate1);
+                    date d2(wannabedate2);
+                    if (isLater(d1,d2)==-1) //an d1>d2, epistrefei -1
+                    {
+                        //std::cerr << "Type properly.(7)";
+                        std::cerr << "error\n";
+                        break;
+                    }//else dates are ok ok ara kaloume
+                    b->top_k_countries(k, d1, d2);
+                }
+                else
+                {
+                    std::cerr << "error\n";
+                }
+                
+            }
         }	
         else	
         {	

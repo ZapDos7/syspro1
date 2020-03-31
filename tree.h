@@ -3,6 +3,7 @@
 
 #include "date.h"
 #include "record.h"
+#include "heap.h"
 
 class tree_node {
 private:
@@ -29,8 +30,10 @@ public:
     tree_node* search(tree_node* tr, date d1);
     long int stats(tree_node * tr, date d1, date d2);
     long int statsCx(tree_node * tr, date d1, date d2, std::string countryName); //gia global stats me country name
-    long int statsAllDisease(tree_node * tr, std::string nm); //epistrefei posa stoixeia exei mesa tou to tree - gia pairs gia heap gia topk
-    long int statsAllCountry(tree_node * tr, std::string nm); //idio alla tr exoume country name
+    void insert_to_heap_diseases(tree_node * tr, heap * swros);
+    void insert_to_heap_diseases_dates(tree_node * tr, heap * swros, date d1, date d2);
+    void insert_to_heap_countries(tree_node * tr, heap * swros);
+    void insert_to_heap_countries_dates(tree_node * tr, heap * swros, date d1, date d2);
 };
 
 

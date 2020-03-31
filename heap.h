@@ -4,8 +4,6 @@
 #include <string>
 #include <cmath>
 #include "date.h"
-#include "tree.h"
-#include "aht.h"
 
 //domi "max heap" oxi vasei array alla vasei dentrou, opws protathike sto eclass
 class heap_node
