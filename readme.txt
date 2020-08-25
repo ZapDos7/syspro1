@@ -43,3 +43,5 @@ Sources:
 - date.h, date.cpp - my code from last years 1st assignment, without the time stamp class & with another assisting function.
 - The hash function for my hash table based on this: http://www.cse.yorku.ca/~oz/hash.html
 - The hash function for the disease and country hash tables is a variation of this, but with a bit more complex math & with a better distribution.
+
+Final Grade: 86%
